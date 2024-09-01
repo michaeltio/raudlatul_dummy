@@ -20,7 +20,7 @@ export default function NavigationBar() {
           }}
         >
           <Image
-            src="/svg/icon/hamburger-icon.svg"
+            src="/svg/icon/hamburger.svg"
             alt="hamburger-icon"
             width={20}
             height={20}
@@ -35,7 +35,7 @@ export default function NavigationBar() {
               animate={{ right: "0%" }}
               exit={{ right: "-50%" }}
               transition={{ duration: 0.3 }}
-              className="font-ptserif fixed right-0 top-0 z-50 flex h-screen w-1/3 flex-col bg-black bg-opacity-10 px-6 text-base font-semibold shadow-[-5px_0_5px_0px_rgba(0,0,15,0.25)] backdrop-blur-sm"
+              className="fixed right-0 top-0 z-50 flex h-screen w-1/3 flex-col bg-black bg-opacity-10 px-6 font-ptserif text-base font-semibold shadow-[-5px_0_5px_0px_rgba(0,0,15,0.25)] backdrop-blur-sm"
             >
               <button
                 className="absolute left-0 top-0 px-2 py-4"
@@ -44,7 +44,7 @@ export default function NavigationBar() {
                 }}
               >
                 <Image
-                  src="/svg/icon/x-close-icon.svg"
+                  src="/svg/icon/x-close.svg"
                   alt="x-close-icon.svg"
                   width={10}
                   height={10}
