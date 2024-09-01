@@ -7,7 +7,7 @@ export default function Service() {
       <div id="mainService" className="overflow-x-hidden">
         <div
           id="landPage"
-          className="mt-14 flex h-auto w-screen flex-row items-center gap-10"
+          className="flex h-auto w-screen flex-row items-center gap-10"
         >
           <Image
             src="/webp/tester.webp"
