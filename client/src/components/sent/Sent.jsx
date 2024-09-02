@@ -1,11 +1,11 @@
 import Image from "next/image";
 
-export default function Order({img, title, p1, p2, p3})
+export default function Sent({img, title, p1, p2, p3})
 {
     return (
         <div id="cardOrders" className="flex flex-col p-3">
                 <div id="contOrder" className=" bg-[#FAF1EA] shadow-xl rounded-3xl h-56">
-                    <p className="font-black font-ptserif text-sm text-[#C6975D] flex justify-end p-4 tracking-wide">Waiting</p>
+                    <p className="font-black font-ptserif text-sm text-[#C6975D] flex justify-end p-4 tracking-wide">On The Way</p>
                     <div className="flex flex-row justify-around">
                         <div className="flex items-center justify-center">
                             <Image
@@ -26,7 +26,7 @@ export default function Order({img, title, p1, p2, p3})
                         <p className="font-black font-ptserif text-sm">{p3}</p>   
                     </div>
                     <div className="flex justify-end">
-                        <button className="border-[#C11313] border-[0.12rem] text-[#C11313] font-black font-ptserif rounded-3xl p-1 w-24 hover:bg-[#C11313] hover:text-[#FAF1EA]">Cancel</button>
+                        <button className="text-[#C11313] font-black font-ptserif underline hover:text-black">Courier Detail</button>
                     </div>  
                 </div>
             </div>
