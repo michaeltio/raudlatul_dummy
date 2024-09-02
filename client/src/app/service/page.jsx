@@ -1,24 +1,28 @@
 import React from "react";
 import Image from "next/image";
+import TopValue from "@/components/service/TopValue";
 
 export default function Service() {
   return (
     <>
-      <div id="mainService" className="overflow-x-hidden">
+      <div id="mainService" className="flex flex-col">
         <div
           id="landPage"
-          className="flex h-auto w-screen flex-row items-center gap-10"
+          className="flex flex-row items-center bg-red-500"
         >
           <Image
             src="/webp/tester.webp"
             alt="img landSevice"
-            className="h-full w-80 rounded-r-lg"
+            className="w-1/3 rounded-r-lg"
             width={50}
             height={100}
           />
-          <a className="item-center justify-center font-ptserif text-xl font-black">
+          <div className="flex w-1/2 items-center justify-center">
+          <h1 className="item-center justify-center font-ptserif text-xl font-black">
             Service Part
-          </a>
+          </h1>
+          </div>
+          
         </div>
 
         <div id="topValues" className="h-auto w-screen">
@@ -39,81 +43,12 @@ export default function Service() {
             className="flex flex-col items-center gap-5 md:flex-row md:justify-center md:gap-28"
           >
             <div id="listTop1" className="mt-14 flex flex-row gap-28">
-              <div id="bookingTop" className="flex flex-col items-center">
-                <Image
-                  src=""
-                  alt="booking"
-                  className="rounded-full bg-[#092928]"
-                  width={60}
-                  height={60}
-                />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
-                  Easy Booking
-                </a>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  Quick and easy booking of
-                </p>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  tours for upcoming dates
-                </p>
-              </div>
-              <div id="priceTop" className="flex flex-col items-center">
-                <Image
-                  src=""
-                  alt="price"
-                  className="rounded-full bg-[#092928]"
-                  width={60}
-                  height={60}
-                />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
-                  Best Price
-                </a>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  Quick and easy booking of
-                </p>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  tours for upcoming dates
-                </p>
-              </div>
+              <TopValue img="booking.svg" title="Easy Booking" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
+              <TopValue img="best-price.svg" title="Best Price" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
             </div>
-
             <div id="listTop2" className="mt-14 flex flex-row gap-28">
-              <div id="qualityTop" className="flex flex-col items-center">
-                <Image
-                  src=""
-                  alt="quality"
-                  className="rounded-full bg-[#092928]"
-                  width={60}
-                  height={60}
-                />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
-                  Quality
-                </a>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  Quick and easy booking of
-                </p>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  tours for upcoming dates
-                </p>
-              </div>
-              <div id="requestTop" className="flex flex-col items-center">
-                <Image
-                  src=""
-                  alt="request"
-                  className="rounded-full bg-[#092928]"
-                  width={60}
-                  height={60}
-                />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
-                  By Request
-                </a>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  Quick and easy booking of
-                </p>
-                <p className="item-center justify-center font-ptserif text-xs font-light">
-                  tours for upcoming dates
-                </p>
-              </div>
+              <TopValue img="quality.svg" title="Quality" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
+              <TopValue img="by-request.svg" title="By Request" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
             </div>
           </div>
 
@@ -140,9 +75,9 @@ export default function Service() {
                 className="flex flex-row items-center justify-center gap-5"
               >
                 <Image
-                  src=""
+                  src="/svg/icon/email.svg"
                   alt="phone"
-                  className="rounded-full bg-[#092928]"
+                  className="rounded-full p-1 bg-[#092928]"
                   width={40}
                   height={40}
                 />
@@ -155,9 +90,9 @@ export default function Service() {
                 className="flex flex-row items-center justify-center gap-5"
               >
                 <Image
-                  src=""
+                  src="/svg/icon/whatsapp.svg"
                   alt="Mail"
-                  className="rounded-full bg-[#092928]"
+                  className="rounded-full bg-[#FAF1EA]"
                   width={40}
                   height={40}
                 />
