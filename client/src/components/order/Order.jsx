@@ -1,21 +1,47 @@
 import Image from "next/image";
 
-export default function Order({img, title, p1, p2, p3})
-{
-    return (
-        <div id="cardOrders" className="flex flex-col p-3">
-                <div id="contOrder" className=" bg-[#FAF1EA] shadow-xl rounded-3xl h-56">
-                    <p className="font-black font-ptserif text-sm text-[#C6975D] flex justify-end p-4 tracking-wide">Waiting</p>
-                    <div className="flex flex-row justify-around">
-                        <div className="flex items-center justify-center">
-                            <Image
-                                src={`/webp/${img}`}
-                                alt="img item"
-                                className="rounded-lg w-32 h-32"
-                                width={32}
-                                height={32}
-                            />
-                        </div> 
+export default function Order({ img, title, p1, p2, p3 }) {
+  return (
+    <>
+      <div className="flex h-56 rounded-3xl bg-slate-500 shadow-xl">
+        <div className="flex w-full flex-row items-center">
+          <Image
+            src={`/webp/${img}`}
+            width={100}
+            height={100}
+            className="h-32 w-32 rounded-lg"
+          />
+          <div className="flex flex-col gap-3">
+            <h1 className="text-md font-ptserif font-black">{title}</h1>
+            <div className="flex flex-row gap-2 tracking-wide">
+              <p className="font-ptserif text-sm">{p1}</p>
+              <p className="font-ptserif text-sm font-black">{p2}</p>
+            </div>
+          </div>
+        </div>
+        <div className="mx-6 my-8 flex flex-col items-end justify-between">
+          <div className="flex flex-col items-end">
+            <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D]">
+              Waiting
+            </p>
+            <p className="font-ptserif text-sm font-black">{p3}</p>
+          </div>
+
+          <button className="w-24 rounded-3xl border-[0.12rem] border-[#C11313] p-1 font-ptserif font-black text-[#C11313] hover:bg-[#C11313] hover:text-[#FAF1EA]">
+            Cancel
+          </button>
+        </div>
+      </div>
+      {/* <div id="cardOrders" className="flex flex-col">
+                <div id="cardOrder" className="bg-slate-500 shadow-xl rounded-3xl h-56 flex flex-row">
+                    <div className="items-center justify-center flex">
+                        <Image
+                            src={`/webp/${img}`}
+                            alt="img item"
+                            className="rounded-lg w-32 h-32"
+                            width={100}
+                            height={100}
+                        />
                         <div className="flex flex-col gap-3">
                             <h1 className="font-black font-ptserif text-md">{title}</h1>
                             <div className="flex flex-row tracking-wide gap-2">
@@ -23,12 +49,10 @@ export default function Order({img, title, p1, p2, p3})
                                 <p className="font-ptserif text-sm font-black">{p2}</p>
                             </div>
                         </div>
-                        <p className="font-black font-ptserif text-sm">{p3}</p>   
                     </div>
-                    <div className="flex justify-end">
-                        <button className="border-[#C11313] border-[0.12rem] text-[#C11313] font-black font-ptserif rounded-3xl p-1 w-24 hover:bg-[#C11313] hover:text-[#FAF1EA]">Cancel</button>
-                    </div>  
+                    
                 </div>
-            </div>
-    )
+        </div> */}
+    </>
+  );
 }
