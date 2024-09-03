@@ -13,7 +13,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`bg-[#FAF1EA] ${inter.className}`}>
+      <body
+        className={`max-w-screen w-screen overflow-x-hidden overflow-x-clip bg-[#FAF1EA] ${inter.className}`}
+      >
         <NavigationBar />
         {children}
         <Footer />
