@@ -1,86 +1,112 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Profile = () => {
-    return (
-        <>
-        {/* <div class="font-ptserif">
-            <div class="flex justify-center pt-12 pb-5 gap-5">
-                <div class="w-56 h-56 pl-3 rounded-[50px] bg-[#014E3E]">
-                </div>
-                <div class="text-center justify-center content-center">
-                    <div class="flex justify-center gap-4">
-                        <div class="w-10 h-10 rounded-full bg-[#E9B472]"></div>
-                        <div class="w-10 h-10 rounded-full bg-[#092928]"></div>
-                    </div>
-                    <div class="w-50 pt-5">
-                        <button type="button" class="w-24 h-8 rounded-3xl box-border border-[1px] border-black">Edit</button>
-                    </div>
-                </div>
+  return (
+    <>
+      <div class="mx-6 flex flex-col gap-10 font-ptserif md:mx-28">
+        <div class="flex flex-col gap-16 md:flex-row md:items-center md:gap-32">
+          <div class="flex flex-row md:flex-col md:gap-14">
+            <div class="h-48 w-48 min-w-48 rounded-[3rem] bg-[#014E3E] md:h-80 md:w-80"></div>
+            <div class="flex w-full flex-col items-center justify-center gap-5 md:hidden md:w-0 md:flex-row">
+              <div class="flex flex-row justify-center gap-5 bg-red-500">
+                <div class="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div>
+                <div class="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14"></div>
+              </div>
+              <button class="rounded-full border-[0.1rem] border-black px-8 md:text-2xl">
+                Edit
+              </button>
             </div>
-
-            <div class="flex p-5 justify-center">
-                <div class="pr-5 font-semibold">
-                    <p class="py-3 px-4">Username</p>
-                    <p class="py-3 px-4">Email</p>
-                    <p class="py-3 px-4">No Phone</p>
-                    <p class="py-3 px-4">Address</p>
-                </div>
-                <div class="w-[2px] h-30 bg-[#092928] rounded-3xl"></div>
-                <div class="px-5">
-                    <p class="p-3">Oshinobu</p>
-                    <p class="p-3">Oshinobu@gmail.com</p>
-                    <p class="p-3">08123456789</p>
-                    <p class="p-3">Universitas Multimedia Nusantara, Gading Serpong</p>
-                </div>
+            <div class="hidden flex-row justify-center gap-5 bg-red-500 md:relative md:bottom-0 md:flex">
+              <div class="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div>
+              <div class="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14"></div>
             </div>
-
-
-            <div class="flex justify-center p-8">
-                <div class="p-5">
-                    <button type="button" class="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
-                </div>
-                <div class="p-5">
-                    <button type="button" class="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
-                </div>
-                <div class="p-5">
-                    <button type="button" class="h-14 w-14 rounded-xl bg-[#E9B472]">Rating</button>
-                </div>
+          </div>
+          <div class="relative w-full gap-14">
+            <div class="flex h-80 gap-10 bg-red-600 md:items-center md:gap-16 md:text-2xl">
+              <div class="flex flex-col gap-5 py-9">
+                <div class="font-semibold">Username</div>
+                <div class="font-semibold">Email</div>
+                <div class="font-semibold">No Phone</div>
+                <div class="font-semibold">Address</div>
+              </div>
+              <div class="flex flex-col gap-5 border-l-2 border-black py-10 pl-8 md:px-16">
+                <div>Oshinobu</div>
+                <div>Oshinobu@gmail.com</div>
+                <div>08123456789</div>
+                <div>Universitas Multimedia Nusantara, Gading Serpong</div>
+              </div>
             </div>
-            
-
-
-        </div> */}
-        <div class="mx-6 font-ptserif">
-            <div class="flex flex-row">
-                <div class="bg-[#014E3E] min-w-48 w-48 h-48 rounded-[3rem]"></div>
-                <div class="w-full flex flex-col items-center justify-center gap-5">
-                    <div class="flex flex-row justify-center gap-5">
-                        <div class="bg-[#E9B472] w-10 h-10 rounded-full"></div>
-                        <div class="bg-[#092928] w-10 h-10 rounded-full"></div>
-                    </div>
-                    <button class="border-black border-[0.1rem] rounded-full px-8">Edit</button>
-                </div>
+            <div class="md:flex">
+              <div class="hidden justify-center md:flex md:justify-center md:text-2xl">
+                <button class="rounded-full border-[0.1rem] border-black px-8 md:h-12">
+                  Edit
+                </button>
+              </div>
+              <div class="bottom-0 right-0 hidden justify-between bg-red-700 md:absolute md:flex md:w-56">
+                <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
+                <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
+                <button class="h-14 w-14 rounded-xl bg-[#E9B472]">
+                  rating
+                </button>
+              </div>
             </div>
-            <div class="flex bg-slate-600 gap-5">
-                <div class="flex flex-col">
-                    <div>Username</div>
-                    <div>Email</div>
-                    <div>No Phone</div>
-                    <div>Address</div>
-                </div>
-                <div class="w-0.5 h-30 bg-[#092928]"></div>
-                <div class="flex flex-col">
-                    <div>Oshinobu</div>
-                    <div>Oshinobu@gmail.com</div>
-                    <div>08123456789</div>
-                    <div>Universitas Multimedia Nusantara, Gading Serpong</div>
-                </div>
-            </div>
-            <div></div>
+          </div>
+          <div class="mx-14 flex justify-between bg-red-700 md:hidden md:w-56">
+            <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
+            <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
+            <button class="h-14 w-14 rounded-xl bg-[#E9B472]">rating</button>
+          </div>
         </div>
-        </>
-    );
-}
+      </div>
+    </>
+  );
+};
 
 export default Profile;
+
+// import React from "react";
+
+// const Profile = () => {
+//   return (
+//     <>
+//       <div class="grid grid-cols-3 gap-4">
+//         <div class="flex md:justify-center">
+//           <div class="h-48 w-48 min-w-48 rounded-[3rem] bg-[#014E3E] md:h-80 md:w-80"></div>
+//         </div>
+
+//         <div class="col-span-2 flex gap-10 bg-red-600 md:gap-16 md:text-2xl">
+//           <div class="flex flex-col gap-5 py-9">
+//             <div class="font-semibold">Username</div>
+//             <div class="font-semibold">Email</div>
+//             <div class="font-semibold">No Phone</div>
+//             <div class="font-semibold">Address</div>
+//           </div>
+//           <div class="flex flex-col gap-5 border-l-2 border-black py-9 pl-8 md:px-16">
+//             <div>Oshinobu</div>
+//             <div>Oshinobu@gmail.com</div>
+//             <div>08123456789</div>
+//             <div>Universitas Multimedia Nusantara, Gading Serpong</div>
+//           </div>
+//         </div>
+
+//         <div class="flex">
+//           <div class="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div>
+//           <div class="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14"></div>
+//         </div>
+
+//         <div class="relative col-span-2">
+//           <button class="rounded-full border-[0.1rem] border-black px-8 md:h-12">
+//             Edit
+//           </button>
+//           <div class="bottom-0 right-0 hidden justify-between bg-red-700 md:absolute md:flex md:w-56">
+//             <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
+//             <button class="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
+//             <button class="h-14 w-14 rounded-xl bg-[#E9B472]">rating</button>
+//           </div>
+//         </div>
+//       </div>
+//     </>
+//   );
+// };
+
+// export default Profile;
