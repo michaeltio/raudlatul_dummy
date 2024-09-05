@@ -7,6 +7,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontSize: {
+        xxs: "0.625rem",
+        xxxs: "0.5rem",
+        xxxxs: "0.45rem",
+      },
       fontFamily: {
         ptserif: ["PT Serif", "serif"],
       },
