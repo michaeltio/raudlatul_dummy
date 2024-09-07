@@ -7,7 +7,7 @@ const EditItem = () => {
         <h1 className="text-2xl font-black">Item</h1>
       </div>
 
-      <div className="mx-10 flex flex-col gap-6 md:mx-60">
+      <div className="mx-10 flex flex-col gap-6 md:mx-80">
         <div className="flex flex-col justify-center gap-4">
           <input
             type="text"
