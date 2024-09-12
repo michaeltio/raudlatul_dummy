@@ -12,7 +12,7 @@ export default function NavigationBar() {
 
   return (
     <>
-      <nav className="mb-6 flex w-screen flex-row items-center justify-between px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] md:px-12 md:py-6">
+      <nav className="mb-6 flex w-screen flex-row items-center justify-between px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] md:mb-12 md:px-12 md:py-6">
         <h1 className="font-ptserif text-2xs font-semibold tracking-wide md:text-lg">
           Raudlatul Irfan
         </h1>
@@ -58,7 +58,7 @@ export default function NavigationBar() {
               animate={{ right: "0%" }}
               exit={{ right: "-50%" }}
               transition={{ duration: 0.3 }}
-              className="fixed right-0 top-0 z-50 flex h-screen w-1/3 flex-col bg-black bg-opacity-10 px-6 font-ptserif text-base font-semibold shadow-[-5px_0_5px_0px_rgba(0,0,15,0.25)] backdrop-blur-sm md:hidden"
+              className="fixed right-0 top-0 z-50 flex h-screen w-1/3 flex-col bg-white bg-opacity-50 px-6 font-ptserif text-base font-semibold shadow-[-5px_0_5px_0px_rgba(0,0,15,0.25)] backdrop-blur-sm md:hidden"
             >
               <button
                 className="absolute left-0 top-0 px-2 py-4"

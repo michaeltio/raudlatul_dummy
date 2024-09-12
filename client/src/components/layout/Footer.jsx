@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="bottom-0 mt-8 md:mt-32">
+    <div className="bottom-0 mt-20 md:mt-32">
       <div className="mx-6 flex flex-col items-center gap-6 border-b-2 border-t-2 border-[#092928] py-6 font-ptserif text-2xs text-xs font-semibold md:mx-8 md:flex-row md:justify-between md:border-t-0">
         <h1 className="md:px-10 md:text-base">Raudlatul Irfan</h1>
         <div className="flex gap-4 md:hidden">
@@ -43,7 +43,7 @@ export default function Footer() {
           <div className="h-5 w-5 rounded-full bg-[#092928]"></div>
         </div>
       </div>
-      <p className="w-full px-8 py-4 text-center font-ptserif text-4xs md:text-left md:text-xs">
+      <p className="w-full px-8 py-2 text-center font-ptserif text-4xs md:py-4 md:text-left md:text-xs">
         Copyright &copy; 2024 Raudlatul Irfan All Rights Reserved
       </p>
     </div>

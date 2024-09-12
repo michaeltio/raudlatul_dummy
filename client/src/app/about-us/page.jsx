@@ -1,52 +1,62 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
+import { useState } from "react";
+
 import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 
-const styles = `
-  .swiper-slide-prev, .swiper-slide-next {
-    transform: translateY(100%) scale(0.5);
-  }
-`;
-
 export default function AboutUs() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   return (
     <>
-      <style>{styles}</style>
-      <div className="flex flex-col gap-6 font-ptserif">
-        <section className="mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] px-4 py-6 text-white">
-          <div className="w-2/3">
-            <h1 className="font-semibold">Raudlatul Irfan</h1>
-            <p className="text-4xs text-justify">
+      <div className="flex flex-col gap-8 font-ptserif md:gap-12">
+        <section className="mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] px-4 py-6 text-white md:mx-16 md:aspect-[17/7] md:rounded-[3rem] md:px-16">
+          <div className="w-2/3 md:py-20">
+            <h1 className="mb-2 text-xl font-semibold md:mb-6 md:text-5xl">
+              Raudlatul Irfan
+            </h1>
+            <p className="text-justify text-4xs md:text-lg">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
         </section>
-        <section className="aspect-[16/3] w-screen bg-[#E9B472]"></section>
-        <section className="flex flex-row items-center gap-4">
+        <section className="aspect-[16/3] w-screen bg-[#E9B472] md:aspect-[16/2]"></section>
+        <section className="flex flex-row items-center justify-end gap-4 md:gap-16">
           <div className="flex w-2/5 flex-col items-end">
-            <h1 className="font-semibold">Our Mission</h1>
-            <p className="text-3xs ml-2 text-end leading-tight">
+            <h1 className="text-xl font-semibold md:mb-6 md:text-4xl">
+              Our Mission
+            </h1>
+            <p className="ml-2 text-end text-3xs leading-tight md:text-lg">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+              sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
-          <div className="aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928]"></div>
+          <div className="aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]"></div>
         </section>
-        <section>
-          <h1>Achievement</h1>
-          <div className="">
+        <section className="mx-16 flex flex-col items-center">
+          <h1 className="mb-4 text-center text-xl font-semibold md:text-4xl">
+            Achievement
+          </h1>
+          <div className="w-3/5 md:hidden">
             <Swiper
               effect={"coverflow"}
-              slide
               grabCursor={true}
               centeredSlides={true}
-              slidesPerView={2}
+              slidesPerView={1.6}
               coverflowEffect={{
                 rotate: 0,
                 stretch: 50,
@@ -56,39 +66,62 @@ export default function AboutUs() {
               pagination={{ dynamicBullets: true }}
               modules={[EffectCoverflow, Pagination]}
               loop={true}
+              onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             >
-              <SwiperSlide>
-                <div>
-                  <img
-                    className="aspect-video"
-                    src="https://swiperjs.com/demos/images/nature-1.jpg"
-                  />
-                </div>
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-2.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-3.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-4.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-5.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-6.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-7.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-8.jpg" />
-              </SwiperSlide>
-              <SwiperSlide>
-                <img src="https://swiperjs.com/demos/images/nature-9.jpg" />
-              </SwiperSlide>
+              {[...Array(9)].map((_, index) => (
+                <SwiperSlide key={index}>
+                  <div className="relative flex flex-col items-center">
+                    <img
+                      className="rounded-3xl"
+                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
+                    />
+                    {activeIndex === index && (
+                      <div className="flex w-full flex-col items-center justify-center rounded-3xl">
+                        <h1 className="text-center text-lg font-semibold">
+                          1st Medal Caligraphy Olimpiade
+                        </h1>
+                        <p className="pb-6 text-center text-sm">
+                          Lorem ipsum dolor ist amet, consectetur adipiscing
+                          elit, sed do eiusmod tempor incididunt ut labore et
+                          dolore magna aliqua.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+          <div className="hidden w-full md:block">
+            <Swiper
+              grabCursor={true}
+              centeredSlides={true}
+              slidesPerView={3}
+              spaceBetween={200}
+              pagination={{ dynamicBullets: true }}
+              modules={[Pagination]}
+              loop={true}
+            >
+              {[...Array(9)].map((_, index) => (
+                <SwiperSlide key={index}>
+                  <div className="relative flex flex-col items-center">
+                    <img
+                      className="rounded-3xl"
+                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
+                    />
+                    <div className="flex w-full flex-col items-center justify-center rounded-3xl">
+                      <h1 className="text-center text-lg font-semibold md:text-xl">
+                        1st Medal Caligraphy Olimpiade
+                      </h1>
+                      <p className="pb-6 text-center text-sm md:text-base">
+                        Lorem ipsum dolor ist amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore
+                        magna aliqua.
+                      </p>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </div>
         </section>
