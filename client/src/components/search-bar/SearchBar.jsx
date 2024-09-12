@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function SearchBar() {
   return (
-    <div className="flex w-full flex-row gap-6 px-16">
+    <div className="flex w-full flex-row gap-6 px-8 md:px-16">
       <input
         type="text"
         placeholder="Search"
