@@ -6,23 +6,19 @@ export default function Service() {
   return (
     <>
       <div id="mainService" className="flex flex-col">
-        <div
-          id="landPage"
-          className="flex flex-row items-center bg-red-500"
-        >
+        <div id="landPage" className="flex flex-row items-center">
           <Image
-            src="/webp/tester.webp"
+            src="/webp/rapat02.webp"
             alt="img landSevice"
-            className="w-1/3 rounded-r-lg"
-            width={50}
-            height={100}
+            className="aspect-[16/13] w-4/5 rounded-e-2xl object-cover md:w-1/2 md:rounded-e-3xl"
+            width={10000}
+            height={10000}
           />
           <div className="flex w-1/2 items-center justify-center">
-          <h1 className="item-center justify-center font-ptserif text-xl font-black">
-            Service Part
-          </h1>
+            <h1 className="item-center justify-center font-ptserif text-xl font-black md:text-3xl">
+              Service Part
+            </h1>
           </div>
-          
         </div>
 
         <div id="topValues" className="h-auto w-screen">
@@ -40,21 +36,44 @@ export default function Service() {
 
           <div
             id="contTop"
-            className="flex flex-col items-center gap-5 md:flex-row md:justify-center md:gap-28"
+            className="flex flex-col items-center gap-5 md:flex-row md:justify-center md:gap-16"
           >
-            <div id="listTop1" className="mt-14 flex flex-row gap-28">
-              <TopValue img="booking.svg" title="Easy Booking" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
-              <TopValue img="best-price.svg" title="Best Price" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
+            <div
+              id="listTop1"
+              className="mt-14 flex justify-center gap-20 md:gap-16"
+            >
+              <TopValue
+                img="booking.svg"
+                title="Easy Booking"
+                p1="Quick and easy booking of"
+                p2="tours for upcoming dates"
+              />
+              <TopValue
+                img="best-price.svg"
+                title="Best Price"
+                p1="Quick and easy booking of"
+                p2="tours for upcoming dates"
+              />
             </div>
-            <div id="listTop2" className="mt-14 flex flex-row gap-28">
-              <TopValue img="quality.svg" title="Quality" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
-              <TopValue img="by-request.svg" title="By Request" p1="Quick and easy booking of" p2="tours for upcoming dates"/>
+            <div id="listTop2" className="mt-14 flex gap-20 md:gap-16">
+              <TopValue
+                img="quality.svg"
+                title="Quality"
+                p1="Quick and easy booking of"
+                p2="tours for upcoming dates"
+              />
+              <TopValue
+                img="by-request.svg"
+                title="By Request"
+                p1="Quick and easy booking of"
+                p2="tours for upcoming dates"
+              />
             </div>
           </div>
 
           <div
             id="contContact"
-            className="mt-20 flex h-auto w-screen flex-col gap-14 md:mt-44 md:flex-row md:items-center md:justify-center"
+            className="mt-20 flex h-auto w-screen flex-col gap-10 md:flex-row md:items-center md:justify-center md:py-10"
           >
             <div
               id="contTitle"
@@ -68,35 +87,33 @@ export default function Service() {
 
             <div
               id="contInfo"
-              className="flex flex-col items-center gap-10 md:flex md:flex-row md:gap-28 md:rounded-full md:border-2 md:border-[#092928] md:p-5"
+              className="flex flex-col items-center justify-center gap-4 md:flex md:w-2/3 md:flex-row md:gap-0 md:rounded-full md:border-2 md:border-[#092928] md:p-5"
             >
               <div
                 id="contPhone"
-                className="flex flex-row items-center justify-center gap-5"
+                className="flex flex-row items-center justify-center gap-3 md:flex-1"
               >
                 <Image
                   src="/svg/icon/email.svg"
                   alt="phone"
-                  className="rounded-full p-1 bg-[#092928]"
+                  className="w-7 rounded-full bg-[#092928] p-1"
                   width={40}
                   height={40}
                 />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
-                  : +62 812 345 6789
-                </a>
+                <a className="text-md font-ptserif">: +62 812 345 6789</a>
               </div>
               <div
                 id="contMail"
-                className="flex flex-row items-center justify-center gap-5"
+                className="flex flex-row items-center justify-center gap-3 md:flex-1"
               >
                 <Image
                   src="/svg/icon/whatsapp.svg"
                   alt="Mail"
-                  className="rounded-full bg-[#FAF1EA]"
+                  className="w-7 rounded-full bg-[#FAF1EA]"
                   width={40}
                   height={40}
                 />
-                <a className="item-center mt-2 justify-center font-ptserif text-lg font-black">
+                <a className="text-md font-ptserif">
                   : RaudlatulIrfan@gmail.com
                 </a>
               </div>
