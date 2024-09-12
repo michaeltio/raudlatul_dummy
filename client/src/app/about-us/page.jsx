@@ -53,13 +53,7 @@ export default function AboutUs() {
               Our Mission
             </h1>
             <p className="ml-2 text-end text-3xs leading-tight md:text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-              sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Memperkenalkan kaligrafi sebagai seni dan teknik yang menekankan pada keindahan bentuk-bentuk, huruf, dan merangkai tulisan secara tersusun, menjalankan bisnis kaligrafi yang berorientasi pada kepuasan konsumen dan mitra, mengupayakan agar kaligrafi menjadi pendorong kegiatan ekonomi masyarakat.
             </p>
           </div>
           <div className="relative aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] bg-opacity-50 md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]">
@@ -140,9 +134,7 @@ export default function AboutUs() {
                         1st Medal Caligraphy Olimpiade
                       </h1>
                       <p className="pb-6 text-center text-sm md:text-base">
-                        Lorem ipsum dolor ist amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore
-                        magna aliqua.
+                      Joko Anwar berhasil meraih medali pertama kaligrafi internasional
                       </p>
                     </div>
                   </div>
