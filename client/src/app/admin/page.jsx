@@ -8,7 +8,7 @@ export default function Admin() {
       <div id="mainAdmin" className="mx-8 md:mx-16">
         <section
           id="contOPR"
-          className="flex w-full flex-row items-center justify-between"
+          className="flex w-full flex-row items-center justify-around"
         >
           <div
             id="Order"
