@@ -5,17 +5,17 @@ import Rating from "@/components/rating/Rating";
 export default function Admin() {
   return (
     <>
-      <div id="mainAdmin" className="mx-6">
+      <div id="mainAdmin" className="mx-8 md:mx-16">
         <section
           id="contOPR"
-          className="flex w-full flex-row items-center justify-between"
+          className="flex w-full flex-row items-center justify-around md:justify-between"
         >
           <div
             id="Order"
-            className="relative flex aspect-square w-3/12 items-center justify-center rounded-3xl bg-[#092928]"
+            className="relative flex aspect-square w-3/12 items-center justify-center rounded-2xl bg-[#092928] md:aspect-[16/10] md:rounded-3xl"
           >
             <div className="flex flex-col items-center justify-center gap-3">
-              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA]">
+              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA] md:text-lg">
                 Order
               </p>
               <p className="font-ptserif text-4xl font-black text-[#FAF1EA]">
@@ -25,10 +25,10 @@ export default function Admin() {
           </div>
           <div
             id="Process"
-            className="relative flex aspect-square w-3/12 items-center justify-center rounded-3xl bg-[#092928]"
+            className="relative flex aspect-square w-3/12 items-center justify-center rounded-2xl bg-[#092928] md:aspect-[16/10] md:rounded-3xl"
           >
             <div className="flex flex-col items-center justify-center gap-3">
-              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA]">
+              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA] md:text-lg">
                 Process
               </p>
               <p className="font-ptserif text-4xl font-black text-[#FAF1EA]">
@@ -38,10 +38,10 @@ export default function Admin() {
           </div>
           <div
             id="Rating"
-            className="relative flex aspect-square w-3/12 items-center justify-center rounded-3xl bg-[#092928]"
+            className="relative flex aspect-square w-3/12 items-center justify-center rounded-2xl bg-[#092928] md:aspect-[16/10] md:rounded-3xl"
           >
             <div className="flex flex-col items-center justify-center gap-3">
-              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA]">
+              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA] md:text-lg">
                 Rating
               </p>
               <p className="font-ptserif text-4xl font-black text-[#FAF1EA]">
@@ -64,9 +64,9 @@ export default function Admin() {
 
         <section
           id="addItem"
-          className="mt-5 flex w-full items-center justify-center"
+          className="mt-10 flex w-full items-center justify-center md:justify-start"
         >
-          <div className="flex aspect-[16/8] w-full flex-col items-center justify-center gap-3 rounded-[3rem] bg-[#014E3E]">
+          <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 rounded-[3rem] bg-[#014E3E] md:aspect-[6/16] md:w-2/12 md:rounded-3xl">
             <Image
               src="/svg/icon/plus.svg"
               className=""
