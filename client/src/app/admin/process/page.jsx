@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
-import Adorder from "@/components/adminOrder/Adorder";
+import Adorder from "@/components/admin-order/Adorder";
 
 export default function AdminProcess() {
   return (
