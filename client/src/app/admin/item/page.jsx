@@ -7,7 +7,7 @@ const EditItem = () => {
         <h1 className="text-2xl font-black">Item</h1>
       </div>
 
-      <div className="mx-10 flex flex-col gap-6">
+      <div className="mx-10 flex flex-col gap-6 items-center">
         <div className="flex flex-col justify-center gap-4">
           <input
             type="text"
@@ -36,7 +36,7 @@ const EditItem = () => {
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
             placeholder="Price"
           />
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <label htmlFor="" className="">Image</label>
             <div className="flex flex-col gap-2 w-full">
               <input
@@ -49,7 +49,7 @@ const EditItem = () => {
             </div>
           </div>
         </div>
-        <button className="w-full h-8 rounded-full bg-[#E9B472] text-[#FAF1EA]">Submit</button>
+        <button className="w-80 h-8 rounded-full bg-[#E9B472] text-[#FAF1EA]">Submit</button>
       </div>
 
       <div className="w-full">
