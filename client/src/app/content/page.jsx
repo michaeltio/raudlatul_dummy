@@ -33,14 +33,14 @@ function Content() {
               <Image
                   src="/svg/icon/star-yellow.svg"
                   alt="img star"
-                  className="w-5 p-1"
+                  className="w-8 p-1"
                   width={5}
                   height={5}
               />
-                <p className="text-sm font-ptserif font-bold">4.9/5</p>
+                <p className="text-2xl font-ptserif font-bold">4.9/5</p>
               </div>
             </div>
-            <p className="text-lg font-ptserif w-80 mb-7">
+            <p className="text-lg font-ptserif mb-7">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
             <div className="space-y-1">
