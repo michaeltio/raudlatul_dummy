@@ -6,7 +6,13 @@ function Content() {
   return (
     <div id="mainService" className="md:flex">
       <div className="px-9 space-y-4 md:px-6 md:py-0 lg:flex md:flex-1 lg:space-x-6 lg:space-y-0">
-        <div className="aspect-[16/11] bg-[#092928] rounded-2xl md:aspect-square md:flex-1 lg:aspect-[16/11]"></div>
+        <div className="aspect-[16/11] bg-[#092928] rounded-2xl md:aspect-square md:flex-1 lg:aspect-[16/11]">
+        <Image 
+        src="/webp/caligraphy01.webp"
+        width={100}
+        height={100}
+        className="w-full h-full"/>
+        </div>
         
         <div className="flex justify-center space-x-4 lg:flex-col lg:space-x-0 lg:space-y-4">
           <div className="w-10 aspect-square bg-[#E9B472] rounded md:w-8"></div>
