@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import { useState } from "react";
+import Image from "next/image";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -13,7 +14,15 @@ export default function AboutUs() {
   return (
     <>
       <div className="flex flex-col gap-8 font-ptserif md:gap-12">
-        <section className="mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] px-4 py-6 text-white md:mx-16 md:aspect-[17/7] md:rounded-[3rem] md:px-16">
+        <section className="relative mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] bg-opacity-50 px-4 py-6 text-white md:mx-16 md:aspect-[17/7] md:rounded-[3rem] md:px-16">
+          <div className="absolute inset-0 -z-10 rounded-2xl md:rounded-[3rem]">
+            <Image
+              src="/webp/main-building.webp"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-2xl md:rounded-[3rem]"
+            />
+          </div>
           <div className="w-2/3 md:py-20">
             <h1 className="mb-2 text-xl font-semibold md:mb-6 md:text-5xl">
               Raudlatul Irfan
@@ -29,7 +38,15 @@ export default function AboutUs() {
             </p>
           </div>
         </section>
-        <section className="aspect-[16/3] w-screen bg-[#E9B472] md:aspect-[16/2]"></section>
+        <section className="relative aspect-[16/3] w-screen bg-[#092928] bg-opacity-50 bg-cover object-contain md:aspect-[16/2]">
+          <div className="absolute inset-0 -z-10">
+            <Image
+              src="/webp/3-caligraphy.webp"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+        </section>
         <section className="flex flex-row items-center justify-end gap-4 md:gap-16">
           <div className="flex w-2/5 flex-col items-end">
             <h1 className="text-xl font-semibold md:mb-6 md:text-4xl">
@@ -45,13 +62,22 @@ export default function AboutUs() {
               sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
           </div>
-          <div className="aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]"></div>
+          <div className="relative aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] bg-opacity-50 md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]">
+            <div className="absolute inset-0 -z-10">
+              <Image
+                src="/webp/rapat01.webp"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-l-xl md:rounded-l-[2.5rem]"
+              />
+            </div>
+          </div>
         </section>
         <section className="mx-16 flex flex-col items-center">
           <h1 className="mb-4 text-center text-xl font-semibold md:text-4xl">
             Achievement
           </h1>
-          <div className="w-3/5 md:hidden">
+          <div className="w-full md:hidden">
             <Swiper
               effect={"coverflow"}
               grabCursor={true}
