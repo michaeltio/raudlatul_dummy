@@ -13,6 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head></head>
       <body className={`max-w-screen w-screen bg-[#FAF1EA] ${inter.className}`}>
         <NavigationBar />
         {children}

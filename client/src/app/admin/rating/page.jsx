@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
-import Adrating from "@/components/AdminRating/Adrating";
+import Adrating from "@/components/admin-rating/Adrating";
 
 export default function AdminRating() {
   return (
