@@ -36,7 +36,7 @@ const EditItem = () => {
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
             placeholder="Price"
           />
-          <div className="flex gap-4">
+          <div className="flex gap-2">
             <label htmlFor="" className="">Image</label>
             <div className="flex flex-col gap-2 w-full">
               <input

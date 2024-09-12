@@ -39,17 +39,17 @@ function Content() {
               <p className="text-sm font-ptserif font-bold">4.9/5</p>
             </div>
           </div>
-          <p className="text-sm font-ptserif w-80 mb-7 lg:text-md">
+          <p className="text-md font-ptserif w-80 mb-7 lg:text-lg">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <div className="space-y-1">
-            <p className="text-sm font-ptserif"><b>Artist:</b> Joko Anwar</p>
-            <p className="text-sm font-ptserif mb-8"><b>Created Date:</b> 30 February 2020</p>
+            <p className="text-md font-ptserif"><b>Artist:</b> Joko Anwar</p>
+            <p className="text-md font-ptserif mb-8"><b>Created Date:</b> 30 February 2020</p>
           </div>
         </div>
 
         <div className="relative">
-          <a href="#" className="text-xs font-bold font-ptserif text-[#E9B472] underline mt-10 mb-6">See Reviews</a>
+          <a href="#" className="text-sm font-bold font-ptserif text-[#E9B472] underline mt-10 mb-6">See Reviews</a>
           <div className="w-44">
             <p className="text-center text-xl font-bold font-ptserif my-3">Rp 1.250.000</p>
             <button className="w-44 py-2 text-lg font-bold font-ptserif border border-black rounded-full">Check Out</button>
