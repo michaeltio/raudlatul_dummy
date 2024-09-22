@@ -9,8 +9,8 @@ const ProfileEdit = () => {
             <div className="absolute h-16 w-16 translate-x-5 translate-y-5 rounded-full bg-[#E9B472] md:h-24 md:w-24"></div>
           </div>
         </div>
-        <div>
-          <div className="flex gap-10 text-lg md:gap-20 md:text-2xl">
+        <div className="justify-center">
+          <div className="flex justify-center gap-10 text-lg md:gap-20 md:text-2xl">
             <div className="flex flex-col gap-8">
               <div className="font-semibold">Username</div>
               <div className="font-semibold">Email</div>
