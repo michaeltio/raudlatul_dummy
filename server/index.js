@@ -1,22 +1,26 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const PORT = 3001;
+const {
+  initializeFirebaseApp,
+  uploadProccessedData,
+  getCollectionData,
+} = require("./firebase");
 
-const db = require("./config");
-console.log(db);
+const PORT = 3001;
+initializeFirebaseApp();
 
 app.use(cors());
 app.use(express.json());
 
-app.get("/api", (req, res) => {
-  res.json({ message: "Hello World!" });
+app.get("/api", async (req, res) => {
+  const data = await getCollectionData("KaligraphyItem");
+  return res.json(data);
 });
 
 app.post("/create", async (req, res) => {
-  const data = req.body;
-  console.log("Data of Test ", data);
-  res.send({ msg: "User Added" });
+  await uploadProccessedData(req.body, "data");
+  return res.json({ message: "Data uploaded successfully!" });
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
