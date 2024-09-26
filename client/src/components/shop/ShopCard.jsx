@@ -10,7 +10,7 @@ export default function ShopCard() {
           height={100}
           className="h-full w-full rounded-2xl object-cover"
         />
-        <div className="absolute aspect-square w-12 rounded-full bg-[#E9B472] md:w-24">
+        <div className="absolute aspect-square w-12 rounded-full bg-[#E9B472] md:w-20">
           <Image
             src="/svg/icon/plus.svg"
             width={100}
@@ -19,8 +19,8 @@ export default function ShopCard() {
           />
         </div>
       </div>
-      <h1 className="font-semibold">Lorem</h1>
-      <p className="text-xs">Rp 10.000,00</p>
+      <h1 className="font-semibold md:text-2xl">Lorem</h1>
+      <p className="text-xs md:text-xl">Rp 10.000,00</p>
     </div>
   );
 }

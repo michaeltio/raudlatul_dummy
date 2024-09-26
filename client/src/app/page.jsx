@@ -9,6 +9,7 @@ import Adorder from "@/components/admin-order/Adorder";
 import Order from "@/components/order/Order";
 import Sent from "@/components/sent/Sent";
 import SearchBar from "@/components/search-bar/SearchBar";
+import ItemAdmin from "@/components/admin-home/ItemAdmin";
 
 export default function Home() {
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function Home() {
       <Sent img="" title="Test" p1="1" p2="2" p3="3" />
       <TopValue />
       <SearchBar />
+      <ItemAdmin />
     </>
   );
 }
