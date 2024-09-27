@@ -4,7 +4,7 @@ export default function Order({ img, title, p1, p2, p3 }) {
   return (
     <>
       <div className="flex h-56 rounded-3xl bg-slate-500 shadow-xl">
-        <div className="flex w-full flex-row items-center">
+        <div className="flex w-full flex-row items-center gap-6 mx-10">
           <Image
             src={`/webp/${img}`}
             width={100}
@@ -19,7 +19,7 @@ export default function Order({ img, title, p1, p2, p3 }) {
             </div>
           </div>
         </div>
-        <div className="mx-6 my-8 flex flex-col items-end justify-between">
+        <div className="mx-8 my-6 flex flex-col items-end justify-between">
           <div className="flex flex-col items-end">
             <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D]">
               Waiting
