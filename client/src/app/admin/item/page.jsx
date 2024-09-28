@@ -4,10 +4,10 @@ import React, { useEffect, useState } from "react";
 const EditItem = () => {
   const [items, setItems] = useState([]);
   const [formData, setFormData] = useState({
-    item: "",
+    item_name: "",
     description: "",
-    artist: "",
-    createdDate: "",
+    artist_name: "",
+    created_date: "",
     price: "",
     image: "",
   });
@@ -49,10 +49,12 @@ const EditItem = () => {
 
   const handleEdit = (item) => {
     setFormData({
-      item: item.item,
+      item_name: item.item_name,
       description: item.description,
-      artist: item.artist,
-      createdDate: item.createdDate,
+      artist_name: item.artist_name,
+      created_date: item.created_date
+        ? item.created_date.split("T")[0]
+        : "",
       price: item.price,
     });
   };
@@ -69,8 +71,8 @@ const EditItem = () => {
         <div className="flex flex-col justify-center gap-4">
           <input
             type="text"
-            name="item"
-            value={formData.item}
+            name="item_name"
+            value={formData.item_name}
             onChange={handleChange}
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
             placeholder="Item"
@@ -86,18 +88,18 @@ const EditItem = () => {
           <div className="flex gap-10">
             <input
               type="text"
-              name="artist"
-              value={formData.artist}
+              name="artist_name"
+              value={formData.artist_name}
               onChange={handleChange}
               className="w-1/2 flex-1 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
               placeholder="Artist"
             />
             <input
-              type="text"
-              name="createdDate"
-              value={formData.createdDate}
+              type="date"
+              name="created_date"
+              value={formData.created_date ? formData.created_date : ""}
               onChange={handleChange}
-              className="flex-1 w-1/2 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
+              className="w-1/2 flex-1 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
               placeholder="Created Date"
             />
           </div>
@@ -125,7 +127,7 @@ const EditItem = () => {
           </div>
         </div>
         <button
-          className="w-80 h-8 rounded-full bg-[#E9B472] text-[#FAF1EA]"
+          className="h-8 w-80 rounded-full bg-[#E9B472] text-[#FAF1EA]"
           onClick={handleSubmit}
         >
           Submit
@@ -162,20 +164,26 @@ const EditItem = () => {
           <tbody>
             {items.map((items, index) => (
               <tr key={index} className="text-xs text-[#092928]">
-                <td className="py-2">{items.item}</td>
+                <td className="py-2">{items.item_name}</td>
                 <td className="py-2">{items.description}</td>
-                <td className="py-2">{items.artist}</td>
-                <td className="py-2">{items.createdDate}</td>
+                <td className="py-2">{items.artist_name}</td>
+                <td className="py-2">
+                  {items.created_date && items.created_date.seconds
+                    ? new Date(
+                        items.created_date.seconds * 1000,
+                      ).toLocaleDateString()
+                    : items.created_date}
+                </td>
                 <td className="py-2">{items.price}</td>
                 <td className="py-2">{items.image}</td>
                 <td className="py-2">
                   <button
                     onClick={() => handleEdit(items)}
-                    className="bg-[#E9B472] text-[#FAF1EA] rounded-full px-2"
+                    className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
                   >
                     Edit
                   </button>
-                  <button className="bg-[#E9B472] text-[#FAF1EA] rounded-full px-2">
+                  <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
                     Delete
                   </button>
                 </td>

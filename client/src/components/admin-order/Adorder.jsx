@@ -46,8 +46,8 @@ export default function Adorder({ p1, p2, p3, p4, p5, p6, p7 }) {
               >
                 Apple MacBook Pro 17"
               </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
+              <td className="px-6 py-4 text-[#092928]">{}</td>
+              <td className="px-6 py-4 text-[#092928]">{}</td>
               <td className="px-6 py-4 text-[#092928]">Yes</td>
               <td className="px-6 py-4 text-[#092928]">Yes</td>
               <td className="px-6 py-4 text-[#092928]">$2999</td>
