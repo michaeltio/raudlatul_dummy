@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function Adrating({ p1, p2, p3, p4, p5, p6, p7 }) {
+export default function Adrating({ reviews }) {
   return (
     <>
       <div className="overflow-x-auto rounded-lg shadow-md">
@@ -9,20 +9,21 @@ export default function Adrating({ p1, p2, p3, p4, p5, p6, p7 }) {
             <tr>
               <th scope="col" className="p-4"></th>
               <th scope="col" className="px-6 py-3">
-                {p1}
+                Nama
               </th>
               <th scope="col" className="px-6 py-3">
-                {p2}
+                Item
               </th>
               <th scope="col" className="px-6 py-3">
-                {p3}
+                Review
               </th>
               <th scope="col" className="px-6 py-3">
-                {p4}
+                Rating
               </th>
             </tr>
           </thead>
           <tbody>
+            {reviews.map((review, index) => (
             <tr className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
               <td className="w-4 p-4">
                 <div className="flex items-center">
@@ -35,186 +36,13 @@ export default function Adrating({ p1, p2, p3, p4, p5, p6, p7 }) {
                 scope="row"
                 className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
               >
-                Apple MacBook Pro 17"
+                {review.customer}
               </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-              <td className="flex items-center gap-3 px-6 py-4 text-[#092928]">
-                <Image
-                  src={`/svg/icon/edit.svg`}
-                  alt="edit"
-                  className=""
-                  width={25}
-                  height={25}
-                />
-                <Image
-                  src={`/svg/icon/delete.svg`}
-                  alt="delete"
-                  className=""
-                  width={25}
-                  height={25}
-                />
-              </td>
+              <td className="px-6 py-4 text-[#092928]">{review.item}</td>
+              <td className="px-6 py-4 text-[#092928]">{review.review}</td>
+              <td className="px-6 py-4 text-[#092928]">{review.rating}</td>
             </tr>
-            <tr className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <label for="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-              <td className="flex items-center px-6 py-4 text-[#092928]">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Edit
-                </a>
-                <a
-                  href="#"
-                  className="ms-3 font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-            <tr className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <label for="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-
-              <td className="flex items-center px-6 py-4 text-[#092928]">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Edit
-                </a>
-                <a
-                  href="#"
-                  className="ms-3 font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-            <tr className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <label for="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-
-              <td className="flex items-center px-6 py-4 text-[#092928]">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Edit
-                </a>
-                <a
-                  href="#"
-                  className="ms-3 font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-            <tr className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <label for="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-
-              <td className="flex items-center px-6 py-4 text-[#092928]">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Edit
-                </a>
-                <a
-                  href="#"
-                  className="ms-3 font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
-            <tr className="bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]">
-              <td className="w-4 p-4">
-                <div className="flex items-center">
-                  <label for="checkbox-table-search-1" className="sr-only">
-                    checkbox
-                  </label>
-                </div>
-              </td>
-              <th
-                scope="row"
-                className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-              >
-                Apple MacBook Pro 17"
-              </th>
-              <td className="px-6 py-4 text-[#092928]">Silver</td>
-              <td className="px-6 py-4 text-[#092928]">Laptop</td>
-
-              <td className="flex items-center px-6 py-4 text-[#092928]">
-                <a
-                  href="#"
-                  className="font-medium text-blue-600 hover:underline dark:text-blue-500"
-                >
-                  Edit
-                </a>
-                <a
-                  href="#"
-                  className="ms-3 font-medium text-red-600 hover:underline dark:text-red-500"
-                >
-                  Remove
-                </a>
-              </td>
-            </tr>
+            ))}
           </tbody>
         </table>
       </div>
