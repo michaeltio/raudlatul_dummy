@@ -1,8 +1,27 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Sent from "@/components/sent/Sent";
 
-export default function Service() {
+export default function Service(key) {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/item");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+  
+  console.log(items);
+
   return (
     <>
         <div id="mainSent" className="">
@@ -11,9 +30,10 @@ export default function Service() {
                 <button className="bg-[#E9B472] p-1 w-32 rounded-3xl font-ptserif font-black text-2xl text-[#FAF1EA] hover:bg-[#C6975D]">Sent</button>
                 <button className="bg-[#E9B472] p-1 w-32 rounded-3xl font-ptserif font-black text-2xl text-[#FAF1EA] hover:bg-[#C6975D]">Rating</button>
             </div>
-            <Sent img="caligraphy01.webp" title="Kaligrafi Surah Yasin 20x40" p1="Total 1 Product:" p2="Rp 1.250.000" p3="1x"/>
-            <Sent img="caligraphy01.webp" title="Kaligrafi Surah Al-Fatihah 40x40" p1="Total 2 Product:" p2="Rp 4.250.000" p3="2x"/>
-        </div>
+            {items.map((item) => (
+            <Sent key={item.id} item={item}/>
+          ))}            
+          </div>
     </>
   );
 }
