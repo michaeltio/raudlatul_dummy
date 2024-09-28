@@ -1,8 +1,25 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Order from "@/components/order/Order";
 
-export default function Service() {
+export default function Service(key) {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/item");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
   return (
     <>
       <div id="mainOrder" className="mx-10">
@@ -21,13 +38,9 @@ export default function Service() {
           </button>
         </div>
         <div className="">
-          <Order
-            img="caligraphy01.webp"
-            title="Kaligrafi Surah Yasin 20x40"
-            p1="Total 1 Product:"
-            p2="Rp 1.250.000"
-            p3="1x"
-          />
+          {items.map((item) => (
+            <Order key={item.id} item={item} />
+          ))}
         </div>
       </div>
     </>

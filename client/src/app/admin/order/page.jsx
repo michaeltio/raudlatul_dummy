@@ -34,11 +34,15 @@ export default function AdminOrder() {
     fetchCourier();
   }, []);
 
-  const handleEdit = (item) => {
+  const handleEdit = (items) => {
     setItems({
-      
+     
+
     });
   };
+
+  console.log(items);
+  console.log(courier);
 
   return (
     <>

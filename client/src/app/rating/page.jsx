@@ -1,8 +1,27 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
 
 export default function Service() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/item");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+  
+  console.log(items);
+
   return (
     <>
       <div id="mainRating" className="">
@@ -20,20 +39,9 @@ export default function Service() {
             Rating
           </button>
         </div>
-        <Rating
-          img="caligraphy01.webp"
-          title="Kaligrafi Surah Yasin 20x40"
-          p1="Total 1 Product:"
-          p2="Rp 1.250.000"
-          p3="1x"
-        />
-        <Rating
-          img="caligraphy01.webp"
-          title="Kaligrafi Surah Al-Fatihah 40x40"
-          p1="Total 2 Product:"
-          p2="Rp 4.250.000"
-          p3="3x"
-        />
+        {items.map((item) => (
+          <Rating key={item.id} item={item}/>
+        ))}
       </div>
     </>
   );

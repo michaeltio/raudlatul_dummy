@@ -1,7 +1,39 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Login = () => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+    no_telp: "",
+    email: "",
+    address: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        "http://localhost:3001/create/add-customer",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        },
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+
   return (
     <div class="font-ptserif">
       <div class="px-10 py-40">
@@ -10,17 +42,27 @@ const Login = () => {
           <div class="pt-10">
             <input
               type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
               class="box-border h-9 w-80 rounded-full border-2 border-black"
+              placeholder="Username"
             />
           </div>
           <div class="py-5">
             <input
               type="text"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               class="box-border h-9 w-80 rounded-full border-2 border-black"
+              placeholder="Password"
             />
           </div>
           <div class="flex items-center justify-center pt-4">
-            <div class="h-9 w-20 rounded-3xl bg-[#E9B472]"></div>
+            <button class="h-9 w-20 rounded-3xl bg-[#E9B472]"
+            onClick={handleSubmit}
+            >Login</button>
           </div>
           <div class="flex items-center justify-center p-10">
             <div class="h-0.5 w-20 rounded-3xl bg-[#092928]"></div>

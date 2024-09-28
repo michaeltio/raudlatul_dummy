@@ -1,6 +1,8 @@
+"use client";
+import React from "react";
 import Image from "next/image";
 
-export default function ShopCard(key) {
+export default function ShopCard({ item }) {
   return (
     <div className="font-ptserif">
       <div className="relative flex aspect-[3/4] w-36 items-end justify-end rounded-2xl bg-[#092928] md:w-80">
@@ -19,8 +21,8 @@ export default function ShopCard(key) {
           />
         </div>
       </div>
-      <h1 className="font-semibold md:text-2xl">Lorem</h1>
-      <p className="text-xs md:text-xl">{item.price}</p>
+        <h1 className="font-semibold md:text-2xl">{item.item_name}</h1>
+        <p className="text-xs md:text-xl">{item.price}</p>
     </div>
   );
 }
