@@ -1,7 +1,7 @@
 "use client";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
-import { useState } from "react";
 import Image from "next/image";
 
 import "swiper/css";
@@ -10,6 +10,7 @@ import "swiper/css/pagination";
 
 export default function AboutUs() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const
 
   return (
     <>

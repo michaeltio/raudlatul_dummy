@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function ShopCard({item}) {
+export default function ShopCard({ item }) {
   return (
     <div className="font-ptserif">
       <div className="relative flex aspect-[3/4] w-36 items-end justify-end rounded-2xl bg-[#092928] md:w-80">

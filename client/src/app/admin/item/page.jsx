@@ -10,6 +10,10 @@ const EditItem = () => {
     created_date: "",
     price: "",
     image: "",
+    category: "",
+    is_available: "",
+    item_id: "",
+    review: "",
   });
 
   useEffect(() => {
