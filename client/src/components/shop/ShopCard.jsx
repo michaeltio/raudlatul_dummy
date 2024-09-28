@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function ShopCard() {
+export default function ShopCard(key) {
   return (
     <div className="font-ptserif">
       <div className="relative flex aspect-[3/4] w-36 items-end justify-end rounded-2xl bg-[#092928] md:w-80">
@@ -20,7 +20,7 @@ export default function ShopCard() {
         </div>
       </div>
       <h1 className="font-semibold md:text-2xl">Lorem</h1>
-      <p className="text-xs md:text-xl">Rp 10.000,00</p>
+      <p className="text-xs md:text-xl">{item.price}</p>
     </div>
   );
 }
