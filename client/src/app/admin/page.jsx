@@ -51,10 +51,10 @@ export default function Admin() {
                 id="custRat"
                 className="absolute bottom-0 my-2 flex flex-row gap-1"
               >
-                <p className="font-ptserif text-2xs font-light text-[#FAF1EA]">
+                <p className="font-ptserif text-2xs font-light text-[#FAF1EA] md:text-sm">
                   15
                 </p>
-                <p className="font-ptserif text-2xs font-light text-[#FAF1EA]">
+                <p className="font-ptserif text-2xs font-light text-[#FAF1EA] md:text-sm">
                   customer
                 </p>
               </div>

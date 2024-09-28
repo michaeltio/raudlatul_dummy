@@ -10,7 +10,7 @@ export default function Service() {
           <Image
             src="/webp/tester.webp"
             alt="img landSevice"
-            className="aspect-[16/13] w-4/5 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
+            className="aspect-[16/11] w-4/5 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
             width={50}
             height={100}
           />
@@ -25,7 +25,7 @@ export default function Service() {
         <div id="topValues" className="h-auto w-screen">
           <div
             id="titleTop"
-            className="mt-24 flex flex-col items-center justify-center"
+            className="mt-14 flex flex-col items-center justify-center md:mt-20"
           >
             <a className="item-center justify-center font-ptserif text-2xl font-black">
               TOP VALUES FOR YOU

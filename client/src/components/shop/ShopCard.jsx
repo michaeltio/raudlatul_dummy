@@ -10,7 +10,7 @@ export default function ShopCard() {
           height={100}
           className="h-full w-full rounded-2xl object-cover"
         />
-        <div className="absolute aspect-square w-12 rounded-full bg-[#E9B472]">
+        <div className="absolute aspect-square w-12 translate-x-2 translate-y-2 rounded-full bg-[#E9B472]">
           <Image
             src="/svg/icon/plus.svg"
             width={100}

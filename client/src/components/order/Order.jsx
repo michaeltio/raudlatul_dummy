@@ -3,7 +3,7 @@ import Image from "next/image";
 export default function Order({ img, title, p1, p2, p3 }) {
   return (
     <>
-      <div className="flex h-56 rounded-3xl shadow-[0_0px_10px_rgba(0,0,0,0.25)]">
+      <div className="flex h-56 rounded-3xl shadow-[0_0px_10px_rgba(0,0,0,0.25)] mb-5">
         <div className="flex w-full flex-row items-center gap-6 ms-7 md:ms-12">
           <Image
             src={`/webp/${img}`}
