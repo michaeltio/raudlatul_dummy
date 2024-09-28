@@ -13,6 +13,7 @@ const {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+  onAuthStateChanged,
 } = require("firebase/auth");
 
 let app;
@@ -64,6 +65,21 @@ const signOutUser = async () => {
     return user;
   } catch (error) {
     console.log("Error in signing out: ", error);
+  }
+};
+
+const authMiddleware = async (req, res, next) => {
+  try {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        res.status(401).send("Unauthorized");
+      }
+    });
+  } catch (error) {
+    console.log("Error in authMiddleware: ", error);
   }
 };
 

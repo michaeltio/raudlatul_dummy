@@ -5,6 +5,9 @@ const {
   initializeFirebaseApp,
   uploadProccessedData,
   getCollectionData,
+  createUser,
+  signInUser,
+  signOutUser,
 } = require("./firebase");
 
 const PORT = 3001;
@@ -12,6 +15,26 @@ initializeFirebaseApp();
 
 app.use(cors());
 app.use(express.json());
+
+// Authentication
+app.post("/register", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await createUser(email, password);
+  return res.json(user);
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await signInUser(email, password);
+  return res.json(user);
+});
+
+app.post("/logout", async (req, res) => {
+  const user = await signOutUser();
+  return res.json(user);
+});
+
+// Data
 
 app.get("/api/item", async (req, res) => {
   const data = await getCollectionData("KaligraphyItem");
