@@ -8,9 +8,16 @@ const {
   query,
   where,
 } = require("firebase/firestore");
+const {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+} = require("firebase/auth");
 
 let app;
 let firestoreDB;
+let auth;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
@@ -26,9 +33,37 @@ const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
     firestoreDB = getFirestore();
+    auth = getAuth();
     return app;
   } catch (error) {
     console.log("Firebase Error: ", error);
+  }
+};
+
+const createUser = async (email, password) => {
+  try {
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    return user;
+  } catch (error) {
+    console.log("Error in creating user: ", error);
+  }
+};
+
+const signInUser = async (email, password) => {
+  try {
+    const user = await signInWithEmailAndPassword(auth, email, password);
+    return user;
+  } catch (error) {
+    console.log("Error in signing in: ", error);
+  }
+};
+
+const signOutUser = async () => {
+  try {
+    const user = await signOut(auth);
+    return user;
+  } catch (error) {
+    console.log("Error in signing out: ", error);
   }
 };
 
@@ -65,4 +100,7 @@ module.exports = {
   getFirebaseApp,
   uploadProccessedData,
   getCollectionData,
+  createUser,
+  signInUser,
+  signOutUser,
 };
