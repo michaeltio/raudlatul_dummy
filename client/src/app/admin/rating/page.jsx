@@ -1,9 +1,27 @@
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
 import Adrating from "@/components/admin-rating/Adrating";
 
 export default function AdminRating() {
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/reviews");
+        const data = await response.json();
+        setReviews(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchReviews();
+  }, []);
+  console.log(reviews)
+
   return (
     <>
       <div id="mainAdminProcess">
@@ -12,7 +30,7 @@ export default function AdminRating() {
             <h1 className="item-center justify-center font-ptserif text-2xl font-black">
               Rating
             </h1>
-            <Adrating p1="Nama" p2="Item" p3="Review" p4="Rating" />
+            <Adrating reviews={reviews}/>
           </div>
         </section>
       </div>

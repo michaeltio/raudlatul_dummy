@@ -46,6 +46,11 @@ app.get("/api", async (req, res) => {
   return res.json(data);
 });
 
+app.get("/api/reviews", async (req, res) => {
+  const data = await getCollectionData("Review");
+  return res.json(data);
+});
+
 app.post("/delete/item", async (req, res) => {
   const { id } = req.body;
   await deleteCollectionData("KaligraphyItem", id);
@@ -64,6 +69,12 @@ app.post("/edit/item", async (req, res) => {
   return res.json({ message: "Data edited successfully!" });
 });
 
+app.post("/edit/reviews", async (req, res) => {
+  const { id, data } = req.body;
+  const updatedData = await editCollectionData("Review", id, data);
+  return res.json({ message: "Data edited successfully!" });
+});
+
 app.post("/create/add-item", async (req, res) => {
   await uploadProccessedData(req.body, "KaligraphyItem");
   return res.json({ message: "Data uploaded successfully!" });
@@ -76,6 +87,11 @@ app.post("/create/add-courier", async (req, res) => {
 
 app.post("/create/add-customer", async (req, res) => {
   await uploadProccessedData(req.body, "Customer");
+  return res.json({ message: "Data uploaded successfully!" });
+});
+
+app.post("/create/ratings", async (req, res) => {
+  await uploadProccessedData(req.body, "Review");
   return res.json({ message: "Data uploaded successfully!" });
 });
 
