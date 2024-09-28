@@ -7,6 +7,7 @@ const {
   getCollectionData,
 } = require("./firebase");
 
+
 const PORT = 3001;
 initializeFirebaseApp();
 
