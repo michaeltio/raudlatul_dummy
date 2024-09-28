@@ -15,6 +15,7 @@ const Profile = () => {
       try {
         const response = await fetch("http://localhost:3001/api/customer");
         const data = await response.json();
+        console.log("Fetched Data:", data);
         setUserData(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -77,6 +78,13 @@ const Profile = () => {
                 <div className="font-semibold md:text-xl">No Phone</div>
                 <div className="font-semibold md:text-xl">Address</div>
               </div>
+
+              {/* <div className="flex flex-col gap-5 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
+                <div className="md:text-xl">{userData.username}</div>
+                <div className="md:text-xl">{userData.email}</div>
+                <div className="md:text-xl">{userData.no_telp}</div>
+                <div className="md:text-xl">{userData.address}</div>
+              </div> */}
 
               {userData.map((userData, index) => (
               <div key={index} className="flex flex-col gap-5 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
