@@ -4,45 +4,36 @@ import Image from "next/image";
 import Rating from "@/components/rating/Rating";
 import Adorder from "@/components/admin-order/Adorder";
 
-
 export default function AdminOrder() {
-  const [items, setItems] = useState([]);
-  const [courier, setCourier] = useState([]);
+  const [orders, setOrders] = useState([]);
+  const [formData, setFormData] = useState({
+    courier_name: "",
+    customer_address: "",
+    customer_name: "",
+    item_name: "",
+    price: "",
+    quantity: "",
+  });
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
+        const response = await fetch("http://localhost:3001/api/order");
         const data = await response.json();
-        setItems(data);
+        setOrders(data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    const fetchCourier = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/courier");
-        const data = await response.json();
-        setCourier(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchItems();
-    fetchCourier();
+    fetchOrders();
   }, []);
 
-  const handleEdit = (items) => {
-    setItems({
-     
-
-    });
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  console.log(items);
-  console.log(courier);
+  console.log(orders);
 
   return (
     <>
@@ -52,15 +43,11 @@ export default function AdminOrder() {
             <h1 className="item-center justify-center font-ptserif text-2xl font-black">
               Order
             </h1>
-            <Adorder
-              p1="Nama"
-              p2="Item"
-              p3="Quantity"
-              p4="Alamat"
-              p5="Kurir"
-              p6="Biaya"
-              p7="Action"
-            />
+            {orders.map((order) => {
+              return (
+                <Adorder key={order.id} item={order} />
+              );
+            })}
           </div>
         </section>
       </div>

@@ -10,7 +10,21 @@ import "swiper/css/pagination";
 
 export default function AboutUs() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const
+  const [achievement, setAchievement] = useState([]);
+
+  useEffect(() => {
+    const fetchAchievement = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/achievement");
+        const data = await response.json();
+        setAchievement(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchAchievement();
+  }, []);
 
   return (
     <>

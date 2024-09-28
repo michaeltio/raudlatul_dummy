@@ -1,6 +1,8 @@
+"use client";
+import React from "react";
 import Image from "next/image";
 
-export default function SearchBar() {
+export default function SearchBar({ item }) {
   return (
     <div className="flex w-full flex-row gap-6 px-8 md:px-16">
       <input

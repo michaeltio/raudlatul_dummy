@@ -12,8 +12,9 @@ const EditItem = () => {
     image: "",
     category: "",
     is_available: "",
-    item_id: "",
+    id: "",
     review: "",
+    quantity: "",
   });
 
   useEffect(() => {
@@ -56,11 +57,32 @@ const EditItem = () => {
       item_name: item.item_name,
       description: item.description,
       artist_name: item.artist_name,
-      created_date: item.created_date
-        ? item.created_date.split("T")[0]
+      created_date: item.created_date && item.created_date.seconds
+        ? new Date(item.created_date.seconds * 1000).toISOString().split("T")[0]
         : "",
       price: item.price,
+      image: item.image,
+      category: item.category,
+      is_available: item.is_available,
+      item_id: item.item_id,
+      review: item.review,
     });
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch("http://localhost:3001/delete/item", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
   console.log(items);
@@ -187,7 +209,9 @@ const EditItem = () => {
                   >
                     Edit
                   </button>
-                  <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
+                  <button 
+                  onClick={() => handleDelete(items.id)}
+                  className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
                     Delete
                   </button>
                 </td>

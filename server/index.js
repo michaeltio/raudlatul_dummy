@@ -21,6 +21,11 @@ app.get("/api/item", async (req, res) => {
   return res.json(data);
 });
 
+app.get("/api/achievement", async (req, res) => {
+  const data = await getCollectionData("Achievement");
+  return res.json(data);
+});
+
 app.get("/api/courier", async (req, res) => {
   const data = await getCollectionData("Courier");
   return res.json(data);
@@ -28,6 +33,11 @@ app.get("/api/courier", async (req, res) => {
 
 app.get("/api/customer", async (req, res) => {
   const data = await getCollectionData("Customer");
+  return res.json(data);
+});
+
+app.get("/api/order", async (req, res) => {
+  const data = await getCollectionData("Order");
   return res.json(data);
 });
 
@@ -39,6 +49,12 @@ app.get("/api", async (req, res) => {
 app.post("/delete/item", async (req, res) => {
   const { id } = req.body;
   await deleteCollectionData("KaligraphyItem", id);
+  return res.json({ message: "Data deleted successfully!" });
+});
+
+app.post("/delete/order", async (req, res) => {
+  const { id } = req.body;
+  await deleteCollectionData("Order", id);
   return res.json({ message: "Data deleted successfully!" });
 });
 

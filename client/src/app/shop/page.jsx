@@ -24,7 +24,9 @@ export default function Shop(key) {
 
   return (
     <div className="flex flex-col">
-      <SearchBar />
+      {items.map((item) => (
+      <SearchBar key={item.id} item={item}/>
+    ))}
       <div className="mt-8 grid grid-cols-2 place-items-center gap-4 md:grid-cols-4 md:gap-10">
         {items.map((item) => (
           <ShopCard key={item.id} item={item}/>
