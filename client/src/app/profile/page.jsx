@@ -77,13 +77,13 @@ const Profile = () => {
                 <div className="font-semibold md:text-xl">No Phone</div>
                 <div className="font-semibold md:text-xl">Address</div>
               </div>
-              
+
               {userData.map((userData, index) => (
               <div key={index} className="flex flex-col gap-5 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
-                <div className="md:text-xl">{userData.username}</div>
-                <div className="md:text-xl">{userData.email}</div>
-                <div className="md:text-xl">{userData.no_phone}</div>
-                <div className="md:text-xl">{userData.address}</div>
+                <div className="md:text-xl">{username.username}</div>
+                <div className="md:text-xl">{email.email}</div>
+                <div className="md:text-xl">{no_phone.no_phone}</div>
+                <div className="md:text-xl">{address.address}</div>
               </div>
                 ))}
                 
