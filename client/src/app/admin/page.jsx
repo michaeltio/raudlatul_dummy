@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
+import ItemAdmin from "@/components/admin-home/ItemAdmin";
 
 export default function Admin() {
   return (
@@ -64,7 +65,7 @@ export default function Admin() {
 
         <section
           id="addItem"
-          className="mt-10 flex w-full items-center justify-center md:justify-start"
+          className="relative mt-10 flex w-full flex-col justify-center gap-6 md:flex-row md:justify-start"
         >
           <div className="flex aspect-[16/9] w-full flex-col items-center justify-center gap-3 rounded-[3rem] bg-[#014E3E] md:aspect-[6/16] md:w-2/12 md:rounded-3xl">
             <Image
@@ -76,6 +77,12 @@ export default function Admin() {
             <p className="font-ptserif text-sm font-black tracking-wide text-[#FAF1EA]">
               Add Item
             </p>
+          </div>
+          <div className="flex h-full w-full flex-col gap-8 overflow-y-scroll">
+            <ItemAdmin />
+            <ItemAdmin />
+            <ItemAdmin />
+            <ItemAdmin />
           </div>
         </section>
       </div>
