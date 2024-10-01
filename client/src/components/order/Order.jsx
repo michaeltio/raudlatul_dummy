@@ -6,7 +6,7 @@ export default function Order({ item }) {
   return (
     <>
       <div className="flex h-56 rounded-3xl bg-slate-500 shadow-xl">
-        <div className="flex w-full flex-row items-center">
+        <div className="flex w-full flex-row items-center gap-6 mx-10">
           <Image
             src="/webp/caligraphy01.webp"
             width={100}
@@ -21,7 +21,7 @@ export default function Order({ item }) {
             </div>
           </div>
         </div>
-        <div className="mx-6 my-8 flex flex-col items-end justify-between">
+        <div className="mx-8 my-6 flex flex-col items-end justify-between">
           <div className="flex flex-col items-end">
             <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D]">
               Waiting
