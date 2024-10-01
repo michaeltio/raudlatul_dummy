@@ -1,3 +1,5 @@
+// Imports
+
 const { initializeApp } = require("firebase/app");
 const {
   getFirestore,
@@ -16,6 +18,8 @@ const {
   onAuthStateChanged,
 } = require("firebase/auth");
 
+// Firebase Config
+
 let app;
 let firestoreDB;
 let auth;
@@ -30,6 +34,8 @@ const firebaseConfig = {
   measurementId: "G-JRGN04FFXP",
 };
 
+// Firebase Initialization
+
 const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
@@ -40,6 +46,8 @@ const initializeFirebaseApp = () => {
     console.log("Firebase Error: ", error);
   }
 };
+
+// Firebase Auth Functions
 
 const createUser = async (email, password) => {
   try {
@@ -82,6 +90,8 @@ const authMiddleware = async (req, res, next) => {
     console.log("Error in authMiddleware: ", error);
   }
 };
+
+// Firebase Firestore Functions
 
 const uploadProccessedData = async (data, collectionName) => {
   try {
