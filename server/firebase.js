@@ -1,3 +1,5 @@
+// Imports
+
 const { initializeApp } = require("firebase/app");
 const {
   getFirestore,
@@ -9,9 +11,19 @@ const {
   query,
   where,
 } = require("firebase/firestore");
+const {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+} = require("firebase/auth");
+
+// Firebase Config
 
 let app;
 let firestoreDB;
+let auth;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
@@ -23,10 +35,13 @@ const firebaseConfig = {
   measurementId: "G-JRGN04FFXP",
 };
 
+// Firebase Initialization
+
 const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
     firestoreDB = getFirestore();
+    auth = getAuth();
     return app;
   } catch (error) {
     console.log("Firebase Error: ", error);
@@ -44,6 +59,52 @@ const randomId = () => {
   }
   return result;
 };
+
+// Firebase Auth Functions
+
+const createUser = async (email, password) => {
+  try {
+    const user = await createUserWithEmailAndPassword(auth, email, password);
+    return user;
+  } catch (error) {
+    console.log("Error in creating user: ", error);
+  }
+};
+
+const signInUser = async (email, password) => {
+  try {
+    const user = await signInWithEmailAndPassword(auth, email, password);
+    return user;
+  } catch (error) {
+    console.log("Error in signing in: ", error);
+  }
+};
+
+const signOutUser = async () => {
+  try {
+    const user = await signOut(auth);
+    return user;
+  } catch (error) {
+    console.log("Error in signing out: ", error);
+  }
+};
+
+const authMiddleware = async (req, res, next) => {
+  try {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        req.user = user;
+        next();
+      } else {
+        res.status(401).send("Unauthorized");
+      }
+    });
+  } catch (error) {
+    console.log("Error in authMiddleware: ", error);
+  }
+};
+
+// Firebase Firestore Functions
 
 const uploadProccessedData = async (data, collectionName) => {
   try {
@@ -85,7 +146,7 @@ const getCollectionDataWhere = async (collectionName, field, value) => {
   } catch (error) {
     console.log("Error in getting data: ", error);
   }
-}
+};
 
 const editCollectionData = async (collectionName, id, data) => {
   try {
@@ -117,4 +178,7 @@ module.exports = {
   getCollectionDataWhere,
   editCollectionData,
   deleteCollectionData,
+  createUser,
+  signInUser,
+  signOutUser,
 };
