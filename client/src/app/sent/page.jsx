@@ -24,8 +24,8 @@ export default function Service(key) {
 
   return (
     <>
-        <div id="mainSent" className="">
-            <div id="navShop" className="flex flex-row gap-8 items-center justify-center mb-10">
+        <div id="mainSent" className="mx-10">
+            <div id="navShop" className="mb-10 flex flex-row items-center justify-between gap-10 md:gap-14 md:justify-center">
                 <button className="bg-[#E9B472] p-1 w-32 rounded-3xl font-ptserif font-black text-2xl text-[#FAF1EA] hover:bg-[#C6975D]">Order</button>
                 <button className="bg-[#E9B472] p-1 w-32 rounded-3xl font-ptserif font-black text-2xl text-[#FAF1EA] hover:bg-[#C6975D]">Sent</button>
                 <button className="bg-[#E9B472] p-1 w-32 rounded-3xl font-ptserif font-black text-2xl text-[#FAF1EA] hover:bg-[#C6975D]">Rating</button>

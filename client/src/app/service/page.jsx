@@ -10,9 +10,9 @@ export default function Service() {
           <Image
             src="/webp/rapat02.webp"
             alt="img landSevice"
-            className="aspect-[16/13] w-4/5 rounded-e-2xl object-cover md:w-1/2 md:rounded-e-3xl"
-            width={10000}
-            height={10000}
+            className="aspect-[16/11] w-4/5 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
+            width={50}
+            height={100}
           />
           <div className="flex w-1/2 items-center justify-center">
             <h1 className="item-center justify-center font-ptserif text-xl font-black md:text-3xl">
@@ -24,7 +24,7 @@ export default function Service() {
         <div id="topValues" className="h-auto w-screen">
           <div
             id="titleTop"
-            className="mt-24 flex flex-col items-center justify-center"
+            className="mt-14 flex flex-col items-center justify-center md:mt-20"
           >
             <a className="item-center justify-center font-ptserif text-2xl font-black">
               TOP VALUES FOR YOU
