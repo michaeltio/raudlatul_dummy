@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SearchBar from "@/components/search-bar/SearchBar";
+import { getAllData } from "@/api/apiClient";
 import ShopCard from "@/components/shop/ShopCard";
+import SearchBar from "@/components/search-bar/SearchBar";
 
 export default function Shop(key) {
   const [items, setItems] = useState([]);
@@ -9,9 +10,8 @@ export default function Shop(key) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const response = await getAllData("KaligraphyItem");
+        setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -19,17 +19,13 @@ export default function Shop(key) {
 
     fetchItems();
   }, []);
-  
-  console.log(items);
 
   return (
     <div className="flex flex-col">
-      {items.map((item) => (
-      <SearchBar key={item.id} item={item}/>
-    ))}
+      <SearchBar/>
       <div className="mt-8 grid grid-cols-2 place-items-center gap-4 md:grid-cols-4 md:gap-10">
-        {items.map((item) => (
-          <ShopCard key={item.id} item={item}/>
+        {items.map((data) => (
+          <ShopCard key={data.id} item={data}/>
         ))}
       </div>
     </div>

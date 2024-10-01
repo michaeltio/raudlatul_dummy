@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: "http://localhost:3001/api",
+  baseURL: "http://localhost:3001",
   headers: {
     "Content-Type": "application/json",
   },
@@ -18,5 +18,24 @@ apiClient.interceptors.response.use(
   }
 );
 
+export const postData = async (collectionName, data) => {
+  return apiClient.post(`/create/${collectionName}`, data);
+}
+
+export const getAllData = async (collectionName) => {
+  return apiClient.get("/read/" + collectionName);
+};
+
+export const getData = async (collectionName, id) => {
+  return apiClient.get(`/read/${collectionName}/${id}`);
+};
+
+export const updateData = async (collectionName, id, data) => {
+  return apiClient.post(`/update/${collectionName}/${id}`, data);
+};
+
+export const deleteData = async (collectionName, id) => {
+  return apiClient.post(`/delete/${collectionName}/${id}`);
+};
 
 export default apiClient;
