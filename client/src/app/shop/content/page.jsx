@@ -1,8 +1,66 @@
-import React from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import SearchBar from "@/components/search-bar/SearchBar";
 
-function Content() {
+const Content = () => {
+  const [items, setItems] = useState([]);
+  const [formData, setFormData] = useState({
+    item_name: "",
+    description: "",
+    artist_name: "",
+    created_date: "",
+    price: "",
+    image: "",
+  });
+
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const response = await fetch("http://localhost:3001/api/item");
+        const data = await response.json();
+        setItems(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchItems();
+  }, []);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3001/create/add-item", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
+  };
+
+  const handleEdit = (item) => {
+    setFormData({
+      item: item.item,
+      description: item.description,
+      artist: item.artist,
+      createdDate: item.createdDate,
+      price: item.price,
+    });
+  };
+
+  console.log(Content);
+
   return (
     <div id="mainService" className="flex flex-col gap-8">
       <SearchBar />
@@ -28,9 +86,12 @@ function Content() {
         <div className="content-center space-y-10 p-9 md:flex-1 md:space-y-20">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h2 className="font-ptserif text-3xl font-bold">
-                Kaligrafi Surah Yasin 20x40
+            {items.map((item, index) => (
+              <h2 key={index} className="font-ptserif text-3xl font-bold">
+                {item.item_name}
               </h2>
+            ))}
+              
               <div className="flex">
                 <Image
                   src="/svg/icon/star-yellow.svg"
@@ -42,17 +103,24 @@ function Content() {
                 <p className="font-ptserif text-2xl font-bold">4.9/5</p>
               </div>
             </div>
-            <p className="mb-7 font-ptserif text-lg">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
+            {items.map((item, index) => (
+              <p key={index} className="mb-7 font-ptserif text-lg">
+                {item.description}
+              </p>
+            ))}
+            
             <div className="space-y-1">
-              <p className="text-md font-ptserif">
-                <b>Artist:</b> Joko Anwar
-              </p>
-              <p className="text-md mb-8 font-ptserif">
-                <b>Created Date:</b> 30 February 2020
-              </p>
+              {items.map((item, index) => (
+                <p key={index} className="text-md font-ptserif">
+                  <b>Artist:</b> {item.artist_name}
+                </p>
+              ))}
+              {items.map((item, index) => (
+                <p key={index} className="text-md mb-8 font-ptserif">
+                  <b>Created Date:</b> {item.created_date ? new Date(item.created_date.seconds * 1000).toLocaleString() : "No Date Available"}
+                </p>
+              ))}
+              
             </div>
           </div>
 
@@ -64,9 +132,12 @@ function Content() {
               See Reviews
             </a>
             <div className="w-44">
-              <p className="my-3 text-center font-ptserif text-xl font-bold">
-                Rp 1.250.000
+            {items.map((item, index) => (
+              <p key={index} className="my-3 text-center font-ptserif text-xl font-bold">
+                {item.price}
               </p>
+            ))}
+              
               <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold">
                 Check Out
               </button>
