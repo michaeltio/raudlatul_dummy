@@ -6,14 +6,12 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    theme: {
-      extend: {
-        colors: {
-          primaryWhite: "#FAF1EA",
-        },
-        fontFamily: {
-          ptserif: ["PT Serif", "serif"],
-        },
+    extend: {
+      colors: {
+        primaryWhite: "#FAF1EA",
+      },
+      fontFamily: {
+        ptserif: ["PT Serif", "serif"],
       },
     },
   },
