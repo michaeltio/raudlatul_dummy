@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`bg-primaryWhite font-ptserif ${inter.className}`}>
         <NavigationBar />
-        {children}
+        <main className="min-h-screen md:pt-20 pt-14">{children}</main>
         <Footer />
       </body>
     </html>

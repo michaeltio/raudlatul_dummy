@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="bottom-0 mt-20 md:mt-32">
+    <div className="bottom-0">
       <div className="mx-6 flex flex-col items-center gap-6 border-b-2 border-t-2 border-[#092928] py-6 font-ptserif text-2xs text-xs font-semibold md:mx-8 md:flex-row md:justify-between md:border-t-0">
         <h1 className="md:px-10 md:text-base">Raudlatul Irfan</h1>
         <div className="flex gap-4 md:hidden">
