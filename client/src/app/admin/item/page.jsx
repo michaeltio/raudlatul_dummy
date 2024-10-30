@@ -191,7 +191,7 @@ const EditItem = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((items, index) => (
+            {/* {items.map((items, index) => (
               <tr key={index} className="text-xs text-[#092928]">
                 <td className="py-2">{items.item_name}</td>
                 <td className="py-2">{items.description}</td>
@@ -220,7 +220,7 @@ const EditItem = () => {
                   </button>
                 </td>
               </tr>
-            ))}
+            ))} */}
           </tbody>
         </table>
       </div>
