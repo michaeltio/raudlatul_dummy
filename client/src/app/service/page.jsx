@@ -21,7 +21,7 @@ export default function Service() {
           </div>
         </div>
 
-        <div id="topValues" className="h-auto w-screen">
+        <div id="topValues" className="h-auto">
           <div
             id="titleTop"
             className="mt-14 flex flex-col items-center justify-center md:mt-20"
@@ -34,46 +34,34 @@ export default function Service() {
             </p>
           </div>
 
-          <div
-            id="contTop"
-            className="flex flex-col items-center mx-4 gap-5 md:flex-row md:justify-center md:gap-28 md:mx-10"
-          >
-            <div
-              id="listTop1"
-              className="mt-14 flex justify-center gap-20 md:gap-28"
-            >
+          <div className="mt-14 md:mt-20 flex items-center justify-center max-h-screen">
+            <div className="grid grid-cols-2 md:grid-cols-4 md:gap-20 2xl:gap-72 gap-12">
               <TopValue
                 img="booking.svg"
                 title="Easy Booking"
-                p1="Quick and easy booking of"
-                p2="tours for upcoming dates"
+                p1="Quick and easy booking of tours for upcoming dates"
               />
               <TopValue
                 img="best-price.svg"
                 title="Best Price"
-                p1="Unbeatable deals,"
-                p2="guaranteed value"
+                p1="Unbeatable deals, guaranteed value"
               />
-            </div>
-            <div id="listTop2" className="mt-14 flex gap-20 md:gap-28">
               <TopValue
                 img="quality.svg"
                 title="Quality"
-                p1="Premium products,"
-                p2="crafted with care"
+                p1="Premium products, crafted with care"
               />
               <TopValue
                 img="by-request.svg"
                 title="By Request"
-                p1="Tailored to your needs,"
-                p2="just ask"
+                p1="Tailored to your needs, just ask"
               />
             </div>
           </div>
 
           <div
             id="contContact"
-            className="mt-20 flex h-auto w-screen flex-col gap-10 md:flex-row md:items-center md:justify-center md:py-10"
+            className="mt-20 flex h-auto flex-col gap-10 md:flex-row md:items-center md:justify-center md:py-10"
           >
             <div
               id="contTitle"
