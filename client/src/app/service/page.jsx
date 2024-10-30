@@ -5,7 +5,7 @@ import TopValue from "@/components/service/TopValue";
 export default function Service() {
   return (
     <>
-      <div id="mainService" className="flex flex-col">
+      <div id="mainService" className="flex flex-col py-12">
         <div id="landPage" className="flex flex-row items-center">
           <Image
             src="/webp/rapat02.webp"
