@@ -91,7 +91,7 @@ const EditItem = () => {
   console.log(items);
 
   return (
-    <div className="mx-10 py-12 flex flex-col gap-16 font-ptserif">
+    <div className="mx-10 flex flex-col gap-16 py-12 font-ptserif">
       <div className="flex justify-center">
         <h1 className="text-2xl font-black">Item</h1>
       </div>
@@ -163,8 +163,8 @@ const EditItem = () => {
         </button>
       </div>
 
-      <div className="w-full">
-        <table className="w-full">
+      <div className="w-full overflow-x-scroll md:overflow-auto">
+        <table className="w-screen md:w-full">
           <thead className="text-xs text-[#FAF1EA]">
             <tr className="rounded-lg bg-[#092928]">
               <th scope="col" className="rounded-l-full py-2">

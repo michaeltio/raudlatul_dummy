@@ -28,7 +28,7 @@ export default function AboutUs() {
 
   return (
     <>
-      <div className="flex flex-col gap-8 font-ptserif md:gap-12 py-12">
+      <div className="flex flex-col gap-8 py-12 font-ptserif md:gap-12">
         <section className="relative mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] bg-opacity-50 px-4 py-6 text-white md:mx-16 md:aspect-[17/7] md:rounded-[3rem] md:px-16">
           <div className="absolute inset-0 -z-10 rounded-2xl md:rounded-[3rem]">
             <Image
@@ -42,7 +42,7 @@ export default function AboutUs() {
             <h1 className="mb-2 text-xl font-semibold md:mb-6 md:text-5xl">
               Raudlatul Irfan
             </h1>
-            <p className="text-justify text-4xs md:text-lg">
+            <p className="text-4xs text-justify md:text-lg">
               Yayasan Raudlatul Irfan adalah lembaga pendidikan Islam yang
               berdedikasi untuk memberikan pendidikan berkualitas berbasis
               nilai-nilai Islami. Kami tidak hanya menyediakan pendidikan formal
@@ -70,7 +70,7 @@ export default function AboutUs() {
             <h1 className="text-xl font-semibold md:mb-6 md:text-4xl">
               Our Mission
             </h1>
-            <p className="ml-2 text-end text-3xs leading-tight md:text-lg">
+            <p className="text-3xs ml-2 text-end leading-tight md:text-lg">
               Memperkenalkan kaligrafi sebagai seni dan teknik yang menekankan
               pada keindahan bentuk-bentuk, huruf, dan merangkai tulisan secara
               tersusun, menjalankan bisnis kaligrafi yang berorientasi pada
@@ -87,83 +87,6 @@ export default function AboutUs() {
                 className="rounded-l-xl md:rounded-l-[2.5rem]"
               />
             </div>
-          </div>
-        </section>
-        <section className="mx-16 flex flex-col items-center">
-          <h1 className="mb-4 text-center text-xl font-semibold md:text-4xl">
-            Achievement
-          </h1>
-          <div className="w-full md:hidden">
-            <Swiper
-              effect={"coverflow"}
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={1.6}
-              coverflowEffect={{
-                rotate: 0,
-                stretch: 50,
-                depth: 300,
-                modifier: 1,
-              }}
-              pagination={{ dynamicBullets: true }}
-              modules={[EffectCoverflow, Pagination]}
-              loop={true}
-              onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
-            >
-              {[...Array(9)].map((_, index) => (
-                <SwiperSlide key={index}>
-                  <div className="relative flex flex-col items-center">
-                    <img
-                      className="rounded-3xl"
-                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
-                    />
-                    {activeIndex === index && (
-                      <div className="flex w-full flex-col items-center justify-center rounded-3xl">
-                        <h1 className="text-center text-lg font-semibold">
-                          1st Medal Caligraphy Olimpiade
-                        </h1>
-                        <p className="pb-6 text-center text-sm">
-                          Lorem ipsum dolor ist amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua.
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-          <div className="hidden w-full md:block">
-            <Swiper
-              grabCursor={true}
-              centeredSlides={true}
-              slidesPerView={3}
-              spaceBetween={200}
-              pagination={{ dynamicBullets: true }}
-              modules={[Pagination]}
-              loop={true}
-            >
-              {[...Array(9)].map((_, index) => (
-                <SwiperSlide key={index}>
-                  <div className="relative flex flex-col items-center">
-                    <img
-                      className="rounded-3xl"
-                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
-                    />
-                    <div className="flex w-full flex-col items-center justify-center rounded-3xl">
-                      <h1 className="text-center text-lg font-semibold md:text-xl">
-                        1st Medal Caligraphy Olimpiade
-                      </h1>
-                      <p className="pb-6 text-center text-sm md:text-base">
-                        Joko Anwar berhasil meraih medali pertama kaligrafi
-                        internasional
-                      </p>
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
           </div>
         </section>
       </div>
