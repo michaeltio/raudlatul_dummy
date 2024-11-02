@@ -52,6 +52,9 @@ export default function Register() {
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
         >
+          {/* {error && <p className="text-red-500">{error}</p>} 
+          {successMessage && <p className="text-green-500">{successMessage}</p>}  */}
+          
           <div className="relative w-4/5 rounded-full border-2 border-black">
             <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
             <input
