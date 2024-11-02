@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { loginUser } from "@/api/apiClient";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -7,9 +8,22 @@ export default function Login() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await loginUser(formData); 
+      setSuccessMessage(response.data.message); 
+    } catch (error) {
+      console.error("Login error:", error); 
+      setError(error.response?.data?.message || "Something went wrong. Please try again.");
+    }
+
   };
 
   const handleChange = (e) => {
