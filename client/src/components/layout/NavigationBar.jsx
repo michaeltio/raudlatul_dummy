@@ -12,8 +12,8 @@ export default function NavigationBar() {
 
   return (
     <>
-      <nav className="z-50 bg-primaryWhite bg-opacity-50 backdrop-blur-sm fixed flex w-screen flex-row items-center justify-between px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] md:px-12 md:py-6">
-        <h1 className="font-ptserif text-2xs font-semibold tracking-wide md:text-lg">
+      <nav className="fixed z-50 flex w-screen flex-row items-center justify-between bg-primaryWhite bg-opacity-50 px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] backdrop-blur-sm md:px-12 md:py-6">
+        <h1 className="text-2xs font-ptserif font-semibold tracking-wide md:text-lg">
           Raudlatul Irfan
         </h1>
         <button
