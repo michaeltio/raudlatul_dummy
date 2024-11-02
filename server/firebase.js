@@ -43,8 +43,7 @@ const registerUser = async (email, password, username, address, phoneNumber) => 
     const uid = userCredential.user.uid;
 
     const userData = {
-      email: userCredential.user.email,
-      username: userCredential.user.displayName,
+      username: username,
       address: address,
       phoneNumber: phoneNumber
     };
