@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
 import Adorder from "@/components/admin-order/Adorder";
+import { postData, getAllData, deleteData, updateData } from "@/api/apiClient";
 
 export default function AdminOrder() {
   const [orders, setOrders] = useState([]);
@@ -18,9 +19,8 @@ export default function AdminOrder() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/order");
-        const data = await response.json();
-        setOrders(data);
+        const response = await getAllData("Order");
+        setOrders(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -28,10 +28,6 @@ export default function AdminOrder() {
 
     fetchOrders();
   }, []);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
 
   console.log(orders);
 
@@ -45,7 +41,7 @@ export default function AdminOrder() {
             </h1>
             {orders.map((order) => {
               return (
-                <Adorder key={order.id} item={order} />
+                <Adorder key={order.id} item={order} onDelete={handleDelete} />
               );
             })}
           </div>

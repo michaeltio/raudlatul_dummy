@@ -1,9 +1,9 @@
 import React from "react";
 import Image from "next/image";
-import Rating from "@/components/rating/Rating";
 import Adorder from "@/components/admin-order/Adorder";
+import { getAllData } from "@/api/apiClient";
 
-export default function AdminProcess() {
+export default function AdminProcess({item}) {
   return (
     <>
       <div id="mainAdminProcess">

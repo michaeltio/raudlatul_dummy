@@ -1,65 +1,33 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import SearchBar from "@/components/search-bar/SearchBar";
+import { postData, getData, deleteData, updateData } from "@/api/apiClient";
 
 const Content = () => {
-  const [items, setItems] = useState([]);
-  const [formData, setFormData] = useState({
-    item_name: "",
-    description: "",
-    artist_name: "",
-    created_date: "",
-    price: "",
-    image: "",
-  });
+  const router = useRouter();
+  const { id } = router.query;
+  const [item, setItem] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchItem = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        if (id) {
+          const response = await getData("KaligraphyItem", id);
+          setItem(response.data);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchItems();
-  }, []);
+    fetchItem();
+  }, [id]);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:3001/create/add-item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error submitting data:", error);
-    }
-  };
-
-  const handleEdit = (item) => {
-    setFormData({
-      item: item.item,
-      description: item.description,
-      artist: item.artist,
-      createdDate: item.createdDate,
-      price: item.price,
-    });
-  };
-
-  console.log(Content);
+  if (!item) {
+    return <div>Item not found</div>;
+  }
 
   return (
     <div id="mainService" className="flex flex-col gap-8">
@@ -72,6 +40,7 @@ const Content = () => {
               width={100}
               height={100}
               className="h-full w-full rounded-2xl object-cover"
+              alt={item.item_name}
             />
           </div>
 
@@ -86,12 +55,9 @@ const Content = () => {
         <div className="content-center space-y-10 p-9 md:flex-1 md:space-y-20">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-            {items.map((item, index) => (
-              <h2 key={index} className="font-ptserif text-3xl font-bold">
+              <h2 className="font-ptserif text-3xl font-bold">
                 {item.item_name}
               </h2>
-            ))}
-              
               <div className="flex">
                 <Image
                   src="/svg/icon/star-yellow.svg"
@@ -103,24 +69,17 @@ const Content = () => {
                 <p className="font-ptserif text-2xl font-bold">4.9/5</p>
               </div>
             </div>
-            {items.map((item, index) => (
-              <p key={index} className="mb-7 font-ptserif text-lg">
-                {item.description}
-              </p>
-            ))}
-            
+            <p className="mb-7 font-ptserif text-lg">{item.description}</p>
             <div className="space-y-1">
-              {items.map((item, index) => (
-                <p key={index} className="text-md font-ptserif">
-                  <b>Artist:</b> {item.artist_name}
-                </p>
-              ))}
-              {items.map((item, index) => (
-                <p key={index} className="text-md mb-8 font-ptserif">
-                  <b>Created Date:</b> {item.created_date ? new Date(item.created_date.seconds * 1000).toLocaleString() : "No Date Available"}
-                </p>
-              ))}
-              
+              <p className="text-md font-ptserif">
+                <b>Artist:</b> {item.artist_name}
+              </p>
+              <p className="text-md mb-8 font-ptserif">
+                <b>Created Date:</b>{" "}
+                {item.created_date
+                  ? new Date(item.created_date.seconds * 1000).toLocaleString()
+                  : "No Date Available"}
+              </p>
             </div>
           </div>
 
@@ -132,12 +91,9 @@ const Content = () => {
               See Reviews
             </a>
             <div className="w-44">
-            {items.map((item, index) => (
-              <p key={index} className="my-3 text-center font-ptserif text-xl font-bold">
+              <p className="my-3 text-center font-ptserif text-xl font-bold">
                 {item.price}
               </p>
-            ))}
-              
               <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold">
                 Check Out
               </button>
@@ -163,6 +119,6 @@ const Content = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Content;

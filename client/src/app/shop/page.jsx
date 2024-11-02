@@ -4,7 +4,7 @@ import { getAllData } from "@/api/apiClient";
 import ShopCard from "@/components/shop/ShopCard";
 import SearchBar from "@/components/search-bar/SearchBar";
 
-export default function Shop(key) {
+export default function Shop() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -24,8 +24,8 @@ export default function Shop(key) {
     <div className="flex flex-col">
       <SearchBar/>
       <div className="mt-8 grid grid-cols-2 place-items-center gap-4 md:grid-cols-4 md:gap-10">
-        {items.map((data) => (
-          <ShopCard key={data.id} item={data}/>
+        {items.map((item, index) => (
+          <ShopCard key={index} data={item}/>
         ))}
       </div>
     </div>

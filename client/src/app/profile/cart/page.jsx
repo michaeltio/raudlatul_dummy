@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import ShopCard from "@/components/shop/ShopCard";
+import { getAllData } from "@/api/apiClient";
 
 export default function Cart(key) {
   const [items, setItems] = useState([]);
@@ -8,9 +9,8 @@ export default function Cart(key) {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const response = await getAllData("KaligraphyItem");
+        setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -25,8 +25,8 @@ export default function Cart(key) {
         Cart
       </h1>
       <div className="mt-8 grid grid-cols-2 place-items-center gap-4 md:grid-cols-4 md:gap-10">
-        {items.map((item) => (
-          <ShopCard key={item} item={item}/>
+        {items.map((item, index) => (
+          <ShopCard key={index} data={item} />
         ))}
       </div>
       <div className="mx-auto flex w-1/2 flex-row justify-between rounded-full bg-[#092928] px-4 py-2 font-semibold text-white md:w-1/3 md:px-20 md:text-xl">

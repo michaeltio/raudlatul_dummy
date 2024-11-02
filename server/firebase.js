@@ -9,11 +9,12 @@ const {
   getDoc,
   collection,
   query,
-  where,
 } = require("firebase/firestore");
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
 
 let app;
 let firestoreDB;
+let auth;
 
 const firebaseConfig = {
   apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
@@ -29,9 +30,39 @@ const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
     firestoreDB = getFirestore();
+    auth = getAuth();
     return app;
   } catch (error) {
     console.log("Firebase Error: ", error);
+  }
+};
+
+const registerUser = async (email, password, username, address, phoneNumber) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = userCredential.user.uid;
+
+    const userData = {
+      email: userCredential.user.email,
+      username: userCredential.user.displayName,
+      address: address,
+      phoneNumber: phoneNumber
+    };
+
+    await setDoc(doc(firestoreDB, "users", uid), userData);
+    
+    return userCredential;
+  } catch (error) {
+    console.log("Error in registering user: ", error);
+  }
+};
+
+const loginUser = async (email, password) => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential;
+  } catch (error) {
+    console.log("Error in logging in user: ", error);
   }
 };
 
@@ -100,4 +131,6 @@ module.exports = {
   getData,
   updateData,
   deleteData,
+  registerUser,
+  loginUser,
 };

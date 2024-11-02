@@ -1,30 +1,32 @@
 "use client";
+import { postData, getAllData, deleteData, updateData } from "@/api/apiClient";
 import React, { useEffect, useState } from "react";
 
 const EditItem = () => {
   const [items, setItems] = useState([]);
   const [formData, setFormData] = useState({
-    item_name: "",
-    description: "",
     artist_name: "",
-    created_date: "",
-    price: "",
-    image: "",
     category: "",
+    created_date: "",
+    description: "",
+    image: "",
     is_available: "",
-    id: "",
-    review: "",
+    item_id: "",
+    item_name: "",
+    price: "",
     quantity: "",
+    rating: "",
   });
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const response = await getAllData("KaligraphyItem");
+        console.log("Data fetched:", response.data); 
+        setItems(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setItems([]); 
       }
     };
 
@@ -35,20 +37,19 @@ const EditItem = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:3001/create/add-item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await response.json();
-      console.log(data);
+      if (formData.item_id) {
+        const response = await updateData("KaligraphyItem", formData.item_id, formData);
+        console.log("Updated item:", response.data);
+        setItems(items.map((item) => (item.item_id === formData.item_id ? response.data : item)));
+      } else {
+        const response = await postData("KaligraphyItem", formData);
+        console.log("Created new item:", response.data);
+        setItems([...items, response.data]);
+      }
     } catch (error) {
-      console.error("Error submitting data:", error);
+      console.error("Error posting data:", error);
     }
   };
 
@@ -65,27 +66,18 @@ const EditItem = () => {
       category: item.category,
       is_available: item.is_available,
       item_id: item.item_id,
-      review: item.review,
+      rating: item.rating,
     });
   };
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch("http://localhost:3001/delete/item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-      const data = await response.json();
-      console.log(data);
+      const response = await deleteData("KaligraphyItem", { id });
+      setItems(response.data);
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
-
-  console.log(items);
 
   return (
     <div className="mx-10 flex flex-col gap-16 font-ptserif">
@@ -188,30 +180,31 @@ const EditItem = () => {
             </tr>
           </thead>
           <tbody>
-            {items.map((items, index) => (
+            {Array.isArray(items) && items.map((item, index) => (
               <tr key={index} className="text-xs text-[#092928]">
-                <td className="py-2">{items.item_name}</td>
-                <td className="py-2">{items.description}</td>
-                <td className="py-2">{items.artist_name}</td>
+                <td className="py-2">{item.item_name}</td>
+                <td className="py-2">{item.description}</td>
+                <td className="py-2">{item.artist_name}</td>
                 <td className="py-2">
-                  {items.created_date && items.created_date.seconds
+                  {item.created_date && item.created_date.seconds
                     ? new Date(
-                        items.created_date.seconds * 1000,
+                        item.created_date.seconds * 1000,
                       ).toLocaleDateString()
-                    : items.created_date}
+                    : item.created_date}
                 </td>
-                <td className="py-2">{items.price}</td>
-                <td className="py-2">{items.image}</td>
+                <td className="py-2">{item.price}</td>
+                <td className="py-2">{item.image}</td>
                 <td className="py-2">
                   <button
-                    onClick={() => handleEdit(items)}
+                    onClick={() => handleEdit(item)}
                     className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
                   >
                     Edit
                   </button>
                   <button 
-                  onClick={() => handleDelete(items.id)}
-                  className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
+                    onClick={() => handleDelete(item.item_id)}
+                    className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                  >
                     Delete
                   </button>
                 </td>

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Rating from "@/components/rating/Rating";
+import { getAllData } from "@/api/apiClient";
 
 export default function Service() {
   const [items, setItems] = useState([]);
@@ -9,9 +10,8 @@ export default function Service() {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const response = await getAllData("KaligraphyItem");
+        setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -40,7 +40,7 @@ export default function Service() {
           </button>
         </div>
         {items.map((item) => (
-          <Rating key={item.id} item={item}/>
+          <Rating key={item.id} data={item}/>
         ))}
       </div>
     </>

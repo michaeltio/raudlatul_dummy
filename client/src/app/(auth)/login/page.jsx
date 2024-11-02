@@ -3,11 +3,8 @@ import React, { useEffect, useState } from "react";
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: "",
     password: "",
-    no_telp: "",
     email: "",
-    address: "",
   });
 
   const handleChange = (e) => {

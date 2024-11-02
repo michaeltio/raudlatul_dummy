@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 
-export default function SearchBar({ item }) {
+export default function SearchBar() {
   return (
     <div className="flex w-full flex-row gap-3 px-8 md:px-16 md:gap-6">
       <input

@@ -1,26 +1,29 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { deleteData } from "@/api/apiClient";
 
 export default function Adorder({ item }) {
+  const [items, setItems] = useState([]);
+  const [formData, setFormData] = useState({
+    courier_name: "",
+    customer_address: "",
+    customer_name: "",
+    item_name: "",
+    item_id: "",
+    price: "",
+    quantity: "",
+  });
+
   const handleDelete = async (id) => {
-    console.log(id);
     try {
-      const response = await fetch("http://localhost:3001/delete/order", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-      const data = await response.json();
-      console.log(data);
+      const response = await deleteData("Order", { id });
+      setItems(response.data);
     } catch (error) {
       console.error("Error deleting data:", error);
     }
   };
 
-  
   return (
     <>
       <div className="overflow-x-auto rounded-lg shadow-md">
@@ -74,21 +77,28 @@ export default function Adorder({ item }) {
               <td className="px-6 py-4 text-[#092928]">{item.courier_name}</td>
               <td className="px-6 py-4 text-[#092928]">{item.price}</td>
               <td className="flex items-center gap-3 px-6 py-4 text-[#092928]">
-                <Image
+                {/* <Image
+                  onClick={() => handleEdit(item)}
                   src={`/svg/icon/edit.svg`}
                   alt="edit"
                   className=""
                   width={25}
                   height={25}
-                />
-                <Image
-                  onClick={() => handleDelete(item.id)}
+                /> */}
+                {/* <Image
+                  onClick={() => handleDelete(item.item_id)}
                   src={`/svg/icon/delete.svg`}
                   alt="delete"
                   className=""
                   width={25}
                   height={25}
-                />
+                /> */}
+                  <button 
+                    onClick={() => onDelete(item.id)}
+                    className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                  >
+                    Delete
+                  </button>
               </td>
             </tr>
           </tbody>

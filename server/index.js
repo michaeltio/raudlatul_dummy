@@ -8,14 +8,35 @@ const {
   getData,
   updateData,
   deleteData,
+  registerUser,
+  loginUser,
 } = require("./firebase");
-
 
 const PORT = 3001;
 initializeFirebaseApp();
 
 app.use(cors());
 app.use(express.json());
+
+app.post("/register", async (req, res) => {
+  const { email, password, username, address, phoneNumber } = req.body;
+  try {
+    const user = await registerUser(email, password, username, address, phoneNumber);
+    return res.json({ message: "User registered successfully!", user });
+  } catch (error) {
+    return res.status(400).json({ message: error.message }); 
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await loginUser(email, password);
+  if (user) {
+    return res.json({ message: "User logged in successfully!", user });
+  } else {
+    return res.status(400).json({ message: "Login failed." });
+  }
+});
 
 app.post("/create/:category", async (req, res) => {
   const category = req.params.category;

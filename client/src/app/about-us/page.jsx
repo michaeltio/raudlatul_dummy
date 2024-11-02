@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 import Image from "next/image";
+import { postData, getAllData, deleteData, updateData } from "@/api/apiClient";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -10,14 +11,13 @@ import "swiper/css/pagination";
 
 export default function AboutUs() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [achievement, setAchievement] = useState([]);
+  const [achievements, setAchievement] = useState([]);
 
   useEffect(() => {
     const fetchAchievement = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/achievement");
-        const data = await response.json();
-        setAchievement(data);
+        const response = await getAllData("Achievement");
+        setAchievement(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -68,7 +68,11 @@ export default function AboutUs() {
               Our Mission
             </h1>
             <p className="ml-2 text-end text-3xs leading-tight md:text-lg">
-            Memperkenalkan kaligrafi sebagai seni dan teknik yang menekankan pada keindahan bentuk-bentuk, huruf, dan merangkai tulisan secara tersusun, menjalankan bisnis kaligrafi yang berorientasi pada kepuasan konsumen dan mitra, mengupayakan agar kaligrafi menjadi pendorong kegiatan ekonomi masyarakat.
+              Memperkenalkan kaligrafi sebagai seni dan teknik yang menekankan
+              pada keindahan bentuk-bentuk, huruf, dan merangkai tulisan secara
+              tersusun, menjalankan bisnis kaligrafi yang berorientasi pada
+              kepuasan konsumen dan mitra, mengupayakan agar kaligrafi menjadi
+              pendorong kegiatan ekonomi masyarakat.
             </p>
           </div>
           <div className="relative aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] bg-opacity-50 md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]">
@@ -103,22 +107,20 @@ export default function AboutUs() {
               loop={true}
               onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
             >
-              {[...Array(9)].map((_, index) => (
+              {achievements.map((achievement, index) => (
                 <SwiperSlide key={index}>
                   <div className="relative flex flex-col items-center">
                     <img
                       className="rounded-3xl"
-                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
+                      src={achievement.image}
                     />
                     {activeIndex === index && (
                       <div className="flex w-full flex-col items-center justify-center rounded-3xl">
                         <h1 className="text-center text-lg font-semibold">
-                          1st Medal Caligraphy Olimpiade
+                          {achievement.title}
                         </h1>
                         <p className="pb-6 text-center text-sm">
-                          Lorem ipsum dolor ist amet, consectetur adipiscing
-                          elit, sed do eiusmod tempor incididunt ut labore et
-                          dolore magna aliqua.
+                          {achievement.description}
                         </p>
                       </div>
                     )}
@@ -137,19 +139,19 @@ export default function AboutUs() {
               modules={[Pagination]}
               loop={true}
             >
-              {[...Array(9)].map((_, index) => (
+              {achievements.map((achievement, index) => (
                 <SwiperSlide key={index}>
                   <div className="relative flex flex-col items-center">
                     <img
                       className="rounded-3xl"
-                      src={`https://swiperjs.com/demos/images/nature-${index + 1}.jpg`}
+                      src={achievement.image}
                     />
                     <div className="flex w-full flex-col items-center justify-center rounded-3xl">
                       <h1 className="text-center text-lg font-semibold md:text-xl">
-                        1st Medal Caligraphy Olimpiade
+                        {achievement.title}
                       </h1>
                       <p className="pb-6 text-center text-sm md:text-base">
-                      Joko Anwar berhasil meraih medali pertama kaligrafi internasional
+                        {achievement.description}
                       </p>
                     </div>
                   </div>
