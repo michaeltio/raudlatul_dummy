@@ -4,11 +4,16 @@ import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { signOutUser } from "@/firebase";
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 
-export default function NavigationBar() {
+export default function NavigationBar({ isAuthenticated }) {
   const [hamburgerActive, setHamburgerActive] = useState(false);
+
+  const handleSignOut = async () => {
+    await signOutUser();
+  };
 
   return (
     <>
@@ -42,12 +47,21 @@ export default function NavigationBar() {
           <Link href="/shop">
             <h1 className={`inline border-b-2 border-[#E9B472]`}>Shop</h1>
           </Link>
-          <Link
-            href="/login"
-            className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
-          >
-            Login
-          </Link>
+          {!isAuthenticated ? (
+            <Link
+              href="/login"
+              className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
+            >
+              Login
+            </Link>
+          ) : (
+            <button
+              onClick={handleSignOut}
+              className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
       </nav>
       <LazyMotion features={domAnimation}>
@@ -96,12 +110,21 @@ export default function NavigationBar() {
                     </h1>
                   </Link>
                 </div>
-                <Link
-                  href="/login"
-                  className="w-full rounded-full bg-[#092928] py-1 text-center text-white"
-                >
-                  Login
-                </Link>
+                {!isAuthenticated ? (
+                  <Link
+                    href="/login"
+                    className="w-full rounded-full bg-[#092928] py-1 text-center text-white"
+                  >
+                    Login
+                  </Link>
+                ) : (
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full rounded-full bg-[#e63946] py-1 text-center text-white"
+                  >
+                    Sign Out
+                  </button>
+                )}
               </div>
             </m.div>
           )}

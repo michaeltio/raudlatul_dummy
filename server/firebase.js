@@ -10,7 +10,7 @@ const {
   collection,
   query,
 } = require("firebase/firestore");
-const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } = require("firebase/auth");
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } = require("firebase/auth");
 
 let app;
 let firestoreDB;
@@ -64,6 +64,16 @@ const loginUser = async (email, password) => {
     console.log("Error in logging in user: ", error);
   }
 };
+
+const signOutUser = async () => {
+  try {
+    await signOut(auth);
+    console.log("User signed out successfully");
+  } catch (error) {
+    console.log("Error signing out: ", error);
+  }
+};
+
 
 const addKaligraphyItem = async (data) => {
   try {
