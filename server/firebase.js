@@ -61,7 +61,8 @@ const loginUser = async (email, password) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential;
   } catch (error) {
-    console.log("Error in logging in user: ", error);
+    console.error("Error in logging in user:", error.message);
+    throw new Error("Failed to log in. Please check your email and password.");
   }
 };
 
@@ -73,7 +74,6 @@ const signOutUser = async () => {
     console.log("Error signing out: ", error);
   }
 };
-
 
 const addKaligraphyItem = async (data) => {
   try {

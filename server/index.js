@@ -13,6 +13,25 @@ const {
   addKaligraphyItem,
   addReviewToKaligraphyItem,
 } = require("./firebase");
+const jwt = require('jsonwebtoken');
+
+const generateToken = (user) => {
+  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) {
+    return res.status(403).send("A token is required for authentication");
+  }
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send("Invalid Token");
+    }
+    req.user = decoded;
+    next();
+  });
+};
 
 const PORT = 3001;
 initializeFirebaseApp();
@@ -34,10 +53,15 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await loginUser(email, password);
   if (user) {
-    return res.json({ message: "User logged in successfully!", user });
+    const token = generateToken(user.user);
+    return res.json({ message: "User logged in successfully!", token });
   } else {
     return res.status(400).json({ message: "Login failed." });
   }
+});
+
+app.get("/protected", verifyToken, (req, res) => {
+  res.send("This is a protected route, user id is: " + req.user.uid);
 });
 
 app.post("/create/kaligraphyItem", async (req, res) => {
