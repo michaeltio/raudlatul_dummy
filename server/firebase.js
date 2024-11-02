@@ -65,6 +65,25 @@ const loginUser = async (email, password) => {
   }
 };
 
+const addKaligraphyItem = async (data) => {
+  try {
+    const document = await addDoc(collection(firestoreDB, "kaligraphyItem"), data);
+    return document.id;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+}
+
+const addReviewToKaligraphyItem = async (itemId, reviewData) => {
+  try {
+    const reviewsRef = collection(firestoreDB, "kaligraphyItem", itemId, "review");
+    const document = await addDoc(reviewsRef, reviewData);
+    return document.id; 
+  } catch (error) {
+    console.error("Error adding review: ", error);
+  }
+};
+
 const postData = async (data, collectionName) => {
   try {
     const document = await addDoc(collection(firestoreDB, collectionName), data);
@@ -132,4 +151,6 @@ module.exports = {
   deleteData,
   registerUser,
   loginUser,
+  addKaligraphyItem,
+  addReviewToKaligraphyItem,
 };

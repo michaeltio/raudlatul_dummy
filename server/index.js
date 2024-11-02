@@ -10,6 +10,8 @@ const {
   deleteData,
   registerUser,
   loginUser,
+  addKaligraphyItem,
+  addReviewToKaligraphyItem,
 } = require("./firebase");
 
 const PORT = 3001;
@@ -35,6 +37,52 @@ app.post("/login", async (req, res) => {
     return res.json({ message: "User logged in successfully!", user });
   } else {
     return res.status(400).json({ message: "Login failed." });
+  }
+});
+
+app.post("/create/kaligraphyItem", async (req, res) => {
+  const { artist_name, category, created_date, description, image, is_available, item_id, item_name, price, quantity, rating } = req.body;
+
+  const itemData = {
+    artist_name,
+    category,
+    created_date,
+    description,
+    image,
+    is_available,
+    item_id,
+    item_name,
+    price,
+    quantity,
+    rating
+  };
+
+  try {
+    const itemId = await addKaligraphyItem(itemData);
+    return res.json({ message: "Kaligraphy item created successfully!", itemId });
+  } catch (error) {
+    console.error("Error creating kaligraphy item: ", error);
+    return res.status(500).json({ message: "Failed to create kaligraphy item." });
+  }
+});
+
+app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
+  const itemId = req.params.itemId;
+  const { customer_name, item_name, rating, review } = req.body;
+
+  const reviewData = {
+    customer_name,
+    item_name,
+    rating,
+    review
+  };
+
+  try {
+    const reviewId = await addReviewToKaligraphyItem(itemId, reviewData);
+    return res.json({ message: "Review added successfully!", reviewId });
+  } catch (error) {
+    console.error("Error adding review: ", error);
+    return res.status(500).json({ message: "Failed to add review." });
   }
 });
 
