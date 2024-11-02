@@ -1,19 +1,42 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { registerUser } from "@/api/apiClient";
 
 export default function Register() {
   const [formData, setFormData] = useState({
     username: "",
     address: "",
-    phonenumber: "",
+    phoneNumber: "",
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await registerUser(formData);
+      setSuccessMessage(response.data.message);
+      setFormData({
+        username: "",
+        address: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
+    }
   };
 
   const handleChange = (e) => {
@@ -24,6 +47,7 @@ export default function Register() {
     <div className="relative flex h-3/5 w-1/2 rounded-3xl bg-[#092928]">
       <div className="relative flex h-full w-1/2 flex-col justify-center rounded-l-3xl bg-white">
         <h1 className="text-center text-3xl font-bold">Register</h1>
+
         <form
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
@@ -52,8 +76,8 @@ export default function Register() {
             <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
             <input
               type="text"
-              name="phonenumber"
-              value={formData.phonenumber}
+              name="phoneNumber"
+              value={formData.phoneNumber}
               onChange={handleChange}
               className="w-full rounded-full px-2 py-1 pl-10"
             />

@@ -18,6 +18,14 @@ apiClient.interceptors.response.use(
   }
 );
 
+export const registerUser = async (formData) => {
+  return apiClient.post("/register", formData);
+};
+
+export const loginUser = async (formData) => {
+  return apiClient.post("/login", formData);
+};
+
 export const postData = async (collectionName, data) => {
   return apiClient.post(`/create/${collectionName}`, data);
 }
