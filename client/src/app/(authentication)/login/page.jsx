@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -47,7 +48,7 @@ export default function Login() {
           <button type="submit" className="rounded-full bg-[#E9B472] px-8 py-2">
             Login
           </button>
-          <p>Don't Have an Account? Register Here!</p>
+          <Link href="/register">Don't Have an Account? Register Here!</Link>
         </form>
       </div>
     </div>
