@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { loginUser } from "@/api/apiClient";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -9,9 +10,24 @@ export default function Login() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await loginUser(formData);
+      setSuccessMessage(response.data.message);
+    } catch (error) {
+      console.error("Login error:", error);
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
+    }
   };
 
   const handleChange = (e) => {
@@ -26,6 +42,9 @@ export default function Login() {
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
         >
+          {/* {error && <p className="text-red-500">{error}</p>} 
+          {successMessage && <p className="text-green-500">{successMessage}</p>}  */}
+
           <div className="relative w-4/5 rounded-full border-2 border-black">
             <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
               <Image

@@ -3,16 +3,35 @@ const app = express();
 const cors = require("cors");
 const {
   initializeFirebaseApp,
-  uploadProccessedData,
-  getCollectionData,
-  getCollectionDataWhere,
-  editCollectionData,
-  deleteCollectionData,
-  createUser,
-  signInUser,
-  signOutUser,
+  postData,
+  getAllData,
+  getData,
+  updateData,
+  deleteData,
+  registerUser,
+  loginUser,
+  addKaligraphyItem,
+  addReviewToKaligraphyItem,
 } = require("./firebase");
+const jwt = require('jsonwebtoken');
 
+const generateToken = (user) => {
+  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+};
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization']?.split(' ')[1];
+  if (!token) {
+    return res.status(403).send("A token is required for authentication");
+  }
+  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    if (err) {
+      return res.status(401).send("Invalid Token");
+    }
+    req.user = decoded;
+    next();
+  });
+};
 
 const PORT = 3001;
 initializeFirebaseApp();
@@ -20,107 +39,110 @@ initializeFirebaseApp();
 app.use(cors());
 app.use(express.json());
 
-// Authentication
 app.post("/register", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await createUser(email, password);
-  return res.json(user);
+  const { email, password, username, address, phoneNumber } = req.body;
+  try {
+    const user = await registerUser(email, password, username, address, phoneNumber);
+    return res.json({ message: "User registered successfully!", user });
+  } catch (error) {
+    return res.status(400).json({ message: error.message }); 
+  }
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await signInUser(email, password);
-  return res.json(user);
+  const user = await loginUser(email, password);
+  if (user) {
+    const token = generateToken(user.user);
+    return res.json({ message: "User logged in successfully!", token });
+  } else {
+    return res.status(400).json({ message: "Login failed." });
+  }
 });
 
-app.post("/logout", async (req, res) => {
-  const user = await signOutUser();
-  return res.json(user);
+app.get("/protected", verifyToken, (req, res) => {
+  res.send("This is a protected route, user id is: " + req.user.uid);
 });
 
-// Data
+app.post("/create/kaligraphyItem", async (req, res) => {
+  const { artist_name, category, created_date, description, image, is_available, item_id, item_name, price, quantity, rating } = req.body;
 
-app.get("/api/item", async (req, res) => {
-  const data = await getCollectionData("KaligraphyItem");
+  const itemData = {
+    artist_name,
+    category,
+    created_date,
+    description,
+    image,
+    is_available,
+    item_id,
+    item_name,
+    price,
+    quantity,
+    rating
+  };
+
+  try {
+    const itemId = await addKaligraphyItem(itemData);
+    return res.json({ message: "Kaligraphy item created successfully!", itemId });
+  } catch (error) {
+    console.error("Error creating kaligraphy item: ", error);
+    return res.status(500).json({ message: "Failed to create kaligraphy item." });
+  }
+});
+
+app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
+  const itemId = req.params.itemId;
+  const { customer_name, item_name, rating, review } = req.body;
+
+  const reviewData = {
+    customer_name,
+    item_name,
+    rating,
+    review
+  };
+
+  try {
+    const reviewId = await addReviewToKaligraphyItem(itemId, reviewData);
+    return res.json({ message: "Review added successfully!", reviewId });
+  } catch (error) {
+    console.error("Error adding review: ", error);
+    return res.status(500).json({ message: "Failed to add review." });
+  }
+});
+
+app.post("/create/:category", async (req, res) => {
+  const category = req.params.category;
+  await postData(req.body, category);
+  return res.json({ message: "Data uploaded successfully!" });
+});
+
+app.get("/read/:category", async (req, res) => {
+  const category = req.params.category;
+  const data = await getAllData(category);
+
   return res.json(data);
 });
 
-app.get("/api/achievement", async (req, res) => {
-  const data = await getCollectionData("Achievement");
+app.get("/read/:category/:id", async (req, res) => {
+  const category = req.params.category;
+  const id = req.params.id;
+  const data = await getData(category, id);
+
   return res.json(data);
 });
 
-app.get("/api/courier", async (req, res) => {
-  const data = await getCollectionData("Courier");
-  return res.json(data);
-});
-
-app.get("/api/customer", async (req, res) => {
-  const data = await getCollectionData("Customer");
-  return res.json(data);
-});
-
-app.get("/api/order", async (req, res) => {
-  const data = await getCollectionData("Order");
-  return res.json(data);
-});
-
-app.get("/api", async (req, res) => {
-  const data = await getCollectionDataWhere(
-    "KaligraphyItem",
-    "item_name",
-    "ex_name"
-  );
-  return res.json(data);
-});
-
-app.get("/api/reviews", async (req, res) => {
-  const data = await getCollectionData("Review");
-  return res.json(data);
-});
-
-app.post("/delete/item", async (req, res) => {
-  const { id } = req.body;
-  await deleteCollectionData("KaligraphyItem", id);
-  return res.json({ message: "Data deleted successfully!" });
-});
-
-app.post("/delete/order", async (req, res) => {
-  const { id } = req.body;
-  await deleteCollectionData("Order", id);
-  return res.json({ message: "Data deleted successfully!" });
-});
-
-app.post("/edit/item", async (req, res) => {
-  const { id, data } = req.body;
-  const updatedData = await editCollectionData("KaligraphyItem", id, data);
+app.post("/update/:category/:id", async (req, res) => {
+  const category = req.params.category;
+  const id = req.params.id;
+  await updateData(category, id, req.body);
   return res.json({ message: "Data edited successfully!" });
 });
 
-app.post("/edit/reviews", async (req, res) => {
-  const { id, data } = req.body;
-  const updatedData = await editCollectionData("Review", id, data);
-  return res.json({ message: "Data edited successfully!" });
-});
-
-app.post("/create/add-item", async (req, res) => {
-  await uploadProccessedData(req.body, "KaligraphyItem");
-  return res.json({ message: "Data uploaded successfully!" });
-});
-
-app.post("/create/add-courier", async (req, res) => {
-  await uploadProccessedData(req.body, "Courier");
-  return res.json({ message: "Data uploaded successfully!" });
-});
-
-app.post("/create/add-customer", async (req, res) => {
-  await uploadProccessedData(req.body, "Customer");
-  return res.json({ message: "Data uploaded successfully!" });
-});
-
-app.post("/create/ratings", async (req, res) => {
-  await uploadProccessedData(req.body, "Review");
-  return res.json({ message: "Data uploaded successfully!" });
+app.post("/delete/:category/:id", async (req, res) => {
+  const category = req.params.category;
+  const id = req.params.id;
+  await deleteData(category, id);
+  return res.json({ message: "Data deleted successfully!" });
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

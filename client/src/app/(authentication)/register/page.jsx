@@ -2,19 +2,42 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { registerUser } from "@/api/apiClient";
 
 export default function Register() {
   const [formData, setFormData] = useState({
     username: "",
     address: "",
-    phonenumber: "",
+    phoneNumber: "",
     email: "",
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+    setError(null);
+    setSuccessMessage(null);
+
+    try {
+      const response = await registerUser(formData);
+      setSuccessMessage(response.data.message);
+      setFormData({
+        username: "",
+        address: "",
+        phoneNumber: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      console.error("Registration error:", error);
+      setError(
+        error.response?.data?.message ||
+          "Something went wrong. Please try again.",
+      );
+    }
   };
 
   const handleChange = (e) => {
@@ -25,10 +48,14 @@ export default function Register() {
     <div className="relative flex h-3/5 w-4/5 justify-start rounded-3xl bg-[#092928] lg:w-2/3 2xl:w-1/2">
       <div className="relative flex h-full w-full flex-col justify-center rounded-3xl bg-white md:w-1/2 md:rounded-l-3xl md:rounded-r-none">
         <h1 className="text-center text-3xl font-bold">Register</h1>
+
         <form
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
         >
+          {/* {error && <p className="text-red-500">{error}</p>} 
+          {successMessage && <p className="text-green-500">{successMessage}</p>}  */}
+          
           <div className="relative w-4/5 rounded-full border-2 border-black">
             <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
               <Image
@@ -74,8 +101,8 @@ export default function Register() {
             </div>
             <input
               type="text"
-              name="phonenumber"
-              value={formData.phonenumber}
+              name="phoneNumber"
+              value={formData.phoneNumber}
               onChange={handleChange}
               className="w-full rounded-full px-2 py-1 pl-10"
             />

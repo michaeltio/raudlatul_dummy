@@ -1,25 +1,16 @@
-// Imports
-
 const { initializeApp } = require("firebase/app");
 const {
   getFirestore,
   doc,
   setDoc,
+  addDoc,
   deleteDoc,
-  collection,
   getDocs,
+  getDoc,
+  collection,
   query,
-  where,
 } = require("firebase/firestore");
-const {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} = require("firebase/auth");
-
-// Firebase Config
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } = require("firebase/auth");
 
 let app;
 let firestoreDB;
@@ -35,8 +26,6 @@ const firebaseConfig = {
   measurementId: "G-JRGN04FFXP",
 };
 
-// Firebase Initialization
-
 const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
@@ -48,107 +37,102 @@ const initializeFirebaseApp = () => {
   }
 };
 
-const randomId = () => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  const length = 20;
-  const charactersLength = characters.length;
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-};
-
-// Firebase Auth Functions
-
-const createUser = async (email, password) => {
+const registerUser = async (email, password, username, address, phoneNumber) => {
   try {
-    const user = await createUserWithEmailAndPassword(auth, email, password);
-    return user;
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const uid = userCredential.user.uid;
+
+    const userData = {
+      username: username,
+      address: address,
+      phoneNumber: phoneNumber
+    };
+
+    await setDoc(doc(firestoreDB, "users", uid), userData);
+    
+    return userCredential;
   } catch (error) {
-    console.log("Error in creating user: ", error);
+    console.log("Error in registering user: ", error);
   }
 };
 
-const signInUser = async (email, password) => {
+const loginUser = async (email, password) => {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, password);
-    return user;
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential;
   } catch (error) {
-    console.log("Error in signing in: ", error);
+    console.error("Error in logging in user:", error.message);
+    throw new Error("Failed to log in. Please check your email and password.");
   }
 };
 
 const signOutUser = async () => {
   try {
-    const user = await signOut(auth);
-    return user;
+    await signOut(auth);
+    console.log("User signed out successfully");
   } catch (error) {
-    console.log("Error in signing out: ", error);
+    console.log("Error signing out: ", error);
   }
 };
 
-const authMiddleware = async (req, res, next) => {
+const addKaligraphyItem = async (data) => {
   try {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        req.user = user;
-        next();
-      } else {
-        res.status(401).send("Unauthorized");
-      }
-    });
+    const document = await addDoc(collection(firestoreDB, "kaligraphyItem"), data);
+    return document.id;
   } catch (error) {
-    console.log("Error in authMiddleware: ", error);
+    console.error("Error adding document: ", error);
   }
-};
+}
 
-// Firebase Firestore Functions
-
-const uploadProccessedData = async (data, collectionName) => {
+const addReviewToKaligraphyItem = async (itemId, reviewData) => {
   try {
-    const document = doc(firestoreDB, collectionName, randomId());
-    let dataUpdated = await setDoc(document, data);
-    return dataUpdated;
+    const reviewsRef = collection(firestoreDB, "kaligraphyItem", itemId, "review");
+    const document = await addDoc(reviewsRef, reviewData);
+    return document.id; 
   } catch (error) {
-    console.log("Error in uploading data: ", error);
+    console.error("Error adding review: ", error);
   }
 };
 
-const getCollectionData = async (collectionName) => {
+const postData = async (data, collectionName) => {
+  try {
+    const document = await addDoc(collection(firestoreDB, collectionName), data);
+    return document;
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+};
+
+const getAllData = async (collectionName) => {
   try {
     const collectionRef = collection(firestoreDB, collectionName);
     const data = [];
-    const q = query(collectionRef);
+    
+    let q;
+    
+    q = query(collectionRef);
 
     const docSnap = await getDocs(q);
     docSnap.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
     });
+    
     return data;
   } catch (error) {
     console.log("Error in getting data: ", error);
   }
 };
 
-const getCollectionDataWhere = async (collectionName, field, value) => {
+const getData = async (collectionName, id) => {
   try {
-    const collectionRef = collection(firestoreDB, collectionName);
-    const data = [];
-    const q = query(collectionRef, where(field, "==", value));
-
-    const docSnap = await getDocs(q);
-    docSnap.forEach((doc) => {
-      data.push(doc.data());
-    });
-    return data;
+    const document = await getDoc(doc(firestoreDB, collectionName, id))
+    return document.data();
   } catch (error) {
     console.log("Error in getting data: ", error);
   }
 };
 
-const editCollectionData = async (collectionName, id, data) => {
+const updateData = async (collectionName, id, data) => {
   try {
     const document = doc(firestoreDB, collectionName, id);
     let dataUpdated = await setDoc(document, data);
@@ -158,7 +142,7 @@ const editCollectionData = async (collectionName, id, data) => {
   }
 };
 
-const deleteCollectionData = async (collectionName, id) => {
+const deleteData = async (collectionName, id) => {
   try {
     const document = doc(firestoreDB, collectionName, id);
     let dataDeleted = await deleteDoc(document);
@@ -168,17 +152,15 @@ const deleteCollectionData = async (collectionName, id) => {
   }
 };
 
-const getFirebaseApp = () => app;
-
 module.exports = {
   initializeFirebaseApp,
-  getFirebaseApp,
-  uploadProccessedData,
-  getCollectionData,
-  getCollectionDataWhere,
-  editCollectionData,
-  deleteCollectionData,
-  createUser,
-  signInUser,
-  signOutUser,
+  postData,
+  getAllData,
+  getData,
+  updateData,
+  deleteData,
+  registerUser,
+  loginUser,
+  addKaligraphyItem,
+  addReviewToKaligraphyItem,
 };
