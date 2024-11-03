@@ -13,14 +13,16 @@ const {
   addKaligraphyItem,
   addReviewToKaligraphyItem,
 } = require("./firebase");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 const generateToken = (user) => {
-  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
 };
 
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -42,10 +44,16 @@ app.use(express.json());
 app.post("/register", async (req, res) => {
   const { email, password, username, address, phoneNumber } = req.body;
   try {
-    const user = await registerUser(email, password, username, address, phoneNumber);
+    const user = await registerUser(
+      email,
+      password,
+      username,
+      address,
+      phoneNumber
+    );
     return res.json({ message: "User registered successfully!", user });
   } catch (error) {
-    return res.status(400).json({ message: error.message }); 
+    return res.status(400).json({ message: error.message });
   }
 });
 
@@ -65,7 +73,19 @@ app.get("/protected", verifyToken, (req, res) => {
 });
 
 app.post("/create/kaligraphyItem", async (req, res) => {
-  const { artist_name, category, created_date, description, image, is_available, item_id, item_name, price, quantity, rating } = req.body;
+  const {
+    artist_name,
+    category,
+    created_date,
+    description,
+    image,
+    is_available,
+    item_id,
+    item_name,
+    price,
+    quantity,
+    rating,
+  } = req.body;
 
   const itemData = {
     artist_name,
@@ -78,15 +98,20 @@ app.post("/create/kaligraphyItem", async (req, res) => {
     item_name,
     price,
     quantity,
-    rating
+    rating,
   };
 
   try {
     const itemId = await addKaligraphyItem(itemData);
-    return res.json({ message: "Kaligraphy item created successfully!", itemId });
+    return res.json({
+      message: "Kaligraphy item created successfully!",
+      itemId,
+    });
   } catch (error) {
     console.error("Error creating kaligraphy item: ", error);
-    return res.status(500).json({ message: "Failed to create kaligraphy item." });
+    return res
+      .status(500)
+      .json({ message: "Failed to create kaligraphy item." });
   }
 });
 
@@ -98,7 +123,7 @@ app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
     customer_name,
     item_name,
     rating,
-    review
+    review,
   };
 
   try {
@@ -132,12 +157,10 @@ app.get("/read/:category/:id", async (req, res) => {
 });
 
 app.get("/read/cart/:userId", async (req, res) => {
-  return res.json({ message: "Cart data fetched successfully!" });
-  // const uid = req.params.userId;
-  // return uid;
-  // const data = await getAllData("kaligraphyItem");
-
-  // return res.json(data);
+  const userId = req.params.userId;
+  // Fetch cart data using userId
+  const cartData = await getCartData(userId); // Assuming getCartData is a function to fetch cart data
+  return res.json(cartData);
 });
 
 app.post("/update/:category/:id", async (req, res) => {

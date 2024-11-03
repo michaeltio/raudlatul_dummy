@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 function Home() {
   return (
     <>
-      <div className="space-y-6 text-center md:py-52 py-12">
+      <div className="space-y-6 py-12 text-center md:py-52">
         <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
           Looking for Beautiful Calligraphy
         </h2>
@@ -14,12 +15,12 @@ function Home() {
             placeholder=""
             className="h-7 w-60 rounded-full border border-black bg-transparent p-2 md:h-10 md:w-7/12"
           />
-          <button className="text-xs w-32 p-3 rounded-full border border-black py-1 font-ptserif font-bold md:w-36 md:text-lg hover:bg-[#092928] hover:text-white">
+          <button className="w-32 rounded-full border border-black p-3 py-1 font-ptserif text-xs font-bold hover:bg-[#092928] hover:text-white md:w-36 md:text-lg">
             Search
           </button>
         </div>
         <div className="justify-center">
-          <div className="flex items-center justify-center md:gap-20 gap-5 text-xs md:text-xl">
+          <div className="flex items-center justify-center gap-5 text-xs md:gap-20 md:text-xl">
             <h1 className={`inline font-ptserif`}>Naski</h1>
             <h1 className={`inline font-ptserif`}>Tsuluts</h1>
             <h1 className={`inline font-ptserif`}>Farisi</h1>
@@ -29,7 +30,7 @@ function Home() {
       </div>
 
       <div id="pembatas" className="grid grid-cols-3">
-        <div className="relative col-span-2 w-full h-20 md:h-auto rounded-e-2xl bg-[#092928]">
+        <div className="relative col-span-2 h-20 w-full rounded-e-2xl bg-[#092928] md:h-auto">
           <Image
             src="/webp/main-building.webp"
             layout="fill"
@@ -38,7 +39,7 @@ function Home() {
           />
           <div className="absolute inset-0 rounded-e-2xl bg-[#092928] opacity-50"></div>
         </div>
-        <div className="relative w-full rounded-s-2xl bg-[#092928]] md:aspect-[16/4]">
+        <div className="bg-[#092928]] relative w-full rounded-s-2xl md:aspect-[16/4]">
           <Image
             src="/webp/building-certificate.webp"
             layout="fill"
@@ -49,17 +50,17 @@ function Home() {
         </div>
       </div>
 
-      <div id="collections" className="md:py-52 py-12 md:space-y-6 md:mx-8">
+      <div id="collections" className="py-12 md:mx-8 md:space-y-6 md:py-52">
         <div className="text-center">
           <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
             Our Collections
           </h2>
         </div>
 
-        <div className="justify-center space-y-3 p-6 md:flex md:space-x-3 md:space-y-0 md:gap-3">
+        <div className="justify-center space-y-3 p-6 md:flex md:gap-3 md:space-x-3 md:space-y-0">
           <div id="3Foto" className="space-y-3 md:flex-1 md:space-y-5">
             <div className="grid grid-cols-3 gap-3 md:gap-5">
-              <div className="relative col-span-2  w-full rounded-2xl bg-[#092928] py-20 md:aspect-video md:py-32 md:h-96">
+              <div className="relative col-span-2 w-full rounded-2xl bg-[#092928] py-20 md:aspect-video md:h-96 md:py-32">
                 <Image
                   src="/webp/caligraphy02.webp"
                   layout="fill"
@@ -76,7 +77,7 @@ function Home() {
                 />
               </div>
             </div>
-            <div className="relative w-full rounded-2xl bg-[#092928] p-14 md:p-20 md:h-1/2">
+            <div className="relative w-full rounded-2xl bg-[#092928] p-14 md:h-1/2 md:p-20">
               <Image
                 src="/webp/caligraphy04.webp"
                 layout="fill"
@@ -109,9 +110,9 @@ function Home() {
 
       <div
         id="getToKnow"
-        className="py-8 p-6 md:items-center md:justify-center md:flex md:mx-8"
+        className="p-6 py-8 md:mx-8 md:flex md:items-center md:justify-center"
       >
-        <div className="relative flex aspect-[5/1] w-full flex-col items-center justify-center gap-3 rounded-2xl py-16 md:gap-7 md:h-1/2">
+        <div className="relative flex aspect-[5/1] w-full flex-col items-center justify-center gap-3 rounded-2xl py-16 md:h-1/2 md:gap-7">
           <Image
             src="/webp/main-building-front.webp"
             width={1000}
@@ -120,12 +121,12 @@ function Home() {
           />
           <div className="absolute inset-0 rounded-2xl bg-[#092928] opacity-50"></div>
 
-          <div className="z-10 text-center font-ptserif text-lg text-white md:text-2xl text-shadow-lg">
+          <div className="text-shadow-lg z-10 text-center font-ptserif text-lg text-white md:text-2xl">
             <p>Let’s get to know</p>
             <p>the Raudlatul Irfan</p>
           </div>
           <button className="z-10 rounded-full bg-[#E9B472] px-6 py-1 font-ptserif font-semibold text-white hover:bg-[#C6975D]">
-            Open
+            <Link href="/about-us">Open</Link>
           </button>
         </div>
       </div>
