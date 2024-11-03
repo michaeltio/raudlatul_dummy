@@ -4,16 +4,11 @@ import { useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
-import { signOutUser } from "@/firebase";
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 
-export default function NavigationBar({ isAuthenticated }) {
+export default function NavigationBar() {
   const [hamburgerActive, setHamburgerActive] = useState(false);
-
-  const handleSignOut = async () => {
-    await signOutUser();
-  };
 
   return (
     <>
@@ -47,21 +42,15 @@ export default function NavigationBar({ isAuthenticated }) {
           <Link href="/shop">
             <h1 className={`inline border-b-2 border-[#E9B472]`}>Shop</h1>
           </Link>
-          {!isAuthenticated ? (
-            <Link
-              href="/login"
-              className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
-            >
-              Login
-            </Link>
-          ) : (
-            <button
-              onClick={handleSignOut}
-              className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
-            >
-              Sign Out
-            </button>
-          )}
+          <Link
+            href="/login"
+            className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
+          >
+            Login
+          </Link>
+          <button className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white">
+            Sign Out
+          </button>
         </div>
       </nav>
       <LazyMotion features={domAnimation}>

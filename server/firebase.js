@@ -10,20 +10,28 @@ const {
   collection,
   query,
 } = require("firebase/firestore");
-const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } = require("firebase/auth");
+const {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut,
+} = require("firebase/auth");
 
 let app;
 let firestoreDB;
 let auth;
 
+require("dotenv").config();
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
-  authDomain: "raudlatulirfan-c7999.firebaseapp.com",
-  projectId: "raudlatulirfan-c7999",
-  storageBucket: "raudlatulirfan-c7999.appspot.com",
-  messagingSenderId: "546842381619",
-  appId: "1:546842381619:web:4afc62d57234b3996a8246",
-  measurementId: "G-JRGN04FFXP",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
 const initializeFirebaseApp = () => {
@@ -37,19 +45,29 @@ const initializeFirebaseApp = () => {
   }
 };
 
-const registerUser = async (email, password, username, address, phoneNumber) => {
+const registerUser = async (
+  email,
+  password,
+  username,
+  address,
+  phoneNumber
+) => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     const uid = userCredential.user.uid;
 
     const userData = {
       username: username,
       address: address,
-      phoneNumber: phoneNumber
+      phoneNumber: phoneNumber,
     };
 
     await setDoc(doc(firestoreDB, "users", uid), userData);
-    
+
     return userCredential;
   } catch (error) {
     console.log("Error in registering user: ", error);
@@ -58,7 +76,11 @@ const registerUser = async (email, password, username, address, phoneNumber) => 
 
 const loginUser = async (email, password) => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
     return userCredential;
   } catch (error) {
     console.error("Error in logging in user:", error.message);
@@ -77,18 +99,26 @@ const signOutUser = async () => {
 
 const addKaligraphyItem = async (data) => {
   try {
-    const document = await addDoc(collection(firestoreDB, "kaligraphyItem"), data);
+    const document = await addDoc(
+      collection(firestoreDB, "kaligraphyItem"),
+      data
+    );
     return document.id;
   } catch (error) {
     console.error("Error adding document: ", error);
   }
-}
+};
 
 const addReviewToKaligraphyItem = async (itemId, reviewData) => {
   try {
-    const reviewsRef = collection(firestoreDB, "kaligraphyItem", itemId, "review");
+    const reviewsRef = collection(
+      firestoreDB,
+      "kaligraphyItem",
+      itemId,
+      "review"
+    );
     const document = await addDoc(reviewsRef, reviewData);
-    return document.id; 
+    return document.id;
   } catch (error) {
     console.error("Error adding review: ", error);
   }
@@ -96,7 +126,10 @@ const addReviewToKaligraphyItem = async (itemId, reviewData) => {
 
 const postData = async (data, collectionName) => {
   try {
-    const document = await addDoc(collection(firestoreDB, collectionName), data);
+    const document = await addDoc(
+      collection(firestoreDB, collectionName),
+      data
+    );
     return document;
   } catch (error) {
     console.error("Error adding document: ", error);
@@ -107,16 +140,16 @@ const getAllData = async (collectionName) => {
   try {
     const collectionRef = collection(firestoreDB, collectionName);
     const data = [];
-    
+
     let q;
-    
+
     q = query(collectionRef);
 
     const docSnap = await getDocs(q);
     docSnap.forEach((doc) => {
       data.push({ id: doc.id, ...doc.data() });
     });
-    
+
     return data;
   } catch (error) {
     console.log("Error in getting data: ", error);
@@ -125,7 +158,7 @@ const getAllData = async (collectionName) => {
 
 const getData = async (collectionName, id) => {
   try {
-    const document = await getDoc(doc(firestoreDB, collectionName, id))
+    const document = await getDoc(doc(firestoreDB, collectionName, id));
     return document.data();
   } catch (error) {
     console.log("Error in getting data: ", error);
