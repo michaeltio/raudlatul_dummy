@@ -93,19 +93,7 @@ export default function Order() {
                       className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]"
                     >
                       <td className="w-4 p-4">
-                        <div className="flex items-center">
-                          <label
-                            htmlFor={`checkbox-table-search-${item.id}`}
-                            className="sr-only"
-                          >
-                            checkbox
-                          </label>
-                          <input
-                            type="checkbox"
-                            id={`checkbox-table-search-${item.id}`}
-                            className="h-5 w-5"
-                          />
-                        </div>
+                        <div className="flex items-center"></div>
                       </td>
                       <th
                         scope="row"

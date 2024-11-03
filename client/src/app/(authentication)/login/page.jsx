@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -26,7 +27,14 @@ export default function Login() {
           onSubmit={handleSubmit}
         >
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/email-black.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>
             <input
               type="email"
               name="email"
@@ -36,7 +44,14 @@ export default function Login() {
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/password.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>
             <input
               type="password"
               name="password"

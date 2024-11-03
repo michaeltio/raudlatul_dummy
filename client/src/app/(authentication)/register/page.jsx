@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function Register() {
@@ -29,7 +30,14 @@ export default function Register() {
           onSubmit={handleSubmit}
         >
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/person.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>
             <input
               type="text"
               name="username"
@@ -39,7 +47,14 @@ export default function Register() {
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/map.svg"
+                width={50}
+                height={50}
+                className="w-5"
+              />
+            </div>
             <input
               type="text"
               name="address"
@@ -49,7 +64,14 @@ export default function Register() {
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/phone.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>{" "}
             <input
               type="text"
               name="phonenumber"
@@ -59,7 +81,14 @@ export default function Register() {
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/email-black.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>{" "}
             <input
               type="email"
               name="email"
@@ -69,7 +98,14 @@ export default function Register() {
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
-            <div className="absolute aspect-square h-full rounded-l-full bg-[#D9D9D9]"></div>
+            <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
+              <Image
+                src="/svg/icon/password.svg"
+                width={50}
+                height={50}
+                className="w-6"
+              />
+            </div>
             <input
               type="password"
               name="password"
