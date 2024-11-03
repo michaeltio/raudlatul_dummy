@@ -2,38 +2,41 @@
 
 import React, { useEffect, useState } from "react";
 import Item from "@/components/shop/Item";
+import { isUserSignedIn } from "@/api/auth";
 import axios from "axios";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [uid, setUid] = useState("");
 
   useEffect(() => {
-    const fetchCartItems = async () => {
+    console.log("isUserSignedIn", isUserSignedIn());
+    const fetchCartData = async () => {
       const token = localStorage.getItem("token");
-      const uid = localStorage.getItem("uid"); // Ensure you store UID upon user login
-      if (token && uid) {
+      if (token) {
         try {
-          const response = await axios.get(
-            `http://localhost:3001/cart/${uid}`,
-            {
-              headers: {
-                Authorization: `${token}`,
-              },
+          const userResponse = await axios.get("http://localhost:3001/user", {
+            headers: {
+              Authorization: `${token}`,
             },
+          });
+          const userId = userResponse.data.user.uid;
+          setUid(userId);
+
+          const cartDataResponse = await axios.get(
+            `http://localhost:3001/read/cart/${userId}`,
           );
-          const items = response.data.cartItems; // Adjust based on your API response structure
-          setCartItems(items);
-          const totalAmount = items.reduce((acc, item) => acc + item.price, 0); // Calculate total
-          setTotal(totalAmount);
+          console.log("cartDataResponse", cartDataResponse);
+          setCartItems(cartDataResponse.data);
         } catch (error) {
-          console.error("Error fetching cart items:", error);
+          console.error("Error fetching cart data:", error);
         }
       }
     };
 
-    fetchCartItems();
-  }, []); // Empty dependency array to run once on component mount
+    fetchCartData();
+  }, []);
 
   return (
     <div className="flex flex-col py-12">
@@ -47,9 +50,9 @@ export default function Cart() {
         {cartItems.length > 0 ? (
           cartItems.map((item, i) => (
             <Item
-              key={item.id || i}
+              key={item.item_id || i}
               image={item.image}
-              name={item.name}
+              name={item.item_name}
               price={item.price.toLocaleString()} // Ensure this is the correct format
             />
           ))

@@ -90,7 +90,7 @@ app.get("/user", authenticateToken, (req, res) => {
 //     const itemId = await postData(itemData, "kaligraphyItem");
 //     return res.json({
 //       message: "Kaligraphy item created successfully!",
-//       itemId: itemId.id, 
+//       itemId: itemId.id,
 //     });
 //   } catch (error) {
 //     console.error("Error creating kaligraphy item: ", error);
@@ -144,12 +144,7 @@ app.get("/read/:category/:id", async (req, res) => {
 
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
-<<<<<<< Updated upstream
   const cartData = await getCartData(userId);
-=======
-  // Fetch cart data using userId
-  const cartData = await getCartData(userId); // Assuming getCartData is a function to fetch cart data
->>>>>>> Stashed changes
   return res.json(cartData);
 });
 
