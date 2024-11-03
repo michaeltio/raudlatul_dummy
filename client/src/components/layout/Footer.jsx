@@ -16,7 +16,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <p className="text-4xs w-full px-8 py-2 text-center font-ptserif md:py-4 md:text-left md:text-xs">
+      <p className="w-full px-8 py-2 text-center font-ptserif text-xs md:py-4 md:text-left md:text-xs">
         Copyright &copy; 2024 Raudlatul Irfan All Rights Reserved
       </p>
     </div>

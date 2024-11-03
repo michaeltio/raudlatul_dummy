@@ -21,8 +21,8 @@ export default function Register() {
   };
 
   return (
-    <div className="relative flex h-3/5 w-1/2 rounded-3xl bg-[#092928]">
-      <div className="relative flex h-full w-1/2 flex-col justify-center rounded-l-3xl bg-white">
+    <div className="relative flex h-3/5 w-4/5 justify-start rounded-3xl bg-[#092928] lg:w-2/3 2xl:w-1/2">
+      <div className="relative flex h-full w-full flex-col justify-center rounded-3xl bg-white md:w-1/2 md:rounded-l-3xl md:rounded-r-none">
         <h1 className="text-center text-3xl font-bold">Register</h1>
         <form
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
@@ -84,6 +84,17 @@ export default function Register() {
           </button>
           <Link href="/login">Already Have an Account? Login Here!</Link>
         </form>
+        <div className="mt-4 flex flex-col items-center gap-4 md:hidden">
+          <div className="flex w-4/5 items-center">
+            <hr className="flex-grow border-t border-black" />
+            <span className="mx-2">Or</span>
+            <hr className="flex-grow border-t border-black" />
+          </div>
+
+          <button className="w-4/5 rounded-full border-2 border-black py-1 font-bold">
+            Google
+          </button>
+        </div>
       </div>
     </div>
   );

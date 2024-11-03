@@ -18,8 +18,8 @@ export default function Login() {
   };
 
   return (
-    <div className="relative flex h-3/5 w-1/2 justify-end rounded-3xl bg-[#092928]">
-      <div className="relative flex h-full w-1/2 flex-col justify-center rounded-r-3xl bg-white">
+    <div className="relative flex h-3/5 w-4/5 justify-end rounded-3xl bg-[#092928] lg:w-2/3 2xl:w-1/2">
+      <div className="relative flex h-full w-full flex-col justify-center rounded-3xl bg-white md:w-1/2 md:rounded-l-none md:rounded-r-3xl">
         <h1 className="text-center text-3xl font-bold">Login</h1>
         <form
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
@@ -50,6 +50,17 @@ export default function Login() {
           </button>
           <Link href="/register">Don't Have an Account? Register Here!</Link>
         </form>
+        <div className="mt-4 flex flex-col items-center gap-4 md:hidden">
+          <div className="flex w-4/5 items-center">
+            <hr className="flex-grow border-t border-black" />
+            <span className="mx-2">Or</span>
+            <hr className="flex-grow border-t border-black" />
+          </div>
+
+          <button className="w-4/5 rounded-full border-2 border-black py-1 font-bold">
+            Google
+          </button>
+        </div>
       </div>
     </div>
   );
