@@ -110,15 +110,12 @@ app.get("/read/:category/:id", async (req, res) => {
   return res.json(data);
 });
 
-<<<<<<< Updated upstream
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
-  const cartData = await getCartData(userId); 
+  const cartData = await getCartData(userId);
   return res.json(cartData);
 });
 
-=======
->>>>>>> Stashed changes
 app.post("/update/:category/:id", async (req, res) => {
   const category = req.params.category;
   const id = req.params.id;
