@@ -71,7 +71,7 @@ export default function Register() {
                 height={50}
                 className="w-6"
               />
-            </div>{" "}
+            </div>
             <input
               type="text"
               name="phonenumber"
