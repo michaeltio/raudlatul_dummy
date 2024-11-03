@@ -2,39 +2,38 @@
 
 import React, { useEffect, useState } from "react";
 import Item from "@/components/shop/Item";
-
-export async function getAllData(uid) {
-  try {
-    // Ubah port ke 3001 agar terhubung ke server Express
-    const response = await fetch(`http://localhost:3001/read/cart/${uid}`);
-    const data = await response.json();
-    console.log("API Response:", data); // Cek data yang diterima
-    return data;
-  } catch (error) {
-    console.error("Error in getAllData:", error);
-  }
-}
+import axios from "axios";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([]); // Initialize as an empty array
+  const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userId = "qvZGpjCH8HTrGNPsoaov0UjIHEu1";
-        const response = await getAllData(userId);
-        setCartItems(response);
-        console.log("Fetched items:", response);
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    const fetchCartItems = async () => {
+      const token = localStorage.getItem("token");
+      const uid = localStorage.getItem("uid"); // Ensure you store UID upon user login
+      if (token && uid) {
+        try {
+          const response = await axios.get(
+            `http://localhost:3001/cart/${uid}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+              },
+            },
+          );
+          const items = response.data.cartItems; // Adjust based on your API response structure
+          setCartItems(items);
+          const totalAmount = items.reduce((acc, item) => acc + item.price, 0); // Calculate total
+          setTotal(totalAmount);
+        } catch (error) {
+          console.error("Error fetching cart items:", error);
+        }
       }
     };
 
-    fetchData();
-  }, []);
-
-  console.log("Cart items:", cartItems);
+    fetchCartItems();
+  }, []); // Empty dependency array to run once on component mount
 
   return (
     <div className="flex flex-col py-12">
@@ -45,14 +44,18 @@ export default function Cart() {
       </div>
 
       <div className="grid grid-cols-2 place-items-center gap-16 px-16 py-12 sm:grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))]">
-        {cartItems.map((item, i) => (
-          <Item
-            key={item.id || i}
-            image={item.image}
-            name={item.name}
-            price={item.price.toLocaleString()}
-          />
-        ))}
+        {cartItems.length > 0 ? (
+          cartItems.map((item, i) => (
+            <Item
+              key={item.id || i}
+              image={item.image}
+              name={item.name}
+              price={item.price.toLocaleString()} // Ensure this is the correct format
+            />
+          ))
+        ) : (
+          <p className="text-center text-gray-500">Your cart is empty.</p>
+        )}
       </div>
     </div>
   );

@@ -88,8 +88,15 @@ app.post("/create/:category", async (req, res) => {
   return res.json({ message: "Data uploaded successfully!" });
 });
 
+app.get("/read/cart/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const cartData = await getAllData("users/" + userId + "/cart"); // Assuming getCartData is a function to fetch cart data
+  return res.json(cartData);
+});
+
 app.get("/read/:category", async (req, res) => {
   const category = req.params.category;
+  console.log("apa aja");
   const data = await getAllData(category);
 
   return res.json(data);
@@ -103,12 +110,15 @@ app.get("/read/:category/:id", async (req, res) => {
   return res.json(data);
 });
 
+<<<<<<< Updated upstream
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
   const cartData = await getCartData(userId); 
   return res.json(cartData);
 });
 
+=======
+>>>>>>> Stashed changes
 app.post("/update/:category/:id", async (req, res) => {
   const category = req.params.category;
   const id = req.params.id;
