@@ -9,7 +9,7 @@ export default function Rating({ item }) {
     <div className="mb-5 flex rounded-3xl shadow-[0_0px_10px_rgba(0,0,0,0.25)]">
       <div className="m-5 flex w-full flex-row items-center gap-3 md:m-6 md:my-5 md:gap-6">
         <Image
-          src={`/webp/${img}`}
+          src="/svg/icon/plus.svg"
           width={100}
           height={100}
           className="aspect-square w-20 rounded-lg md:w-32"

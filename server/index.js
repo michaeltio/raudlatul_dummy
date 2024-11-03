@@ -70,6 +70,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.post("/logout", authenticateToken, (req, res) => {
+  // Invalidate the token on the client side
   return res.json({ message: "Logout successful!" });
 });
 
@@ -81,6 +82,37 @@ app.get("/user", authenticateToken, (req, res) => {
   console.log(req.user);
   return res.json({ user: req.user });
 });
+
+// app.post("/create/kaligraphyItem", async (req, res) => {
+//   const itemData = req.body;
+
+//   try {
+//     const itemId = await postData(itemData, "kaligraphyItem");
+//     return res.json({
+//       message: "Kaligraphy item created successfully!",
+//       itemId: itemId.id, 
+//     });
+//   } catch (error) {
+//     console.error("Error creating kaligraphy item: ", error);
+//     return res
+//       .status(500)
+//       .json({ message: "Failed to create kaligraphy item." });
+//   }
+// });
+
+// app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
+//   const itemId = req.params.itemId;
+//   const reviewData = req.body;
+
+//   try {
+//     const reviewsRef = `kaligraphyItem/${itemId}/review`;
+//     const reviewId = await postData(reviewData, reviewsRef);
+//     return res.json({ message: "Review added successfully!", reviewId: reviewId.id });
+//   } catch (error) {
+//     console.error("Error adding review: ", error);
+//     return res.status(500).json({ message: "Failed to add review." });
+//   }
+// });
 
 app.post("/create/:category", async (req, res) => {
   const category = req.params.category;
@@ -112,7 +144,12 @@ app.get("/read/:category/:id", async (req, res) => {
 
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
+<<<<<<< Updated upstream
   const cartData = await getCartData(userId);
+=======
+  // Fetch cart data using userId
+  const cartData = await getCartData(userId); // Assuming getCartData is a function to fetch cart data
+>>>>>>> Stashed changes
   return res.json(cartData);
 });
 
