@@ -1,25 +1,70 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getData, updateData } from "@/api/apiClient";
+import { isUserSignedIn } from "@/api/auth";
+import axios from "axios";
 
 const ProfileEdit = () => {
-  // Use temporary hardcoded data for userData
   const [userData, setUserData] = useState({
-    username: "temporary_user",
-    email: "temporary_user@example.com",
-    no_telp: "1234567890",
-    address: "Temporary Address",
+    username: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
   });
+  const [uid, setUid] = useState("");
 
-  // Function to handle input changes
+  useEffect(() => {
+    console.log("isUserSignedIn", isUserSignedIn());
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("http://localhost:3001/user", {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          const userId = response.data.user.uid;
+          setUid(userId);
+          const userDataResponse = await getData("users", userId);
+          
+          setUserData({
+            ...userDataResponse.data,
+            email: response.data.user.email,
+          });
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      }
+    };
+
+    fetchUser();
+  }, []);
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
-  // Temporary submit function without API call
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated data (temporary):", userData);
-    alert("Data has been temporarily updated!");
+    console.log("Updated data:", userData);
+    
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get("http://localhost:3001/user", {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
+      const userId = response.data.user.uid;
+
+      const { email, ...dataToUpdate } = userData; 
+      await updateData("users", userId, dataToUpdate);
+      alert("Data has been updated successfully!");
+    } catch (error) {
+      console.error("Error updating user data:", error);
+      alert("There was an error updating the data.");
+    }
   };
 
   return (
@@ -60,8 +105,8 @@ const ProfileEdit = () => {
               />
               <input
                 type="text"
-                name="no_telp"
-                value={userData.no_telp}
+                name="phoneNumber"
+                value={userData.phoneNumber}
                 onChange={handleChange}
                 className="flex border-b-2 border-[#C1C1C1] bg-[#FAF1EA]"
                 required

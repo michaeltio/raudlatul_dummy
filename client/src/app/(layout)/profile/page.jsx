@@ -1,25 +1,46 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { getData } from "@/api/apiClient";
+import { isUserSignedIn } from "@/api/auth";
+import axios from "axios";
 
 const Profile = () => {
-  // Hardcoded user data
   const [userData, setUserData] = useState({
-    username: "Oshinobu",
-    email: "Oshinobu@gmail.com",
-    no_phone: "08123456789",
-    address: "Universitas Multimedia Nusantara, Gading Serpong",
+    username: "",
+    email: "",
+    phoneNumber: "",
+    address: "",
   });
+  const [uid, setUid] = useState("");
 
-  const handleChange = (e) => {
-    setUserData({ ...userData, [e.target.name]: e.target.value });
-  };
+  useEffect(() => {
+    console.log("isUserSignedIn", isUserSignedIn());
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("http://localhost:3001/user", {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          const userId = response.data.user.uid;
+          setUid(userId);
+          const userDataResponse = await getData("users", userId);
+          
+          setUserData({
+            ...userDataResponse.data,
+            email: response.data.user.email,
+          });
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      }
+    };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    // Here, you would handle the form submission logic
-    console.log("Form Submitted:", userData);
-  };
+    fetchUser();
+  }, []);
 
   return (
     <>
@@ -59,7 +80,7 @@ const Profile = () => {
               <div className="flex flex-col gap-6 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
                 <div className="md:text-xl">{userData.username}</div>
                 <div className="md:text-xl">{userData.email}</div>
-                <div className="md:text-xl">{userData.no_phone}</div>
+                <div className="md:text-xl">{userData.phoneNumber}</div>
                 <div className="md:text-xl">{userData.address}</div>
               </div>
             </div>
