@@ -1,26 +1,31 @@
 const express = require("express");
-const app = express();
+const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const {
   initializeFirebaseApp,
+  registerUser,
+  loginUser,
+  addKaligraphyItem,
+  addReviewToKaligraphyItem,
   postData,
   getAllData,
   getData,
   updateData,
   deleteData,
-  registerUser,
-  loginUser,
-  addKaligraphyItem,
-  addReviewToKaligraphyItem,
 } = require("./firebase");
-const jwt = require('jsonwebtoken');
 
-const generateToken = (user) => {
-  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, { expiresIn: '1h' });
-};
+require("dotenv").config();
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization']?.split(' ')[1];
+const app = express();
+const PORT = 3001;
+
+initializeFirebaseApp();
+
+app.use(cors());
+app.use(express.json());
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -33,39 +38,67 @@ const verifyToken = (req, res, next) => {
   });
 };
 
-const PORT = 3001;
-initializeFirebaseApp();
-
-app.use(cors());
-app.use(express.json());
-
 app.post("/register", async (req, res) => {
   const { email, password, username, address, phoneNumber } = req.body;
   try {
-    const user = await registerUser(email, password, username, address, phoneNumber);
+    const user = await registerUser(
+      email,
+      password,
+      username,
+      address,
+      phoneNumber
+    );
     return res.json({ message: "User registered successfully!", user });
   } catch (error) {
-    return res.status(400).json({ message: error.message }); 
+    return res.status(400).json({ message: error.message });
   }
 });
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await loginUser(email, password);
-  if (user) {
-    const token = generateToken(user.user);
-    return res.json({ message: "User logged in successfully!", token });
-  } else {
-    return res.status(400).json({ message: "Login failed." });
+  try {
+    const user = await loginUser(email, password);
+    const token = jwt.sign(
+      { uid: user.user.uid, email: user.user.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    return res.json({ message: "Login successful!", token });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 });
 
-app.get("/protected", verifyToken, (req, res) => {
-  res.send("This is a protected route, user id is: " + req.user.uid);
+app.post("/logout", authenticateToken, (req, res) => {
+  // Invalidate the token on the client side
+  return res.json({ message: "Logout successful!" });
+});
+
+app.get("/protected", authenticateToken, (req, res) => {
+  return res.json({ message: "This is a protected route" });
+});
+
+app.get("/user", authenticateToken, (req, res) => {
+  console.log(req.user);
+  return res.json({ user: req.user });
 });
 
 app.post("/create/kaligraphyItem", async (req, res) => {
-  const { artist_name, category, created_date, description, image, is_available, item_id, item_name, price, quantity, rating } = req.body;
+  const {
+    artist_name,
+    category,
+    created_date,
+    description,
+    image,
+    is_available,
+    item_id,
+    item_name,
+    price,
+    quantity,
+    rating,
+  } = req.body;
 
   const itemData = {
     artist_name,
@@ -78,15 +111,20 @@ app.post("/create/kaligraphyItem", async (req, res) => {
     item_name,
     price,
     quantity,
-    rating
+    rating,
   };
 
   try {
     const itemId = await addKaligraphyItem(itemData);
-    return res.json({ message: "Kaligraphy item created successfully!", itemId });
+    return res.json({
+      message: "Kaligraphy item created successfully!",
+      itemId,
+    });
   } catch (error) {
     console.error("Error creating kaligraphy item: ", error);
-    return res.status(500).json({ message: "Failed to create kaligraphy item." });
+    return res
+      .status(500)
+      .json({ message: "Failed to create kaligraphy item." });
   }
 });
 
@@ -98,7 +136,7 @@ app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
     customer_name,
     item_name,
     rating,
-    review
+    review,
   };
 
   try {

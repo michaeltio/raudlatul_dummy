@@ -3,6 +3,7 @@ import { useState } from "react";
 import { loginUser } from "@/api/apiClient";
 import Link from "next/link";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -13,14 +14,23 @@ export default function Login() {
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
 
     try {
-      const response = await loginUser(formData);
+      const response = await axios.post(
+        "http://localhost:3001/login",
+        formData,
+      );
       setSuccessMessage(response.data.message);
+      localStorage.setItem("token", response.data.token);
+      console.log("Login successful!");
     } catch (error) {
       console.error("Login error:", error);
       setError(
@@ -28,10 +38,6 @@ export default function Login() {
           "Something went wrong. Please try again.",
       );
     }
-  };
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (

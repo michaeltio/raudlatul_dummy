@@ -22,16 +22,14 @@ let app;
 let firestoreDB;
 let auth;
 
-require("dotenv").config();
-
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.FIREBASE_PROJECT_ID,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.FIREBASE_APP_ID,
-  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
+  authDomain: "raudlatulirfan-c7999.firebaseapp.com",
+  projectId: "raudlatulirfan-c7999",
+  storageBucket: "raudlatulirfan-c7999.appspot.com",
+  messagingSenderId: "546842381619",
+  appId: "1:546842381619:web:4afc62d57234b3996a8246",
+  measurementId: "G-JRGN04FFXP",
 };
 
 const initializeFirebaseApp = () => {

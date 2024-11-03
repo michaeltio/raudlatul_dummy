@@ -1,14 +1,47 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
+import { isUserSignedIn } from "@/api/auth";
+import axios from "axios";
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
 
 export default function NavigationBar() {
   const [hamburgerActive, setHamburgerActive] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const handleSignOut = () => {
+    localStorage.removeItem("token");
+    window.location.reload();
+  };
+
+  const [isSignedIn, setIsSignedIn] = useState();
+
+  useEffect(() => {
+    console.log("isUserSignedIn", isUserSignedIn());
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("http://localhost:3001/user", {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          console.log(response.data.user);
+        } catch (error) {
+          console.error("Error fetching user:", error);
+        }
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  console.log("isSignedIn", isSignedIn);
 
   return (
     <>
@@ -48,7 +81,10 @@ export default function NavigationBar() {
           >
             Login
           </Link>
-          <button className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white">
+          <button
+            onClick={handleSignOut}
+            className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
+          >
             Sign Out
           </button>
         </div>

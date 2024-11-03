@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import SearchBar from "@/components/shop/SearchBar";
 import Item from "@/components/shop/Item";
@@ -22,14 +22,14 @@ export default function Shop() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getAllData('kaligraphyItem'); 
-        setItems(response); 
-        console.log("Fetched items:", response); 
+        const response = await getAllData("kaligraphyItem");
+        setItems(response);
+        console.log("Fetched items:", response);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
-    
+
     fetchData();
   }, []);
 
@@ -46,7 +46,7 @@ export default function Shop() {
             <Item
               key={item.item_id || i} // Tambahkan fallback untuk key jika item_id tidak tersedia
               image={item.image}
-              name={item.item_name}  
+              name={item.item_name}
               price={item.price}
             />
           ))
