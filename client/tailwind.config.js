@@ -7,10 +7,8 @@ module.exports = {
   ],
   theme: {
     extend: {
-      fontSize: {
-        "2xs": "0.625rem",
-        "3xs": "0.5rem",
-        "4xs": "0.45rem",
+      colors: {
+        primaryWhite: "#FAF1EA",
       },
       fontFamily: {
         ptserif: ["PT Serif", "serif"],

@@ -3,10 +3,6 @@
   src: url("/font/PTSerif/PTSerif-Regular.ttf") format("ttf");
 }
 
-body {
-  overflow-x: hidden;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
