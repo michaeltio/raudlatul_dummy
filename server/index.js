@@ -13,16 +13,19 @@ const {
   updateData,
   deleteData,
 } = require("./firebase");
-const jwt = require("jsonwebtoken");
 
-const generateToken = (user) => {
-  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-};
+require("dotenv").config();
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(" ")[1];
+const app = express();
+const PORT = 3001;
+
+initializeFirebaseApp();
+
+app.use(cors());
+app.use(express.json());
+
+const authenticateToken = (req, res, next) => {
+  const token = req.headers["authorization"];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
