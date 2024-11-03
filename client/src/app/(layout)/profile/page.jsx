@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import Link from "next/link";
 
 const Profile = () => {
   // Hardcoded user data
@@ -55,7 +56,7 @@ const Profile = () => {
                 <div className="text-lg font-semibold md:text-2xl">Address</div>
               </div>
 
-              <div className="flex flex-col gap-5 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
+              <div className="flex flex-col gap-6 border-l-2 border-black py-8 ps-8 md:py-5 md:ps-12">
                 <div className="md:text-xl">{userData.username}</div>
                 <div className="md:text-xl">{userData.email}</div>
                 <div className="md:text-xl">{userData.no_phone}</div>
@@ -65,28 +66,44 @@ const Profile = () => {
             <div className="md:flex md:pt-5">
               <div className="hidden justify-center md:flex md:justify-center md:text-2xl">
                 <button className="rounded-full border border-black px-10 md:h-12">
-                  Edit
+                  <Link href="/profile/edit">Edit</Link>
                 </button>
               </div>
               <div className="bottom-0 right-0 hidden justify-between md:absolute md:flex md:w-56">
-                <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-                  Order
-                </button>
-                <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-                  Sent
-                </button>
-                <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-                  Rating
-                </button>
+                <Link href="/profile/order">
+                  <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                    Order
+                  </button>
+                </Link>
+                <Link href="/profile/sent">
+                  <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                    Sent
+                  </button>
+                </Link>
+                <Link href="/profile/rating">
+                  <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                    Rating
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
           <div className="flex justify-center gap-5 md:hidden md:w-56">
-            <button className="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
-            <button className="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
-            <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-              Rating
-            </button>
+            <Link href="/profile/order">
+              <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                Order
+              </button>
+            </Link>
+            <Link href="/profile/sent">
+              <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                Sent
+              </button>
+            </Link>
+            <Link href="/profile/rating">
+              <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
+                Rating
+              </button>
+            </Link>
           </div>
         </div>
       </div>

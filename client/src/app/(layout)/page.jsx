@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -125,7 +126,7 @@ export default function Home() {
             <p>the Raudlatul Irfan</p>
           </div>
           <button className="z-10 rounded-full bg-[#E9B472] px-6 py-1 font-ptserif font-semibold text-white hover:bg-[#C6975D]">
-            Open
+            <Link href="/about-us">Open</Link>
           </button>
         </div>
       </div>

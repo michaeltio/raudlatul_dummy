@@ -55,7 +55,7 @@ export default function Register() {
         >
           {/* {error && <p className="text-red-500">{error}</p>} 
           {successMessage && <p className="text-green-500">{successMessage}</p>}  */}
-          
+
           <div className="relative w-4/5 rounded-full border-2 border-black">
             <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
               <Image
@@ -145,7 +145,9 @@ export default function Register() {
           <button type="submit" className="rounded-full bg-[#E9B472] px-8 py-2">
             Register
           </button>
-          <Link href="/login">Already Have an Account? Login Here!</Link>
+          <Link href="/login" className="hover:text-[#C6975D]">
+            Already Have an Account? Login Here!
+          </Link>
         </form>
         <div className="mt-4 flex flex-col items-center gap-4 md:hidden">
           <div className="flex w-4/5 items-center">

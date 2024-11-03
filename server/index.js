@@ -13,19 +13,16 @@ const {
   updateData,
   deleteData,
 } = require("./firebase");
+const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
+const generateToken = (user) => {
+  return jwt.sign({ uid: user.uid }, process.env.JWT_SECRET, {
+    expiresIn: "1h",
+  });
+};
 
-const app = express();
-const PORT = 3001;
-
-initializeFirebaseApp();
-
-app.use(cors());
-app.use(express.json());
-
-const authenticateToken = (req, res, next) => {
-  const token = req.headers["authorization"];
+const verifyToken = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     return res.status(403).send("A token is required for authentication");
   }
@@ -170,12 +167,10 @@ app.get("/read/:category/:id", async (req, res) => {
 });
 
 app.get("/read/cart/:userId", async (req, res) => {
-  return res.json({ message: "Cart data fetched successfully!" });
-  // const uid = req.params.userId;
-  // return uid;
-  // const data = await getAllData("kaligraphyItem");
-
-  // return res.json(data);
+  const userId = req.params.userId;
+  // Fetch cart data using userId
+  const cartData = await getCartData(userId); // Assuming getCartData is a function to fetch cart data
+  return res.json(cartData);
 });
 
 app.post("/update/:category/:id", async (req, res) => {

@@ -88,7 +88,9 @@ export default function Login() {
           <button type="submit" className="rounded-full bg-[#E9B472] px-8 py-2">
             Login
           </button>
-          <Link href="/register">Don't Have an Account? Register Here!</Link>
+          <Link href="/register" className="hover:text-[#C6975D]">
+            Don't Have an Account? Register Here!
+          </Link>
         </form>
         <div className="mt-4 flex flex-col items-center gap-4 md:hidden">
           <div className="flex w-4/5 items-center">
