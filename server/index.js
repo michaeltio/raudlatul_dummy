@@ -131,6 +131,15 @@ app.get("/read/:category/:id", async (req, res) => {
   return res.json(data);
 });
 
+app.get("/read/cart/:userId", async (req, res) => {
+  return res.json({ message: "Cart data fetched successfully!" });
+  // const uid = req.params.userId;
+  // return uid;
+  // const data = await getAllData("kaligraphyItem");
+
+  // return res.json(data);
+});
+
 app.post("/update/:category/:id", async (req, res) => {
   const category = req.params.category;
   const id = req.params.id;
