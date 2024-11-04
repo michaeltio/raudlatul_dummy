@@ -32,6 +32,7 @@ export default function NavigationBar() {
             },
           });
           console.log(response.data.user);
+          setIsSignedIn(true);
         } catch (error) {
           console.error("Error fetching user:", error);
         }
@@ -41,14 +42,15 @@ export default function NavigationBar() {
     fetchUser();
   }, []);
 
-  console.log("isSignedIn", isSignedIn);
-
   return (
     <>
       <nav className="fixed z-50 flex w-screen flex-row items-center justify-between bg-primaryWhite bg-opacity-50 px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] backdrop-blur-sm md:px-12 md:py-6">
-        <h1 className="text-2xs font-ptserif font-semibold tracking-wide md:text-lg">
+        <Link
+          href="/"
+          className="text-2xs font-ptserif font-semibold tracking-wide md:text-lg"
+        >
           Raudlatul Irfan
-        </h1>
+        </Link>
         <button
           className="md:hidden"
           onClick={() => {
@@ -75,18 +77,29 @@ export default function NavigationBar() {
           <Link href="/shop">
             <h1 className={`inline border-b-2 border-[#E9B472]`}>Shop</h1>
           </Link>
-          <Link
-            href="/login"
-            className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
-          >
-            Login
-          </Link>
-          <button
-            onClick={handleSignOut}
-            className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
-          >
-            Sign Out
-          </button>
+          {!isSignedIn ? (
+            <Link
+              href="/login"
+              className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
+            >
+              Login
+            </Link>
+          ) : (
+            <>
+              <button
+                onClick={handleSignOut}
+                className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
+              >
+                Sign Out
+              </button>
+              <Link
+                href="/profile"
+                className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
+              >
+                Profile
+              </Link>
+            </>
+          )}
         </div>
       </nav>
       <LazyMotion features={domAnimation}>
@@ -135,7 +148,7 @@ export default function NavigationBar() {
                     </h1>
                   </Link>
                 </div>
-                {!isAuthenticated ? (
+                {!isSignedIn ? (
                   <Link
                     href="/login"
                     className="w-full rounded-full bg-[#092928] py-1 text-center text-white"

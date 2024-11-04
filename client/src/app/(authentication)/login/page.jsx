@@ -4,13 +4,15 @@ import { loginUser } from "@/api/apiClient";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const router = useRouter();
 
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
