@@ -9,12 +9,12 @@ export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [uid, setUid] = useState("");
+  const [loading, setLoading] = useState(true); // Loading state to manage client-side rendering
 
   useEffect(() => {
-    console.log("isUserSignedIn", isUserSignedIn());
     const fetchCartData = async () => {
       const token = localStorage.getItem("token");
-      if (token) {
+      if (token && isUserSignedIn()) {
         try {
           const userResponse = await axios.get("http://localhost:3001/user", {
             headers: {
@@ -24,15 +24,30 @@ export default function Cart() {
           const userId = userResponse.data.user.uid;
           setUid(userId);
 
-          const cartDataResponse = await axios.get(
-            `http://localhost:3001/read/cart/${userId}`,
+          const [cartDataResponse, kaligraphyItems] = await Promise.all([
+            axios.get(`http://localhost:3001/read/cart/${userId}`),
+            axios.get(`http://localhost:3001/read/kaligraphyItem`),
+          ]);
+
+          // Filter cart items based on user cart data
+          const filteredItems = kaligraphyItems.data.filter((item) =>
+            cartDataResponse.data.some(
+              (cartItem) => cartItem.item_id === item.id,
+            ),
           );
-          console.log("cartDataResponse", cartDataResponse);
-          setCartItems(cartDataResponse.data);
+          setCartItems(filteredItems);
+
+          // Calculate total price
+          const totalPrice = filteredItems.reduce(
+            (sum, item) => sum + item.price,
+            0,
+          );
+          setTotal(totalPrice);
         } catch (error) {
           console.error("Error fetching cart data:", error);
         }
       }
+      setLoading(false); // Mark loading as false once data is loaded
     };
 
     fetchCartData();
@@ -47,13 +62,15 @@ export default function Cart() {
       </div>
 
       <div className="grid grid-cols-2 place-items-center gap-16 px-16 py-12 sm:grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))]">
-        {cartItems.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-gray-500">Loading your cart...</p>
+        ) : cartItems.length > 0 ? (
           cartItems.map((item, i) => (
             <Item
               key={item.item_id || i}
               image={item.image}
               name={item.item_name}
-              price={item.price.toLocaleString()} // Ensure this is the correct format
+              price={item.price.toLocaleString()}
             />
           ))
         ) : (

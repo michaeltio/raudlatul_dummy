@@ -44,7 +44,8 @@ export default function Shop() {
         {items.length > 0 ? (
           items.map((item, i) => (
             <Item
-              key={item.item_id || i} // Tambahkan fallback untuk key jika item_id tidak tersedia
+              id={item.id}
+              key={i}
               image={item.image}
               name={item.item_name}
               price={item.price}
