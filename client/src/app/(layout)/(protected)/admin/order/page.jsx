@@ -1,50 +1,50 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import axios from "axios";
 
 export default function Order() {
   const [orders, setOrders] = useState([]);
-  const [formData, setFormData] = useState({
-    courier_name: "",
-    customer_address: "",
-    customer_name: "",
-    item_name: "",
-    price: "",
-    quantity: "",
-  });
 
   useEffect(() => {
-    const tempOrders = [
-      {
-        id: 1,
-        courier_name: "John Doe",
-        customer_address: "123 Elm St",
-        customer_name: "Jane Smith",
-        item_name: "Laptop",
-        price: "1200",
-        quantity: "1",
-      },
-      {
-        id: 2,
-        courier_name: "Mary Johnson",
-        customer_address: "456 Oak St",
-        customer_name: "Mike Brown",
-        item_name: "Phone",
-        price: "800",
-        quantity: "2",
-      },
-      // Add more temporary order objects as needed
-    ];
+    const fetchOrders = async () => {
+      try {
+        const usersResponse = await axios.get("http://localhost:3001/read/users");
+        const users = usersResponse.data;
 
-    setOrders(tempOrders);
+        const allOrders = [];
+
+        for (const user of users) {
+          const userId = user.id;
+          const cartDataResponse = await axios.get(`http://localhost:3001/read/order/${userId}`);
+
+          const userOrders = cartDataResponse.data.map(order => ({
+            userId: userId,
+            orderId: order.id,
+            ...order
+          }));
+
+          allOrders.push(...userOrders);
+        }
+
+        setOrders(allOrders);
+      } catch (error) {
+        console.error("Error fetching users with orders:", error);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleDelete = (id) => {
-    setOrders((prevOrders) => prevOrders.filter((order) => order.id !== id));
+  const handleDelete = async (orderId, userId) => {
+    try {
+      console.log(`Deleting orderId: ${orderId} for userId: ${userId}`);
+      await axios.post(`http://localhost:3001/delete/order/${userId}/${orderId}`);
+      setOrders(orders.filter(order => order.orderId !== orderId));
+      console.log("Order deleted successfully");
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
   };
 
   console.log(orders);
@@ -74,9 +74,6 @@ export default function Order() {
                     </th>
                     <th scope="col" className="px-6 py-3">
                       ADDRESS
-                    </th>
-                    <th scope="col" className="px-6 py-3">
-                      COURIER
                     </th>
                     <th scope="col" className="px-6 py-3">
                       PRICE
@@ -110,18 +107,15 @@ export default function Order() {
                       <td className="px-6 py-4 text-[#092928]">
                         {item.customer_address}
                       </td>
-                      <td className="px-6 py-4 text-[#092928]">
-                        {item.courier_name}
-                      </td>
                       <td className="px-6 py-4 text-[#092928]">{item.price}</td>
                       <td className="flex items-center gap-3 px-6 py-4 text-[#092928]">
                         <input
                           type="checkbox"
-                          id={`checkbox-table-search-${item.id}`}
+                          id={`checkbox-table-search-${item.orderId}`}
                           className="h-5 w-5"
                         />
                         <Image
-                          onClick={() => handleDelete(item.id)}
+                          onClick={() => handleDelete(item.orderId, item.userId)}
                           src={`/svg/icon/delete.svg`}
                           alt="delete"
                           className="cursor-pointer"
