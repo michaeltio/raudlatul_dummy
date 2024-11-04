@@ -2,7 +2,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Item({ image, name, price, isInCart, onToggleCart }) {
+export default function Item({
+  image,
+  name,
+  price,
+  isInCart,
+  onToggleCart,
+  quantity,
+}) {
   return (
     <div className="relative w-32 sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
@@ -29,6 +36,7 @@ export default function Item({ image, name, price, isInCart, onToggleCart }) {
       <div className="pt-4">
         <h1 className="text-wrap font-semibold">{name}</h1>
         <p>Rp. {price}</p>
+        {isInCart && <p>Quantity: {quantity}</p>}
       </div>
     </div>
   );
