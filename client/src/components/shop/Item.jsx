@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Item({ image, name, price }) {
+export default function Item({ image, name, price, isInCart, onToggleCart }) {
   return (
     <div className="relative w-32 sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
@@ -12,10 +13,13 @@ export default function Item({ image, name, price }) {
           height={500}
           className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
         />
-        <div className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16">
+        <div
+          onClick={onToggleCart}
+          className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
+        >
           <Image
-            src="/svg/icon/plus.svg"
-            alt="Add to cart"
+            src={isInCart ? "/svg/icon/minus.svg" : "/svg/icon/plus.svg"} // Toggle icon based on cart status
+            alt={isInCart ? "Remove from cart" : "Add to cart"}
             width={20}
             height={20}
             className="w-1/3"
