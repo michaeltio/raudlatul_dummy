@@ -106,6 +106,30 @@ app.post("/create/:kaligraphyItemId/review", async (req, res) => {
   return res.json({ message: "Review uploaded successfully!" });
 });
 
+app.post("/create/:userId/cart", async (req, res) => {
+  const userId = req.params.userId;
+  const cart = req.body;
+
+  await postData(cart, "users/" + userId + "/cart");
+  return res.json({ message: "Cart uploaded successfully!" });
+});
+
+app.post("/create/:userId/order", async (req, res) => {
+  const userId = req.params.userId;
+  const order = req.body;
+
+  await postData(order, "users/" + userId + "/order");
+  return res.json({ message: "Order uploaded successfully!" });
+});
+
+app.post("/create/:userId/wishlist", async (req, res) => {
+  const userId = req.params.userId;
+  const wishlist = req.body;
+
+  await postData(wishlist, "users/" + userId + "/wishlist");
+  return res.json({ message: "Wishlist uploaded successfully!" });
+});
+
 app.get("/read/:category", async (req, res) => {
   const category = req.params.category;
   

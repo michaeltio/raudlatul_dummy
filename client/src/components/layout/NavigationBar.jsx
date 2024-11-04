@@ -86,18 +86,17 @@ export default function NavigationBar() {
             </Link>
           ) : (
             <>
+              <Link href="/profile">
+                <h1 className={`inline border-b-2 border-[#E9B472]`}>
+                  Profile
+                </h1>
+              </Link>
               <button
                 onClick={handleSignOut}
                 className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
               >
                 Sign Out
               </button>
-              <Link
-                href="/profile"
-                className="w-24 rounded-full bg-[#092928] py-1 text-center text-white"
-              >
-                Profile
-              </Link>
             </>
           )}
         </div>
