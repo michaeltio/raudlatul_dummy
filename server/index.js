@@ -98,6 +98,12 @@ app.post("/create/:category", async (req, res) => {
   return res.json({ message: "Data uploaded successfully!" });
 });
 
+app.get("/read/wishlist/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const wishlistData = await getAllData("users/" + userId + "/wishlist");
+  return res.json(wishlistData);
+});
+
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
   const cartData = await getAllData("users/" + userId + "/cart");
@@ -118,12 +124,6 @@ app.get("/read/:category/:id", async (req, res) => {
   const data = await getData(category, id);
 
   return res.json(data);
-});
-
-app.get("/read/cart/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const cartData = await getCartData(userId);
-  return res.json(cartData);
 });
 
 app.post("/update/:category/:id", async (req, res) => {
