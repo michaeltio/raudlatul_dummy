@@ -1,3 +1,4 @@
+// Import funtions
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
@@ -10,10 +11,11 @@ const {
   getData,
   updateData,
   deleteData,
+  signOutUser,
 } = require("./firebase");
-
 require("dotenv").config();
 
+// Express setup
 const app = express();
 const PORT = 3001;
 
@@ -22,6 +24,7 @@ initializeFirebaseApp();
 app.use(cors());
 app.use(express.json());
 
+// Middleware to authenticate token
 const authenticateToken = (req, res, next) => {
   const token = req.headers["authorization"];
   if (!token) {
@@ -36,6 +39,7 @@ const authenticateToken = (req, res, next) => {
   });
 };
 
+// Authentication routes
 app.post("/register", async (req, res) => {
   const { email, password, username, address, phoneNumber } = req.body;
   try {
@@ -69,9 +73,13 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/logout", authenticateToken, (req, res) => {
-  // Invalidate the token on the client side
-  return res.json({ message: "Logout successful!" });
+app.post("/logout", authenticateToken, async (req, res) => {
+  try {
+    await signOutUser();
+    return res.json({ message: "Logout successful!" });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to logout." });
+  }
 });
 
 app.get("/protected", authenticateToken, (req, res) => {
@@ -83,37 +91,7 @@ app.get("/user", authenticateToken, (req, res) => {
   return res.json({ user: req.user });
 });
 
-// app.post("/create/kaligraphyItem", async (req, res) => {
-//   const itemData = req.body;
-
-//   try {
-//     const itemId = await postData(itemData, "kaligraphyItem");
-//     return res.json({
-//       message: "Kaligraphy item created successfully!",
-//       itemId: itemId.id,
-//     });
-//   } catch (error) {
-//     console.error("Error creating kaligraphy item: ", error);
-//     return res
-//       .status(500)
-//       .json({ message: "Failed to create kaligraphy item." });
-//   }
-// });
-
-// app.post("/create/kaligraphyItem/:itemId/review", async (req, res) => {
-//   const itemId = req.params.itemId;
-//   const reviewData = req.body;
-
-//   try {
-//     const reviewsRef = `kaligraphyItem/${itemId}/review`;
-//     const reviewId = await postData(reviewData, reviewsRef);
-//     return res.json({ message: "Review added successfully!", reviewId: reviewId.id });
-//   } catch (error) {
-//     console.error("Error adding review: ", error);
-//     return res.status(500).json({ message: "Failed to add review." });
-//   }
-// });
-
+// CRUD routes
 app.post("/create/:category", async (req, res) => {
   const category = req.params.category;
   await postData(req.body, category);
@@ -122,7 +100,7 @@ app.post("/create/:category", async (req, res) => {
 
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
-  const cartData = await getAllData("users/" + userId + "/cart"); // Assuming getCartData is a function to fetch cart data
+  const cartData = await getAllData("users/" + userId + "/cart");
   return res.json(cartData);
 });
 

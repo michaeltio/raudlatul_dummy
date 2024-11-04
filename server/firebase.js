@@ -1,3 +1,4 @@
+// Importing Firebase SDK
 const { initializeApp } = require("firebase/app");
 const {
   getFirestore,
@@ -17,21 +18,25 @@ const {
   onAuthStateChanged,
   signOut,
 } = require("firebase/auth");
+require("dotenv").config();
 
+// Firebase variables
 let app;
 let firestoreDB;
 let auth;
 
+// Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDHelwXXrAMhytact6B3zCS7LyEDcJS-Wo",
-  authDomain: "raudlatulirfan-c7999.firebaseapp.com",
-  projectId: "raudlatulirfan-c7999",
-  storageBucket: "raudlatulirfan-c7999.appspot.com",
-  messagingSenderId: "546842381619",
-  appId: "1:546842381619:web:4afc62d57234b3996a8246",
-  measurementId: "G-JRGN04FFXP",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 };
 
+// Initialize Firebase app
 const initializeFirebaseApp = () => {
   try {
     app = initializeApp(firebaseConfig);
@@ -43,6 +48,7 @@ const initializeFirebaseApp = () => {
   }
 };
 
+// Authentication functions
 const registerUser = async (
   email,
   password,
@@ -95,6 +101,7 @@ const signOutUser = async () => {
   }
 };
 
+// Firestore functions
 const postData = async (data, collectionName) => {
   try {
     const document = await addDoc(
@@ -165,4 +172,5 @@ module.exports = {
   deleteData,
   registerUser,
   loginUser,
+  signOutUser,
 };
