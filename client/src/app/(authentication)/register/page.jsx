@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { registerUser } from "@/api/apiClient";
+import { useRouter } from "next/router";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -31,6 +32,8 @@ export default function Register() {
         email: "",
         password: "",
       });
+      console.log("Registration successful!");
+      router.push("/login");
     } catch (error) {
       console.error("Registration error:", error);
       setError(
