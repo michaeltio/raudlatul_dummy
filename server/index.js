@@ -98,6 +98,12 @@ app.post("/create/:category", async (req, res) => {
   return res.json({ message: "Data uploaded successfully!" });
 });
 
+app.get("/read/review/:kaligraphyItemId", async (req, res) => {
+  const kaligraphyItemId = req.params.kaligraphyItemId;
+  const reviewData = await getAllData("kaligraphyItem/" + kaligraphyItemId + "/review");
+  return res.json(reviewData);
+});
+
 app.get("/read/cart/:userId", async (req, res) => {
   const userId = req.params.userId;
   const cartData = await getAllData("users/" + userId + "/cart");
