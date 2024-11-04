@@ -98,6 +98,28 @@ app.post("/create/:category", async (req, res) => {
   return res.json({ message: "Data uploaded successfully!" });
 });
 
+app.post("/create/:kaligraphyItemId/review", async (req, res) => {
+  const kaligraphyItemId = req.params.kaligraphyItemId;
+  const review = req.body;
+
+  await postData(review, "kaligraphyItem/" + kaligraphyItemId + "/review");
+  return res.json({ message: "Review uploaded successfully!" });
+});
+
+app.get("/read/:category", async (req, res) => {
+  const category = req.params.category;
+  
+  const data = await getAllData(category);
+
+  return res.json(data);
+});
+
+app.get("/read/review/:kaligraphyItemId", async (req, res) => {
+  const kaligraphyItemId = req.params.kaligraphyItemId;
+  const reviewData = await getAllData("kaligraphyItem/" + kaligraphyItemId + "/review");
+  return res.json(reviewData);
+});
+
 app.get("/read/wishlist/:userId", async (req, res) => {
   const userId = req.params.userId;
   const wishlistData = await getAllData("users/" + userId + "/wishlist");
@@ -110,12 +132,10 @@ app.get("/read/cart/:userId", async (req, res) => {
   return res.json(cartData);
 });
 
-app.get("/read/:category", async (req, res) => {
-  const category = req.params.category;
-  console.log("apa aja");
-  const data = await getAllData(category);
-
-  return res.json(data);
+app.get("/read/order/:userId", async (req, res) => {
+  const userId = req.params.userId;
+  const orderData = await getAllData("users/" + userId + "/order");
+  return res.json(orderData);
 });
 
 app.get("/read/:category/:id", async (req, res) => {
@@ -129,15 +149,65 @@ app.get("/read/:category/:id", async (req, res) => {
 app.post("/update/:category/:id", async (req, res) => {
   const category = req.params.category;
   const id = req.params.id;
+
   await updateData(category, id, req.body);
   return res.json({ message: "Data edited successfully!" });
+});
+
+app.post("/update/cart/:userId/:cartId", async (req, res) => {
+  const userId = req.params.userId;
+  const cartId = req.params.cartId;
+
+  await updateData("users/" + userId + "/cart", cartId, req.body);
+  return res.json({ message: "Cart updated successfully!" });
+});
+
+app.post("/update/order/:userId/:orderId", async (req, res) => {
+  const userId = req.params.userId;
+  const orderId = req.params.orderId;
+
+  await updateData("users/" + userId + "/order", orderId, req.body);
+  return res.json({ message: "Order updated successfully!" });
+});
+
+app.post("/update/wishlist/:userId/:wishlistId", async (req, res) => {
+  const userId = req.params.userId;
+  const wishlistId = req.params.wishlistId;
+
+  await updateData("users/" + userId + "/wishlist", wishlistId, req.body);
+  return res.json({ message: "Wishlist updated successfully!" });
 });
 
 app.post("/delete/:category/:id", async (req, res) => {
   const category = req.params.category;
   const id = req.params.id;
+
   await deleteData(category, id);
   return res.json({ message: "Data deleted successfully!" });
+});
+
+app.post("/delete/cart/:userId/:cartId", async (req, res) => {
+  const userId = req.params.userId;
+  const cartId = req.params.cartId;
+
+  await deleteData("users/" + userId + "/cart", cartId);
+  return res.json({ message: "Cart deleted successfully!" });
+});
+
+app.post("/delete/order/:userId/:orderId", async (req, res) => {
+  const userId = req.params.userId;
+  const orderId = req.params.orderId;
+
+  await deleteData("users/" + userId + "/order", orderId);
+  return res.json({ message: "Order deleted successfully!" });
+});
+
+app.post("/delete/wishlist/:userId/:wishlistId", async (req, res) => {
+  const userId = req.params.userId;
+  const wishlistId = req.params.wishlistId;
+
+  await deleteData("users/" + userId + "/wishlist", wishlistId);
+  return res.json({ message: "Wishlist deleted successfully!" });
 });
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));

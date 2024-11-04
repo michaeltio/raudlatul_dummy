@@ -4,6 +4,7 @@ import { loginUser } from "@/api/apiClient";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ export default function Login() {
       setSuccessMessage(response.data.message);
       localStorage.setItem("token", response.data.token);
       console.log("Login successful!");
+      router.push("/");
     } catch (error) {
       console.error("Login error:", error);
       setError(
