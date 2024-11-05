@@ -4,6 +4,7 @@ import Link from "next/link";
 import { getData } from "@/api/apiClient";
 import { isUserSignedIn } from "@/api/auth";
 import axios from "axios";
+import Image from "next/image";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -28,7 +29,7 @@ const Profile = () => {
           const userId = response.data.user.uid;
           setUid(userId);
           const userDataResponse = await getData("users", userId);
-          
+
           setUserData({
             ...userDataResponse.data,
             email: response.data.user.email,
@@ -52,16 +53,34 @@ const Profile = () => {
             </div>
             <div className="flex w-full flex-col items-center justify-center gap-5 md:hidden md:w-0">
               <div className="flex flex-row justify-center gap-6">
-                <div className="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div>
-                <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14"></div>
+                {/* <div className="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div> */}
+                <Link href="/cart">
+                  <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14">
+                    <Image
+                      src="/svg/icon/cart.svg"
+                      width={100}
+                      height={100}
+                      className="w-full p-2"
+                    />
+                  </div>
+                </Link>
               </div>
               <button className="rounded-full border border-black px-10 py-1 md:text-2xl">
                 Edit
               </button>
             </div>
             <div className="hidden flex-row justify-center gap-10 md:relative md:bottom-0 md:flex">
-              <div className="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div>
-              <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14"></div>
+              {/* <div className="h-10 w-10 rounded-full bg-[#E9B472] md:h-14 md:w-14"></div> */}
+              <Link href="/cart">
+                <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14">
+                  <Image
+                    src="/svg/icon/cart.svg"
+                    width={100}
+                    height={100}
+                    className="w-full p-3"
+                  />
+                </div>
+              </Link>
             </div>
           </div>
           <div className="relative w-full gap-14">
