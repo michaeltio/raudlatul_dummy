@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Order from "@/components/profile/Order";
+import Link from "next/link";
 
 export default function Service(key) {
   const [items, setItems] = useState([
@@ -41,15 +42,21 @@ export default function Service(key) {
         id="navShop"
         className="mb-10 flex flex-row items-center justify-between gap-5 md:justify-center md:gap-14"
       >
-        <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
-          Order
-        </button>
-        <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
-          Sent
-        </button>
-        <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
-          Rating
-        </button>
+        <Link href="/profile/order">
+          <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
+            Order
+          </button>
+        </Link>
+        <Link href="/profile/sent">
+          <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
+            Sent
+          </button>
+        </Link>
+        <Link href="/profile/rating">
+          <button className="w-32 rounded-3xl bg-[#E9B472] p-1 font-ptserif text-2xl font-black text-[#FAF1EA] hover:bg-[#C6975D]">
+            Rating
+          </button>
+        </Link>
       </div>
       <div>
         {items.map((item) => (
