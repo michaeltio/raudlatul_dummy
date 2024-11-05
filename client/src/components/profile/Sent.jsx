@@ -14,14 +14,7 @@ export default function Sent({ item }) {
           height={100}
           className="aspect-square w-20 rounded-lg md:w-32"
         />
-        <div className="flex w-full flex-col gap-3">
-          <div className="flex flex-col items-end">
-            <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D] md:text-lg">
-              On The Way
-            </p>
-            <p className="font-ptserif text-xs font-black md:text-base">{p3}</p>
-          </div>
-
+        <div className="flex w-full flex-row gap-1">
           <div className="flex flex-col gap-1">
             <h1 className="line-clamp-1 font-ptserif text-base font-black md:text-xl">
               {title}
@@ -31,11 +24,23 @@ export default function Sent({ item }) {
               <p className="font-ptserif text-xs font-black md:text-sm">{p2}</p>
             </div>
           </div>
-          <div className="flex flex-col items-end">
+
+          <div className="flex w-full flex-col gap-1">
+            <div className="flex flex-col items-end">
+              <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D] md:text-lg">
+                On The Way
+              </p>
+              <p className="font-ptserif text-xs font-black md:text-base">
+                {p3}
+              </p>
+            </div>
+          </div>
+
+          {/* <div className="flex flex-col items-end">
             <button className="text-end font-ptserif font-black text-[#C11313] underline hover:text-black md:text-lg">
               Courier Detail
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
