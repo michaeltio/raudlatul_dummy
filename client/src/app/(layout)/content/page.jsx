@@ -4,27 +4,74 @@ import SearchBar from "@/components/shop/SearchBar";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 
-export async function getAllData(endpoint) {
-  try {
-    // Ubah port ke 3001 agar terhubung ke server Express
-    const response = await fetch(`http://localhost:3001/read/${endpoint}`);
-    const data = await response.json();
-    console.log("API Response:", data); // Cek data yang diterima
-    return data;
-  } catch (error) {
-    console.error("Error in getAllData:", error);
-  }
-}
+// export async function getAllData(endpoint) {
+//   try {
+//     // Ubah port ke 3001 agar terhubung ke server Express
+//     const response = await fetch(`http://localhost:3001/read/${endpoint}`);
+//     const data = await response.json();
+//     console.log("API Response:", data); // Cek data yang diterima
+//     return data;
+//   } catch (error) {
+//     console.error("Error in getAllData:", error);
+//   }
+// }
 
 export default function Content() {
   const [items, setItems] = useState([]);
+  const [uid, setUid] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      const selectedItemId = localStorage.getItem("selectedItemId");
       try {
-        const response = await getAllData("kaligraphyItem");
-        setItems(response);
+        const userResponse = await axios.get("http://localhost:3001/user", {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
+        const userId = userResponse.data.user.uid;
+        // setUid(userId);
+
+        const [contentDataResponse, kaligraphyItems] = await Promise.all([
+          axios.get(`http://localhost:3001/read/content/${userId}`),
+          axios.get(`http://localhost:3001/read/kaligraphyItem`),
+        ]);
+
+        // const filteredItems = kaligraphyItems.data.filter((item) =>
+        //   contentDataResponse.data.some(
+        //     (cartItem) => cartItem.item_id === item.id,
+        //   ),
+        // );
+        // setCartItems(filteredItems);
+
+        if (
+          Array.isArray(contentDataResponse.data) &&
+          Array.isArray(kaligraphyItems.data)
+        ) {
+          const filteredItems = kaligraphyItems.data.filter((item) =>
+            contentDataResponse.data.some(
+              (cartItem) => cartItem.item_id === item.id,
+            ),
+          );
+          setItems(filteredItems);
+        } else {
+          console.error("Data format is incorrect.");
+        }
+
+        console.log("Content Data Response:", contentDataResponse.data);
+        console.log("Kaligraphy Items:", kaligraphyItems.data);
+
+        // const selectedItemId = localStorage.getItem("selectedItemId");
+        if (selectedItemId) {
+          // Cari item dengan id yang sesuai
+          const item = response.find((item) => item.id === selectedItemId);
+          setSelectedItem(item);
+        }
+
         console.log("Fetched items:", response);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -33,10 +80,6 @@ export default function Content() {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log("Items state updated:", items); // Log setiap kali items di-update
-  }, [items]);
 
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
