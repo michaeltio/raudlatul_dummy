@@ -1,38 +1,58 @@
+"use client";
+
 import SearchBar from "@/components/shop/SearchBar";
 import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
-const items = [
-  {
-    item_name: "Calligraphy Art",
-    description: "Beautiful Arabic calligraphy art with intricate details.",
-    artist_name: "Ahmad Al-Tamimi",
-    created_date: { seconds: 1696297200 }, // Use a timestamp for demo purposes
-    price: "Rp 1.250.000",
-  },
-];
+export async function getAllData(endpoint) {
+  try {
+    // Ubah port ke 3001 agar terhubung ke server Express
+    const response = await fetch(`http://localhost:3001/read/${endpoint}`);
+    const data = await response.json();
+    console.log("API Response:", data); // Cek data yang diterima
+    return data;
+  } catch (error) {
+    console.error("Error in getAllData:", error);
+  }
+}
 
 export default function Content() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getAllData("kaligraphyItem");
+        setItems(response);
+        console.log("Fetched items:", response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log("Items state updated:", items); // Log setiap kali items di-update
+  }, [items]);
+
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
       <SearchBar />
       <div className="md:mx-10 md:flex">
         <div className="space-y-4 px-9 md:flex-1 md:px-6 md:py-0 xl:flex xl:space-x-6 xl:space-y-0">
-          <div className="aspect-[16/11] rounded-2xl bg-[#092928] md:aspect-square md:flex-1 2xl:aspect-[16/11]">
-            <Image
-              src="/webp/caligraphy01.webp"
-              width={500}
-              height={500}
-              className="h-full w-full rounded-2xl object-cover"
-              alt="Calligraphy Art"
-            />
-          </div>
-
-          <div className="flex justify-center space-x-4 xl:flex-col xl:space-x-0 xl:space-y-4">
-            <div className="aspect-square w-12 rounded bg-[#E9B472] xl:w-14"></div>
-            <div className="aspect-square w-12 rounded bg-[#014E3E] xl:w-14"></div>
-            <div className="aspect-square w-12 rounded bg-[#E9B472] xl:w-14"></div>
-            <div className="aspect-square w-12 rounded bg-[#014E3E] xl:w-14"></div>
-          </div>
+          {items.map((item, index) => (
+            <div className="aspect-[16/11] rounded-2xl bg-[#092928] md:aspect-square md:flex-1 2xl:aspect-[16/11]">
+              <Image
+                src={`/webp/${item.image}`}
+                width={1000}
+                height={1000}
+                className="object-fit h-full w-full rounded-2xl"
+              />
+            </div>
+          ))}
         </div>
 
         <div className="content-center space-y-10 p-9 md:flex-1 md:space-y-20">
@@ -96,26 +116,11 @@ export default function Content() {
                   {item.price}
                 </p>
               ))}
-
-              <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold">
-                Check Out
-              </button>
-            </div>
-            <div className="absolute bottom-0 right-0 flex space-x-4">
-              <Image
-                src="/svg/icon/love.svg"
-                alt="img love"
-                className="h-10 w-10 rounded-full bg-[#E9B472] p-2"
-                width={10}
-                height={10}
-              />
-              <Image
-                src="/svg/icon/cart.svg"
-                alt="img cart"
-                className="h-10 w-10 rounded-full bg-[#014E3E] p-2"
-                width={10}
-                height={10}
-              />
+              <Link href="/cart">
+                <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold hover:border-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA]">
+                  Check Out
+                </button>
+              </Link>
             </div>
           </div>
         </div>
