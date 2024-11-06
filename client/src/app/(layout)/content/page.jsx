@@ -22,6 +22,7 @@ export default function Content() {
   const [items, setItems] = useState([]);
   const [uid, setUid] = useState("");
   const [selectedItem, setSelectedItem] = useState(null);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,6 +47,15 @@ export default function Content() {
         } else {
           console.error("Data format is incorrect. Expected array format.");
         }
+        const token = localStorage.getItem("token");
+        if (token) {
+          const userResponse = await axios.get("http://localhost:3001/user", {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
+          setUser(userResponse.data.user); // Set the user data
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -53,6 +63,26 @@ export default function Content() {
 
     fetchData();
   }, []);
+
+  const handleToggleCart = async () => {
+    if (!user) {
+      console.error("User is not logged in.");
+      return;
+    }
+
+    try {
+      // Ensure that the item ID is valid and user is set before making the request
+      const response = await axios.post(
+        `http://localhost:3001/create/${user.uid}/cart`,
+        {
+          item_id: selectedItem.id, // Ensure that `selectedItem.id` is used here
+        },
+      );
+      console.log("Item added to cart", response.data);
+    } catch (e) {
+      console.error("Error adding item to cart", e);
+    }
+  };
 
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
@@ -118,11 +148,12 @@ export default function Content() {
                   <p className="my-3 text-center font-ptserif text-xl font-bold">
                     {selectedItem.price}
                   </p>
-                  <Link href="/cart">
-                    <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold hover:border-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA]">
-                      Check Out
-                    </button>
-                  </Link>
+                  <button
+                    onClick={handleToggleCart}
+                    className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold hover:border-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA]"
+                  >
+                    Check Out
+                  </button>
                 </div>
               </div>
             </div>
