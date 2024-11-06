@@ -3,19 +3,14 @@ import { useState } from "react";
 import { loginUser } from "@/api/apiClient";
 import Link from "next/link";
 import Image from "next/image";
-import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const router = useRouter();
-
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,22 +20,26 @@ export default function Login() {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
+    setIsLoading(true);
+
+    if (!formData.email || !formData.password) {
+      setError("Please fill out all fields.");
+      setIsLoading(false);
+      return;
+    }
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/login",
-        formData,
-      );
+      const response = await loginUser(formData);
       setSuccessMessage(response.data.message);
       localStorage.setItem("token", response.data.token);
-      console.log("Login successful!");
       router.push("/");
     } catch (error) {
-      console.error("Login error:", error);
       setError(
         error.response?.data?.message ||
           "Something went wrong. Please try again.",
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,8 +51,8 @@ export default function Login() {
           className="relative mt-8 flex w-full flex-col items-center justify-center gap-4"
           onSubmit={handleSubmit}
         >
-          {/* {error && <p className="text-red-500">{error}</p>} 
-          {successMessage && <p className="text-green-500">{successMessage}</p>}  */}
+          {error && <p className="text-red-500">{error}</p>}
+          {successMessage && <p className="text-green-500">{successMessage}</p>}
 
           <div className="relative w-4/5 rounded-full border-2 border-black">
             <div className="absolute flex aspect-square h-full items-center justify-center rounded-l-full bg-[#D9D9D9]">
@@ -70,6 +69,8 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
               className="w-full rounded-full px-2 py-1 pl-10"
+              id="email"
+              aria-label="Email address"
             />
           </div>
           <div className="relative w-4/5 rounded-full border-2 border-black">
@@ -87,26 +88,21 @@ export default function Login() {
               value={formData.password}
               onChange={handleChange}
               className="w-full rounded-full px-2 py-1 pl-10"
+              id="password"
+              aria-label="Password"
             />
           </div>
-          <button type="submit" className="rounded-full bg-[#E9B472] px-8 py-2">
-            Login
+          <button
+            type="submit"
+            className={`rounded-full ${isLoading ? "bg-gray-400" : "bg-[#E9B472]"} px-8 py-2`}
+            disabled={isLoading}
+          >
+            {isLoading ? "Loading..." : "Login"}
           </button>
           <Link href="/register" className="hover:text-[#C6975D]">
             Don't Have an Account? Register Here!
           </Link>
         </form>
-        <div className="mt-4 flex flex-col items-center gap-4 md:hidden">
-          <div className="flex w-4/5 items-center">
-            <hr className="flex-grow border-t border-black" />
-            <span className="mx-2">Or</span>
-            <hr className="flex-grow border-t border-black" />
-          </div>
-
-          <button className="w-4/5 rounded-full border-2 border-black py-1 font-bold">
-            Google
-          </button>
-        </div>
       </div>
     </div>
   );
