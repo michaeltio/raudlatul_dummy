@@ -15,7 +15,6 @@ const {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
   signOut,
 } = require("firebase/auth");
 require("dotenv").config();
@@ -44,7 +43,7 @@ const initializeFirebaseApp = () => {
     auth = getAuth();
     return app;
   } catch (error) {
-    console.log("Firebase Error: ", error);
+    console.error("Error initializing Firebase: ", error);
   }
 };
 
@@ -64,17 +63,12 @@ const registerUser = async (
     );
     const uid = userCredential.user.uid;
 
-    const userData = {
-      username: username,
-      address: address,
-      phoneNumber: phoneNumber,
-    };
-
+    const userData = { username, address, phoneNumber };
     await setDoc(doc(firestoreDB, "users", uid), userData);
 
     return userCredential;
   } catch (error) {
-    console.log("Error in registering user: ", error);
+    console.error("Error registering user: ", error);
   }
 };
 
@@ -87,7 +81,7 @@ const loginUser = async (email, password) => {
     );
     return userCredential;
   } catch (error) {
-    console.error("Error in logging in user:", error.message);
+    console.error("Error logging in user: ", error.message);
     throw new Error("Failed to log in. Please check your email and password.");
   }
 };
@@ -97,7 +91,7 @@ const signOutUser = async () => {
     await signOut(auth);
     console.log("User signed out successfully");
   } catch (error) {
-    console.log("Error signing out: ", error);
+    console.error("Error signing out: ", error);
   }
 };
 
@@ -119,22 +113,16 @@ const getAllData = async (collectionName) => {
     const collectionRef = collection(firestoreDB, collectionName);
     const data = [];
 
-    let coll;
-
-    coll = query(collectionRef);
-
+    const coll = query(collectionRef);
     const docSnap = await getDocs(coll);
-    
+
     docSnap.forEach((doc) => {
-      console.log(doc._key);
       data.push({ id: doc.id, ...doc.data() });
     });
 
-    console.log("Data: ", data);
-
     return data;
   } catch (error) {
-    console.log("Error in getting data: ", error);
+    console.error("Error getting data: ", error);
   }
 };
 
@@ -143,27 +131,27 @@ const getData = async (collectionName, id) => {
     const document = await getDoc(doc(firestoreDB, collectionName, id));
     return document.data();
   } catch (error) {
-    console.log("Error in getting data: ", error);
+    console.error("Error getting data: ", error);
   }
 };
 
 const updateData = async (collectionName, id, data) => {
   try {
     const document = doc(firestoreDB, collectionName, id);
-    let dataUpdated = await setDoc(document, data);
-    return dataUpdated;
+    await setDoc(document, data);
+    return document;
   } catch (error) {
-    console.log("Error in uploading data: ", error);
+    console.error("Error updating data: ", error);
   }
 };
 
 const deleteData = async (collectionName, id) => {
   try {
     const document = doc(firestoreDB, collectionName, id);
-    let dataDeleted = await deleteDoc(document);
-    return dataDeleted;
+    await deleteDoc(document);
+    return document;
   } catch (error) {
-    console.log("Error in deleting data: ", error);
+    console.error("Error deleting data: ", error);
   }
 };
 

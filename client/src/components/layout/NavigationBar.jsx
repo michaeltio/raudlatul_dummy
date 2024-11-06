@@ -5,41 +5,27 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { isUserSignedIn } from "@/api/auth";
-import axios from "axios";
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from "framer-motion";
+import { signOutUser } from "@/api/apiClient";
 
 export default function NavigationBar() {
   const [hamburgerActive, setHamburgerActive] = useState(false);
-  const [user, setUser] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    await signOutUser();
     localStorage.removeItem("token");
     window.location.reload();
   };
 
-  const [isSignedIn, setIsSignedIn] = useState();
-
   useEffect(() => {
-    console.log("isUserSignedIn", isUserSignedIn());
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:3001/user", {
-            headers: {
-              Authorization: `${token}`,
-            },
-          });
-          console.log(response.data.user);
-          setIsSignedIn(true);
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      }
+    const checkUserSignedIn = async () => {
+      const user = await isUserSignedIn();
+      setIsSignedIn(!!user);
     };
 
-    fetchUser();
+    checkUserSignedIn();
   }, []);
 
   return (

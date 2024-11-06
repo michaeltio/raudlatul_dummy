@@ -1,17 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { isUserSignedIn } from "@/api/auth";
 
 export default function ProtectedLayout({ children }) {
   const router = useRouter();
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
-    if (!isUserSignedIn()) {
-      router.push("/login");
-    }
+    const checkSignInStatus = async () => {
+      const signedIn = await isUserSignedIn();
+      if (!signedIn) {
+        router.push("/login");
+      } else {
+        setSignedIn(true);
+      }
+    };
+    checkSignInStatus();
   }, [router]);
 
-  return isUserSignedIn() ? <>{children}</> : null;
+  return signedIn ? <>{children}</> : null;
 }

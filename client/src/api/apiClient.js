@@ -26,6 +26,10 @@ export const loginUser = async (formData) => {
   return apiClient.post("/login", formData);
 };
 
+export const signOutUser = async () => {
+  return apiClient.post("/logout");
+};
+
 export const postData = async (collectionName, data) => {
   return apiClient.post(`/create/${collectionName}`, data);
 };

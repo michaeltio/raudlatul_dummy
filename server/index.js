@@ -92,148 +92,62 @@ app.get("/user", authenticateToken, (req, res) => {
 });
 
 // CRUD routes
-app.post("/create/:category", async (req, res) => {
-  const category = req.params.category;
-  await postData(req.body, category);
-  return res.json({ message: "Data uploaded successfully!" });
+// Create data
+app.post("/data", authenticateToken, async (req, res) => {
+  const { collectionName, data } = req.body;
+  try {
+    const document = await postData(data, collectionName);
+    return res.json({ message: "Data added successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
-app.post("/create/:kaligraphyItemId/review", async (req, res) => {
-  const kaligraphyItemId = req.params.kaligraphyItemId;
-  const review = req.body;
-
-  await postData(review, "kaligraphyItem/" + kaligraphyItemId + "/review");
-  return res.json({ message: "Review uploaded successfully!" });
+// Read all data
+app.get("/data/:collectionName", authenticateToken, async (req, res) => {
+  const { collectionName } = req.params;
+  try {
+    const data = await getAllData(collectionName);
+    return res.json({ data });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
-app.post("/create/:userId/cart", async (req, res) => {
-  const userId = req.params.userId;
-  const cart = req.body;
-
-  await postData(cart, "users/" + userId + "/cart");
-  return res.json({ message: "Cart uploaded successfully!" });
+// Read single data
+app.get("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+  const { collectionName, id } = req.params;
+  try {
+    const data = await getData(collectionName, id);
+    return res.json({ data });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
-app.post("/create/:userId/order", async (req, res) => {
-  const userId = req.params.userId;
-  const order = req.body;
-
-  await postData(order, "users/" + userId + "/order");
-  return res.json({ message: "Order uploaded successfully!" });
+// Update data
+app.put("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+  const { collectionName, id } = req.params;
+  const data = req.body;
+  try {
+    const document = await updateData(collectionName, id, data);
+    return res.json({ message: "Data updated successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
-app.post("/create/:userId/wishlist", async (req, res) => {
-  const userId = req.params.userId;
-  const wishlist = req.body;
-
-  await postData(wishlist, "users/" + userId + "/wishlist");
-  return res.json({ message: "Wishlist uploaded successfully!" });
+// Delete data
+app.delete("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+  const { collectionName, id } = req.params;
+  try {
+    const document = await deleteData(collectionName, id);
+    return res.json({ message: "Data deleted successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 });
 
-app.get("/read/review/:kaligraphyItemId", async (req, res) => {
-  const kaligraphyItemId = req.params.kaligraphyItemId;
-  const reviewData = await getAllData(
-    "kaligraphyItem/" + kaligraphyItemId + "/review"
-  );
-  return res.json(reviewData);
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
-
-app.get("/read/:category", async (req, res) => {
-  const category = req.params.category;
-
-  const data = await getAllData(category);
-
-  return res.json(data);
-});
-
-app.get("/read/wishlist/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const wishlistData = await getAllData("users/" + userId + "/wishlist");
-  return res.json(wishlistData);
-});
-
-app.get("/read/cart/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const cartData = await getAllData("users/" + userId + "/cart");
-  return res.json(cartData);
-});
-
-app.get("/read/order/:userId", async (req, res) => {
-  const userId = req.params.userId;
-  const orderData = await getAllData("users/" + userId + "/order");
-  return res.json(orderData);
-});
-
-app.get("/read/:category/:id", async (req, res) => {
-  const category = req.params.category;
-  const id = req.params.id;
-  const data = await getData(category, id);
-
-  return res.json(data);
-});
-
-app.post("/update/:category/:id", async (req, res) => {
-  const category = req.params.category;
-  const id = req.params.id;
-
-  await updateData(category, id, req.body);
-  return res.json({ message: "Data edited successfully!" });
-});
-
-app.post("/update/cart/:userId/:cartId", async (req, res) => {
-  const userId = req.params.userId;
-  const cartId = req.params.cartId;
-
-  await updateData("users/" + userId + "/cart", cartId, req.body);
-  return res.json({ message: "Cart updated successfully!" });
-});
-
-app.post("/update/order/:userId/:orderId", async (req, res) => {
-  const userId = req.params.userId;
-  const orderId = req.params.orderId;
-
-  await updateData("users/" + userId + "/order", orderId, req.body);
-  return res.json({ message: "Order updated successfully!" });
-});
-
-app.post("/update/wishlist/:userId/:wishlistId", async (req, res) => {
-  const userId = req.params.userId;
-  const wishlistId = req.params.wishlistId;
-
-  await updateData("users/" + userId + "/wishlist", wishlistId, req.body);
-  return res.json({ message: "Wishlist updated successfully!" });
-});
-
-app.post("/delete/:category/:id", async (req, res) => {
-  const category = req.params.category;
-  const id = req.params.id;
-
-  await deleteData(category, id);
-  return res.json({ message: "Data deleted successfully!" });
-});
-
-app.post("/delete/cart/:userId/:cartId", async (req, res) => {
-  const userId = req.params.userId;
-  const cartId = req.params.cartId;
-
-  await deleteData("users/" + userId + "/cart", cartId);
-  return res.json({ message: "Cart deleted successfully!" });
-});
-
-app.post("/delete/order/:userId/:orderId", async (req, res) => {
-  const userId = req.params.userId;
-  const orderId = req.params.orderId;
-
-  await deleteData("users/" + userId + "/order", orderId);
-  return res.json({ message: "Order deleted successfully!" });
-});
-
-app.post("/delete/wishlist/:userId/:wishlistId", async (req, res) => {
-  const userId = req.params.userId;
-  const wishlistId = req.params.wishlistId;
-
-  await deleteData("users/" + userId + "/wishlist", wishlistId);
-  return res.json({ message: "Wishlist deleted successfully!" });
-});
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
