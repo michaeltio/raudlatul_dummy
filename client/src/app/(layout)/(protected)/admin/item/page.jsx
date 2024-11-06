@@ -1,7 +1,9 @@
 "use client";
+import { getAllData, postData } from "@/api/apiClient";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-const EditItem = () => {
+export default function EditItem() {
   const [items, setItems] = useState([]);
   const [formData, setFormData] = useState({
     item_name: "",
@@ -9,22 +11,23 @@ const EditItem = () => {
     artist_name: "",
     created_date: "",
     price: "",
-    image: "",
+    image: null, // Handling file input
     category: "",
-    is_available: "",
-    id: "",
-    review: "",
+    is_available: true,
     quantity: "",
   });
+  const [error, setError] = useState(null); // To handle error messages
 
+  // Fetch data from the API
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
+        const response = await getAllData("kaligraphyItem");
+        const data = response.data;
         setItems(data);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setError("Failed to fetch items. Please try again.");
       }
     };
 
@@ -32,23 +35,48 @@ const EditItem = () => {
   }, []);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handle file input for image
+  const handleFileChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      image: e.target.files[0], // Store the file object
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formDataToSubmit = new FormData();
+    for (const key in formData) {
+      formDataToSubmit.append(key, formData[key]);
+    }
+
     try {
-      const response = await fetch("http://localhost:3001/create/add-item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+      const response = await postData("kaligraphyItem", formDataToSubmit, {
+        "Content-Type": "multipart/form-data",
       });
-      const data = await response.json();
-      console.log(data);
+      console.log("Item added:", response.data);
+      setFormData({
+        item_name: "",
+        description: "",
+        artist_name: "",
+        created_date: "",
+        price: "",
+        image: null,
+        category: "",
+        is_available: true,
+        quantity: "",
+      });
     } catch (error) {
       console.error("Error submitting data:", error);
+      setError("Failed to submit data. Please try again.");
     }
   };
 
@@ -69,6 +97,7 @@ const EditItem = () => {
       is_available: item.is_available,
       item_id: item.item_id,
       review: item.review,
+      quantity: item.quantity,
     });
   };
 
@@ -82,13 +111,13 @@ const EditItem = () => {
         body: JSON.stringify({ id }),
       });
       const data = await response.json();
-      console.log(data);
+      console.log("Item deleted:", data);
+      setItems((prevItems) => prevItems.filter((item) => item.id !== id));
     } catch (error) {
-      console.error("Error deleting data:", error);
+      console.error("Error deleting item:", error);
+      setError("Failed to delete item. Please try again.");
     }
   };
-
-  console.log(items);
 
   return (
     <div className="mx-10 flex flex-col gap-16 py-12 font-ptserif">
@@ -96,15 +125,17 @@ const EditItem = () => {
         <h1 className="text-2xl font-black">Item</h1>
       </div>
 
+      {error && <p className="text-red-500">{error}</p>}
+
       <div className="mx-10 flex flex-col items-center gap-6">
-        <div className="flex flex-col justify-center gap-4">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="text"
             name="item_name"
             value={formData.item_name}
             onChange={handleChange}
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
-            placeholder="Item"
+            placeholder="Item Name"
           />
           <input
             type="text"
@@ -126,7 +157,7 @@ const EditItem = () => {
             <input
               type="date"
               name="created_date"
-              value={formData.created_date ? formData.created_date : ""}
+              value={formData.created_date || ""}
               onChange={handleChange}
               className="w-1/2 flex-1 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
               placeholder="Created Date"
@@ -141,26 +172,27 @@ const EditItem = () => {
             placeholder="Price"
           />
           <div className="flex gap-2">
-            <label htmlFor="" className="">
+            <label htmlFor="image" className="">
               Image
             </label>
-            <div className="flex w-full flex-col gap-2">
-              <input
-                type="file"
-                className="rounded-lg border-2 border-dashed border-black"
-              />
-              <p className="text-gray-500">
-                SVG, PNG, JPG or GIF (MAX. 800x400px).
-              </p>
-            </div>
+            <input
+              type="file"
+              name="image"
+              id="image"
+              onChange={handleFileChange}
+              className="rounded-lg border-2 border-dashed border-black"
+            />
+            <p className="text-gray-500">
+              SVG, PNG, JPG or GIF (MAX. 800x400px).
+            </p>
           </div>
-        </div>
-        <button
-          className="h-8 w-80 rounded-full bg-[#E9B472] text-[#FAF1EA]"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
+          <button
+            type="submit"
+            className="h-8 w-80 rounded-full bg-[#E9B472] text-[#FAF1EA]"
+          >
+            Submit
+          </button>
+        </form>
       </div>
 
       <div className="w-full overflow-x-scroll md:overflow-auto">
@@ -191,41 +223,38 @@ const EditItem = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {items.map((items, index) => (
-              <tr key={index} className="text-xs text-[#092928]">
-                <td className="py-2">{items.item_name}</td>
-                <td className="py-2">{items.description}</td>
-                <td className="py-2">{items.artist_name}</td>
+            {items.map((item) => (
+              <tr key={item.id} className="text-xs text-[#092928]">
+                <td className="py-2">{item.item_name}</td>
+                <td className="py-2">{item.description}</td>
+                <td className="py-2">{item.artist_name}</td>
                 <td className="py-2">
-                  {items.created_date && items.created_date.seconds
-                    ? new Date(
-                        items.created_date.seconds * 1000
-                      ).toLocaleDateString()
-                    : items.created_date}
+                  {item.created_date &&
+                    new Date(
+                      item.created_date.seconds * 1000,
+                    ).toLocaleDateString()}
                 </td>
-                <td className="py-2">{items.price}</td>
-                <td className="py-2">{items.image}</td>
+                <td className="py-2">{item.price}</td>
+                <td className="py-2">{item.image}</td>
                 <td className="py-2">
                   <button
-                    onClick={() => handleEdit(items)}
+                    onClick={() => handleEdit(item)}
                     className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
                   >
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(items.id)}
+                    onClick={() => handleDelete(item.id)}
                     className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
                   >
                     Delete
                   </button>
                 </td>
               </tr>
-            ))} */}
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
-};
-
-export default EditItem;
+}

@@ -15,7 +15,7 @@ apiClient.interceptors.response.use(
     } else if (error.response.status === 404) {
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export const registerUser = async (formData) => {
@@ -28,10 +28,10 @@ export const loginUser = async (formData) => {
 
 export const postData = async (collectionName, data) => {
   return apiClient.post(`/create/${collectionName}`, data);
-}
+};
 
 export const getAllData = async (collectionName) => {
-  return apiClient.get("/read/" + collectionName);
+  return apiClient.get(`/read/${collectionName}`);
 };
 
 export const getData = async (collectionName, id) => {

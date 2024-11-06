@@ -130,20 +130,20 @@ app.post("/create/:userId/wishlist", async (req, res) => {
   return res.json({ message: "Wishlist uploaded successfully!" });
 });
 
-app.get("/read/:category", async (req, res) => {
-  const category = req.params.category;
-
-  const data = await getAllData(category);
-
-  return res.json(data);
-});
-
 app.get("/read/review/:kaligraphyItemId", async (req, res) => {
   const kaligraphyItemId = req.params.kaligraphyItemId;
   const reviewData = await getAllData(
     "kaligraphyItem/" + kaligraphyItemId + "/review"
   );
   return res.json(reviewData);
+});
+
+app.get("/read/:category", async (req, res) => {
+  const category = req.params.category;
+
+  const data = await getAllData(category);
+
+  return res.json(data);
 });
 
 app.get("/read/wishlist/:userId", async (req, res) => {
