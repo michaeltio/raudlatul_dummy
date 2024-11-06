@@ -3,18 +3,7 @@
 import SearchBar from "@/components/shop/SearchBar";
 import Item from "@/components/shop/Item";
 import React, { useEffect, useState } from "react";
-
-export async function getAllData(endpoint) {
-  try {
-    // Ubah port ke 3001 agar terhubung ke server Express
-    const response = await fetch(`http://localhost:3001/read/${endpoint}`);
-    const data = await response.json();
-    console.log("API Response:", data); // Cek data yang diterima
-    return data;
-  } catch (error) {
-    console.error("Error in getAllData:", error);
-  }
-}
+import { getAllData } from "@/api/apiClient";
 
 export default function Shop() {
   const [items, setItems] = useState([]);
@@ -23,8 +12,7 @@ export default function Shop() {
     const fetchData = async () => {
       try {
         const response = await getAllData("kaligraphyItem");
-        setItems(response);
-        console.log("Fetched items:", response);
+        setItems(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -32,10 +20,6 @@ export default function Shop() {
 
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log("Items state updated:", items); // Log setiap kali items di-update
-  }, [items]);
 
   return (
     <div className="flex flex-col py-12">
