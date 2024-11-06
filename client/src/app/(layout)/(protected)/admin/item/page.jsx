@@ -101,11 +101,10 @@ export default function EditItem() {
   };
 
   const handleDelete = async (id) => {
-    
     try {
       const response = await deleteData("kaligraphyItem", id);
       console.log("Item deleted:", response.data);
-      
+
       setItems((prevItems) => prevItems.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -217,35 +216,43 @@ export default function EditItem() {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
-              <tr key={item.id} className="text-xs text-[#092928]">
-                <td className="py-2">{item.item_name}</td>
-                <td className="py-2">{item.description}</td>
-                <td className="py-2">{item.artist_name}</td>
-                <td className="py-2">
-                  {item.created_date &&
-                    new Date(
-                      item.created_date.seconds * 1000,
-                    ).toLocaleDateString()}
-                </td>
-                <td className="py-2">{item.price}</td>
-                <td className="py-2">{item.image}</td>
-                <td className="py-2">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
-                  >
-                    Delete
-                  </button>
+            {items.length === 0 ? (
+              <tr>
+                <td colSpan="7" className="p-4 text-center text-black">
+                  No items found
                 </td>
               </tr>
-            ))}
+            ) : (
+              items.map((item) => (
+                <tr key={item.id} className="text-xs text-[#092928]">
+                  <td className="py-2">{item.item_name}</td>
+                  <td className="py-2">{item.description}</td>
+                  <td className="py-2">{item.artist_name}</td>
+                  <td className="py-2">
+                    {item.created_date &&
+                      new Date(
+                        item.created_date.seconds * 1000,
+                      ).toLocaleDateString()}
+                  </td>
+                  <td className="py-2">{item.price}</td>
+                  <td className="py-2">{item.image}</td>
+                  <td className="py-2">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
