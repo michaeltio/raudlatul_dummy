@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import axios from "axios";
+import { getAllData, deleteData } from "@/api/apiClient";
 
 export default function Order() {
   const [orders, setOrders] = useState([]);
@@ -9,14 +10,14 @@ export default function Order() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const usersResponse = await axios.get("http://localhost:3001/read/users");
+        const usersResponse = await getAllData("users");
         const users = usersResponse.data;
 
         const allOrders = [];
 
         for (const user of users) {
           const userId = user.id;
-          const cartDataResponse = await axios.get(`http://localhost:3001/read/order/${userId}`);
+          const cartDataResponse = await getAllData(`order/${userId}`);
 
           const userOrders = cartDataResponse.data.map(order => ({
             userId: userId,
@@ -39,7 +40,7 @@ export default function Order() {
   const handleDelete = async (orderId, userId) => {
     try {
       console.log(`Deleting orderId: ${orderId} for userId: ${userId}`);
-      await axios.post(`http://localhost:3001/delete/order/${userId}/${orderId}`);
+      await deleteData(`order/${userId}`, orderId);
       setOrders(orders.filter(order => order.orderId !== orderId));
       console.log("Order deleted successfully");
     } catch (error) {

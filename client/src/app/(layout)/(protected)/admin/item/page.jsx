@@ -1,6 +1,5 @@
 "use client";
 import { deleteData, getAllData, postData } from "@/api/apiClient";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 export default function EditItem() {
