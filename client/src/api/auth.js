@@ -7,13 +7,16 @@ export const isUserSignedIn = async () => {
     try {
       const response = await axios.get("http://localhost:3001/user", {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `${token}`,
         },
       });
       return response.data.user;
     } catch (error) {
       localStorage.removeItem("token");
-      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 403)
+      ) {
         await signOutUser();
       }
       console.error("Error fetching user:", error);

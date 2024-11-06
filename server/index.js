@@ -73,7 +73,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
-app.post("/logout", authenticateToken, async (req, res) => {
+app.post("/logout", async (req, res) => {
   try {
     await signOutUser();
     return res.json({ message: "Logout successful!" });
@@ -87,7 +87,6 @@ app.get("/protected", authenticateToken, (req, res) => {
 });
 
 app.get("/user", authenticateToken, (req, res) => {
-  console.log(req.user);
   return res.json({ user: req.user });
 });
 
@@ -110,7 +109,7 @@ app.get("/data/:collectionName", async (req, res) => {
   const { collectionName } = req.params;
   try {
     const data = await getAllData(collectionName);
-    return res.json( data );
+    return res.json(data);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -121,7 +120,7 @@ app.get("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   try {
     const data = await getData(collectionName, id);
-    return res.json( data );
+    return res.json(data);
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
