@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import SearchBar from "@/components/search-bar/SearchBar";
+import SearchBar from "@/components/shop/SearchBar";
 
 const ContentReview = () => {
   const [items, setItems] = useState([]);
