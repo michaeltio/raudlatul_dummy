@@ -30,7 +30,6 @@ export default function Login() {
 
     try {
       const response = await loginUser(formData);
-      console.log(response);
       setSuccessMessage(response.data.message);
       localStorage.setItem("token", response.data.token);
       router.push("/");
