@@ -16,7 +16,7 @@ export default function Order() {
 
         for (const user of users) {
           const userId = user.id;
-          const cartDataResponse = await getAllData(`order/${userId}`);
+          const cartDataResponse = await getAllData("users/" + userId + "/order");
 
           const userOrders = cartDataResponse.data.map((order) => ({
             userId: userId,
