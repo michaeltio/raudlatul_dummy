@@ -120,6 +120,8 @@ const getAllData = async (collectionName) => {
       data.push({ id: doc.id, ...doc.data() });
     });
 
+    console.log(data);
+
     return data;
   } catch (error) {
     console.error("Error getting data: ", error);

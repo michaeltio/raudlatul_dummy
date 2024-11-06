@@ -13,7 +13,9 @@ export const isUserSignedIn = async () => {
       return response.data.user;
     } catch (error) {
       localStorage.removeItem("token");
-      await signOutUser();
+      if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        await signOutUser();
+      }
       console.error("Error fetching user:", error);
     }
   }

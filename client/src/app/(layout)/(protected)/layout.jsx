@@ -12,7 +12,7 @@ export default function ProtectedLayout({ children }) {
     const checkSignInStatus = async () => {
       const signedIn = await isUserSignedIn();
       if (!signedIn) {
-        router.push("/login");
+        
       } else {
         setSignedIn(true);
       }
@@ -20,5 +20,5 @@ export default function ProtectedLayout({ children }) {
     checkSignInStatus();
   }, [router]);
 
-  return signedIn ? <>{children}</> : null;
+  return <>{children}</>;
 }

@@ -61,6 +61,7 @@ export default function Login() {
                 width={50}
                 height={50}
                 className="w-6"
+                alt="Email Icon"
               />
             </div>
             <input

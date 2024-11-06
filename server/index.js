@@ -93,8 +93,10 @@ app.get("/user", authenticateToken, (req, res) => {
 
 // CRUD routes
 // Create data
-app.post("/data", authenticateToken, async (req, res) => {
-  const { collectionName, data } = req.body;
+app.post("/data/:collectionName", async (req, res) => {
+  const { collectionName } = req.params;
+  const data = req.body;
+  console.log(data);
   try {
     const document = await postData(data, collectionName);
     return res.json({ message: "Data added successfully!", document });
@@ -104,29 +106,29 @@ app.post("/data", authenticateToken, async (req, res) => {
 });
 
 // Read all data
-app.get("/data/:collectionName", authenticateToken, async (req, res) => {
+app.get("/data/:collectionName", async (req, res) => {
   const { collectionName } = req.params;
   try {
     const data = await getAllData(collectionName);
-    return res.json({ data });
+    return res.json( data );
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 });
 
 // Read single data
-app.get("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+app.get("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   try {
     const data = await getData(collectionName, id);
-    return res.json({ data });
+    return res.json( data );
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
 });
 
 // Update data
-app.put("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+app.put("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   const data = req.body;
   try {
@@ -138,7 +140,7 @@ app.put("/data/:collectionName/:id", authenticateToken, async (req, res) => {
 });
 
 // Delete data
-app.delete("/data/:collectionName/:id", authenticateToken, async (req, res) => {
+app.delete("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   try {
     const document = await deleteData(collectionName, id);

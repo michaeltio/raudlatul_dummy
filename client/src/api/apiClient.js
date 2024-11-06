@@ -31,23 +31,23 @@ export const signOutUser = async () => {
 };
 
 export const postData = async (collectionName, data) => {
-  return apiClient.post(`/create/${collectionName}`, data);
+  return apiClient.post(`/data/${collectionName}`, data);
 };
 
 export const getAllData = async (collectionName) => {
-  return apiClient.get(`/read/${collectionName}`);
+  return apiClient.get(`/data/${collectionName}`);
 };
 
 export const getData = async (collectionName, id) => {
-  return apiClient.get(`/read/${collectionName}/${id}`);
+  return apiClient.get(`/data/${collectionName}/${id}`);
 };
 
 export const updateData = async (collectionName, id, data) => {
-  return apiClient.post(`/update/${collectionName}/${id}`, data);
+  return apiClient.put(`/data/${collectionName}/${id}`, data);
 };
 
 export const deleteData = async (collectionName, id) => {
-  return apiClient.post(`/delete/${collectionName}/${id}`);
+  return apiClient.delete(`/data/${collectionName}/${id}`);
 };
 
 export default apiClient;
