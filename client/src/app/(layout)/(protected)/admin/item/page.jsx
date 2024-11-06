@@ -1,5 +1,5 @@
 "use client";
-import { getAllData, postData } from "@/api/apiClient";
+import { deleteData, getAllData, postData } from "@/api/apiClient";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -102,16 +102,11 @@ export default function EditItem() {
   };
 
   const handleDelete = async (id) => {
+    
     try {
-      const response = await fetch("http://localhost:3001/delete/item", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id }),
-      });
-      const data = await response.json();
-      console.log("Item deleted:", data);
+      const response = await deleteData("kaligraphyItem", id);
+      console.log("Item deleted:", response.data);
+      
       setItems((prevItems) => prevItems.filter((item) => item.id !== id));
     } catch (error) {
       console.error("Error deleting item:", error);

@@ -119,14 +119,18 @@ const getAllData = async (collectionName) => {
     const collectionRef = collection(firestoreDB, collectionName);
     const data = [];
 
-    let q;
+    let coll;
 
-    q = query(collectionRef);
+    coll = query(collectionRef);
 
-    const docSnap = await getDocs(q);
+    const docSnap = await getDocs(coll);
+    
     docSnap.forEach((doc) => {
+      console.log(doc._key);
       data.push({ id: doc.id, ...doc.data() });
     });
+
+    console.log("Data: ", data);
 
     return data;
   } catch (error) {
