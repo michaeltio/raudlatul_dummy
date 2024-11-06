@@ -171,6 +171,17 @@ app.put("/data/:collectionName/:id", async (req, res) => {
   }
 });
 
+app.delete("/data/:collectionName/:userId/order/:id", async (req, res) => {
+  const { collectionName, userId, id } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/order`;
+  try {
+    const document = await deleteData(fullCollectionName, id);
+    return res.json({ message: "Data deleted successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 // Delete data
 app.delete("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;

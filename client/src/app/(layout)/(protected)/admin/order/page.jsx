@@ -16,7 +16,7 @@ export default function Order() {
 
         for (const user of users) {
           const userId = user.id;
-          const cartDataResponse = await getAllData(
+          const orderDataResponse = await getAllData(
             "users/" + userId + "/order",
           );
 
@@ -41,15 +41,13 @@ export default function Order() {
   const handleDelete = async (orderId, userId) => {
     try {
       console.log(`Deleting orderId: ${orderId} for userId: ${userId}`);
-      await deleteData(`order/${userId}`, orderId);
-      setOrders(orders.filter((order) => order.orderId !== orderId));
+      await deleteData(`users/${userId}/order`, orderId);
       console.log("Order deleted successfully");
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting order:", error);
     }
   };
-
-  console.log(orders);
 
   return (
     <>

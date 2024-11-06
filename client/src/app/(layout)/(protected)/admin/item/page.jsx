@@ -73,6 +73,7 @@ export default function EditItem() {
         is_available: true,
         quantity: "",
       });
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting data:", error);
       setError("Failed to submit data. Please try again.");
@@ -105,7 +106,7 @@ export default function EditItem() {
       const response = await deleteData("kaligraphyItem", id);
       console.log("Item deleted:", response.data);
 
-      setItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      window.location.reload();
     } catch (error) {
       console.error("Error deleting item:", error);
       setError("Failed to delete item. Please try again.");
