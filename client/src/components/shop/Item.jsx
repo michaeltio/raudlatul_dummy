@@ -52,7 +52,7 @@ export default function Item({
   };
 
   return (
-    <div className="relative w-32 sm:w-64">
+    <div className="relative w-32 rounded-2xl hover:bg-[#EADFD7] sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
         <Image
           src={`/webp/${image}`}
