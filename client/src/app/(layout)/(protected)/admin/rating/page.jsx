@@ -1,48 +1,38 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { getAllData } from "@/api/apiClient";
+
 export default function Rating() {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    const tempReviews = [
-      {
-        id: 1,
-        customer: "Jane Smith",
-        item: "Laptop",
-        review: "Excellent service!",
-        rating: 5,
-      },
-      {
-        id: 2,
-        customer: "Mike Brown",
-        item: "Phone",
-        review: "Very good experience.",
-        rating: 4,
-      },
-      {
-        id: 3,
-        customer: "Alice Johnson",
-        item: "Tablet",
-        review: "Average service.",
-        rating: 3,
-      },
-      {
-        id: 4,
-        customer: "Bob Davis",
-        item: "Headphones",
-        review: "Not satisfied.",
-        rating: 2,
-      },
-      {
-        id: 5,
-        customer: "Emily Clark",
-        item: "Smartwatch",
-        review: "Terrible experience!",
-        rating: 1,
-      },
-    ];
+    const fetchReviews = async () => {
+      try {
+        const kaligraphyItemsResponse = await getAllData("kaligraphyItem");
+        const kaligraphyItems = kaligraphyItemsResponse.data;
 
-    setReviews(tempReviews);
+        const allReviews = [];
+
+        for (const kaligraphyItem of kaligraphyItems) {
+          const kaligraphyItemId = kaligraphyItem.id;
+          const cartDataResponse = await getAllData(`review/${kaligraphyItemId}`);
+
+          const kaligraphyItemReviews = cartDataResponse.data.map(review => ({
+            kaligraphyItemId: kaligraphyItemId,
+            reviewId: review.id,
+            ...review
+          }));
+
+          allReviews.push(...kaligraphyItemReviews);
+        }
+
+        setReviews(allReviews);
+      } catch (error) {
+        console.error("Error fetching kaligraphy item reviews:", error);
+      }
+    };
+
+    fetchReviews();
   }, []);
 
   return (
@@ -92,10 +82,10 @@ export default function Rating() {
                         scope="row"
                         className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
                       >
-                        {review.customer}
+                        {review.customer_name}
                       </th>
                       <td className="px-6 py-4 text-[#092928]">
-                        {review.item}
+                        {review.item_name}
                       </td>
                       <td className="px-6 py-4 text-[#092928]">
                         {review.review}
