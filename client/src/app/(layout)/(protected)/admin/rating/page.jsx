@@ -15,13 +15,17 @@ export default function Rating() {
 
         for (const kaligraphyItem of kaligraphyItems) {
           const kaligraphyItemId = kaligraphyItem.id;
-          const cartDataResponse = await getAllData(`review/${kaligraphyItemId}`);
+          const reviewDataResponse = await getAllData(
+            `kaligraphyItem/${kaligraphyItemId}/review`,
+          );
 
-          const kaligraphyItemReviews = cartDataResponse.data.map(review => ({
-            kaligraphyItemId: kaligraphyItemId,
-            reviewId: review.id,
-            ...review
-          }));
+          const kaligraphyItemReviews = reviewDataResponse.data.map(
+            (review) => ({
+              kaligraphyItemId: kaligraphyItemId,
+              reviewId: review.id,
+              ...review,
+            }),
+          );
 
           allReviews.push(...kaligraphyItemReviews);
         }
@@ -44,7 +48,7 @@ export default function Rating() {
               Customer Ratings
             </h1>
 
-            <div className="overflow-x-auto rounded-lg shadow-md">
+            <div className="w-3/5 overflow-x-scroll rounded-lg shadow-md 2xl:overflow-hidden">
               <table className="w-full text-left font-ptserif text-sm tracking-wide text-[#FAF1EA]">
                 <thead className="bg-[#014E3E] text-xs uppercase text-[#FAF1EA]">
                   <tr>
@@ -64,37 +68,39 @@ export default function Rating() {
                   </tr>
                 </thead>
                 <tbody>
-                  {reviews.map((review) => (
-                    <tr
-                      key={review.id}
-                      className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]"
-                    >
-                      <td className="w-4 p-4">
-                        <div className="flex items-center">
-                          <input
-                            type="checkbox"
-                            id={`checkbox-table-search-${review.id}`}
-                            className="h-5 w-5"
-                          />
-                        </div>
-                      </td>
-                      <th
-                        scope="row"
-                        className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
-                      >
-                        {review.customer_name}
-                      </th>
-                      <td className="px-6 py-4 text-[#092928]">
-                        {review.item_name}
-                      </td>
-                      <td className="px-6 py-4 text-[#092928]">
-                        {review.review}
-                      </td>
-                      <td className="px-6 py-4 text-[#092928]">
-                        {review.rating}
+                  {reviews.length === 0 ? (
+                    <tr>
+                      <td colSpan="5" className="p-4 text-center text-black">
+                        No reviews found
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    reviews.map((review) => (
+                      <tr
+                        key={review.reviewId}
+                        className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]"
+                      >
+                        <td className="w-4 p-4">
+                          <div className="flex items-center"></div>
+                        </td>
+                        <th
+                          scope="row"
+                          className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
+                        >
+                          {review.customer_name}
+                        </th>
+                        <td className="px-6 py-4 text-[#092928]">
+                          {review.item_name}
+                        </td>
+                        <td className="px-6 py-4 text-[#092928]">
+                          {review.review}
+                        </td>
+                        <td className="px-6 py-4 text-[#092928]">
+                          {review.rating}
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             </div>

@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
+import { getAllData, postData, updateData, deleteData } from "@/api/apiClient"; // Adjust the import path as needed
 
 export default function Process() {
   const [process, setProcess] = useState([]);
@@ -15,63 +16,43 @@ export default function Process() {
   });
 
   useEffect(() => {
-    const tempProcess = [
-      {
-        id: 1,
-        courier_name: "John Doe",
-        customer_address: "123 Elm St",
-        customer_name: "Jane Smith",
-        item_name: "Laptop",
-        price: "1200",
-        quantity: "1",
-        status: "Pending", // Default status
-      },
-      {
-        id: 2,
-        courier_name: "Mary Johnson",
-        customer_address: "456 Oak St",
-        customer_name: "Mike Brown",
-        item_name: "Phone",
-        price: "800",
-        quantity: "2",
-        status: "Pending", // Default status
-      },
-      // Add more temporary order objects as needed
-    ];
+    const fetchData = async () => {
+      try {
+        const response = await getAllData("process");
+        setProcess(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
 
-    setProcess(tempProcess);
+    fetchData();
   }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleDelete = (id) => {
-    setProcess((prevProcess) => prevProcess.filter((item) => item.id !== id));
+  const handleDelete = async (id) => {
+    try {
+      await deleteData("process", id);
+      setProcess((prevProcess) => prevProcess.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Error deleting data:", error);
+    }
   };
 
-  const handleStatusChange = (id, status) => {
-    setProcess((prevProcess) =>
-      prevProcess.map((item) => (item.id === id ? { ...item, status } : item)),
-    );
+  const handleStatusChange = async (id, status) => {
+    try {
+      await updateData("process", id, { status });
+      setProcess((prevProcess) =>
+        prevProcess.map((item) =>
+          item.id === id ? { ...item, status } : item,
+        ),
+      );
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
-
-  const handleAddProcess = () => {
-    // Add new process to the list
-    const newProcess = { ...formData, id: Date.now() };
-    setProcess((prevProcess) => [...prevProcess, newProcess]);
-    setFormData({
-      courier_name: "",
-      customer_address: "",
-      customer_name: "",
-      item_name: "",
-      price: "",
-      quantity: "",
-      status: "Pending", // Reset to default status
-    });
-  };
-
-  console.log(process);
 
   return (
     <>
@@ -164,6 +145,12 @@ export default function Process() {
                           <option value="Shipped">Shipped</option>
                           <option value="Delivered">Delivered</option>
                         </select>
+                        <button
+                          onClick={() => handleDelete(item.id)}
+                          className="rounded-md bg-red-500 p-2 text-white"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}

@@ -115,6 +115,17 @@ app.get("/data/:collectionName/:userId/order", async (req, res) => {
   }
 });
 
+app.get("/data/:collectionName/:userId/review", async (req, res) => {
+  const { collectionName, userId } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/review`;
+  try {
+    const data = await getAllData(fullCollectionName);
+    return res.json(data);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 app.get("/data/:collectionName/:userId/wishlist", async (req, res) => {
   const { collectionName, userId } = req.params;
   const fullCollectionName = `${collectionName}/${userId}/wishlist`;
@@ -171,6 +182,7 @@ app.put("/data/:collectionName/:id", async (req, res) => {
   }
 });
 
+// Delete data
 app.delete("/data/:collectionName/:userId/order/:id", async (req, res) => {
   const { collectionName, userId, id } = req.params;
   const fullCollectionName = `${collectionName}/${userId}/order`;
@@ -182,7 +194,6 @@ app.delete("/data/:collectionName/:userId/order/:id", async (req, res) => {
   }
 });
 
-// Delete data
 app.delete("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   try {
