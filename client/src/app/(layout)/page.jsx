@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
@@ -31,20 +30,18 @@ export default function Home() {
 
       <div id="pembatas" className="grid grid-cols-3">
         <div className="relative col-span-2 h-20 w-full rounded-e-2xl bg-[#092928] md:h-auto">
-          <Image
+          <img
             src="/webp/main-building.webp"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-e-2xl"
+            alt="Main Building"
+            className="absolute inset-0 h-full w-full rounded-e-2xl object-cover"
           />
           <div className="absolute inset-0 rounded-e-2xl bg-[#092928] opacity-50"></div>
         </div>
         <div className="bg-[#092928]] relative w-full rounded-s-2xl md:aspect-[16/4]">
-          <Image
+          <img
             src="/webp/building-certificate.webp"
-            layout="fill"
-            objectFit="cover"
-            className="rounded-s-2xl"
+            alt="Building Certificate"
+            className="absolute inset-0 h-full w-full rounded-s-2xl object-cover"
           />
           <div className="absolute inset-0 rounded-s-2xl bg-[#092928] opacity-50"></div>
         </div>
@@ -61,47 +58,42 @@ export default function Home() {
           <div id="3Foto" className="space-y-3 md:flex-1 md:space-y-5">
             <div className="grid grid-cols-3 gap-3 md:gap-5">
               <div className="relative col-span-2 w-full rounded-2xl bg-[#092928] py-20 md:aspect-video md:h-96 md:py-32">
-                <Image
+                <img
                   src="/webp/caligraphy02.webp"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-2xl"
+                  alt="Caligraphy 02"
+                  className="absolute inset-0 h-full w-full rounded-2xl object-cover"
                 />
               </div>
               <div className="relative w-full rounded-2xl bg-[#092928] py-20 md:py-32">
-                <Image
+                <img
                   src="/webp/caligraphy03.webp"
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-2xl"
+                  alt="Caligraphy 03"
+                  className="absolute inset-0 h-full w-full rounded-2xl object-cover"
                 />
               </div>
             </div>
             <div className="relative w-full rounded-2xl bg-[#092928] p-14 md:h-1/2 md:p-20">
-              <Image
+              <img
                 src="/webp/caligraphy04.webp"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-2xl"
+                alt="Caligraphy 04"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
               />
             </div>
           </div>
 
           <div id="2Foto" className="space-y-3 md:flex-1 md:space-y-7">
             <div className="relative w-full rounded-2xl bg-[#092928] py-20 md:h-1/2">
-              <Image
+              <img
                 src="/webp/caligraphy05.webp"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-2xl"
+                alt="Caligraphy 05"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
               />
             </div>
             <div className="relative aspect-video w-full rounded-2xl bg-[#014E3E] md:aspect-auto md:h-2/3">
-              <Image
+              <img
                 src="/webp/caligraphy01.webp"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-2xl"
+                alt="Caligraphy 01"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
               />
             </div>
           </div>
@@ -113,10 +105,9 @@ export default function Home() {
         className="p-6 py-8 md:mx-8 md:flex md:items-center md:justify-center"
       >
         <div className="relative flex aspect-[5/1] w-full flex-col items-center justify-center gap-3 rounded-2xl py-16 md:h-1/2 md:gap-7">
-          <Image
+          <img
             src="/webp/main-building-front.webp"
-            width={1000}
-            height={1000}
+            alt="Main Building Front"
             className="absolute -z-10 h-full w-full rounded-2xl object-cover"
           />
           <div className="absolute inset-0 rounded-2xl bg-[#092928] opacity-50"></div>

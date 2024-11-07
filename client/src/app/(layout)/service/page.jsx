@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import TopValue from "@/components/service/TopValue";
 
 export default function Service() {
@@ -7,7 +6,7 @@ export default function Service() {
     <>
       <div id="mainService" className="flex flex-col py-12">
         <div id="landPage" className="flex flex-row items-center">
-          <Image
+          <img
             src="/webp/caligraphy06.webp"
             alt="img landSevice"
             className="aspect-[16/11] w-4/6 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
@@ -34,8 +33,8 @@ export default function Service() {
             </p>
           </div>
 
-          <div className="mt-14 md:mt-20 flex items-center justify-center max-h-screen">
-            <div className="grid grid-cols-2 md:grid-cols-4 md:gap-20 2xl:gap-72 gap-12">
+          <div className="mt-14 flex max-h-screen items-center justify-center md:mt-20">
+            <div className="grid grid-cols-2 gap-12 md:grid-cols-4 md:gap-20 2xl:gap-72">
               <TopValue
                 img="booking.svg"
                 title="Easy Booking"
@@ -65,7 +64,7 @@ export default function Service() {
           >
             <div
               id="contTitle"
-              className="flex flex-col items-center md:items-start md:mx-10"
+              className="flex flex-col items-center md:mx-10 md:items-start"
             >
               <a className="font-ptserif text-2xl font-black">Contact Us!</a>
               <p className="item-center justify-center font-ptserif text-xs font-light tracking-wide">
@@ -81,7 +80,7 @@ export default function Service() {
                 id="contPhone"
                 className="flex flex-row items-center justify-center gap-3 md:flex-1"
               >
-                <Image
+                <img
                   src="/svg/icon/email.svg"
                   alt="phone"
                   className="w-7 rounded-full bg-[#092928] p-1"
@@ -96,7 +95,7 @@ export default function Service() {
                 id="contMail"
                 className="flex flex-row items-center justify-center gap-3 md:flex-1"
               >
-                <Image
+                <img
                   src="/svg/icon/whatsapp.svg"
                   alt="Mail"
                   className="w-7 rounded-full bg-[#FAF1EA]"

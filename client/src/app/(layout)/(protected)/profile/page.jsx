@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { getData } from "@/api/apiClient";
 import { isUserSignedIn } from "@/api/auth";
-import Image from "next/image";
 
 const Profile = () => {
   const [userData, setUserData] = useState({
@@ -42,11 +41,12 @@ const Profile = () => {
             <div className="flex flex-row justify-center gap-6">
               <Link href="/cart">
                 <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14">
-                  <Image
+                  <img
                     src="/svg/icon/cart.svg"
                     width={100}
                     height={100}
                     className="w-full p-2"
+                    alt="Cart"
                   />
                 </div>
               </Link>
@@ -58,11 +58,12 @@ const Profile = () => {
           <div className="hidden flex-row justify-center gap-10 md:relative md:bottom-0 md:flex">
             <Link href="/cart">
               <div className="h-10 w-10 rounded-full bg-[#092928] md:h-14 md:w-14">
-                <Image
+                <img
                   src="/svg/icon/cart.svg"
                   width={100}
                   height={100}
                   className="w-full p-3"
+                  alt="Cart"
                 />
               </div>
             </Link>

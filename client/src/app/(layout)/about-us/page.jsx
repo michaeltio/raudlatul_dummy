@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
-import Image from "next/image";
 
 import "swiper/css";
 import "swiper/css/effect-coverflow";
@@ -31,11 +30,10 @@ export default function AboutUs() {
       <div className="flex flex-col gap-8 py-12 font-ptserif md:gap-12">
         <section className="relative mx-6 flex aspect-[17/9] items-end rounded-2xl bg-[#092928] bg-opacity-50 px-4 py-6 text-white md:mx-16 md:aspect-[17/7] md:rounded-[3rem] md:px-16">
           <div className="absolute inset-0 -z-10 rounded-2xl md:rounded-[3rem]">
-            <Image
+            <img
               src="/webp/main-building.webp"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-2xl md:rounded-[3rem]"
+              alt="Main Building"
+              className="h-full w-full rounded-2xl object-cover md:rounded-[3rem]"
             />
           </div>
           <div className="w-2/3 md:py-20">
@@ -58,10 +56,10 @@ export default function AboutUs() {
         </section>
         <section className="relative aspect-[16/3] w-screen bg-[#092928] bg-opacity-50 bg-cover object-contain md:aspect-[16/2]">
           <div className="absolute inset-0 -z-10">
-            <Image
+            <img
               src="/webp/3-caligraphy.webp"
-              layout="fill"
-              objectFit="cover"
+              alt="Caligraphy"
+              className="h-full w-full object-cover"
             />
           </div>
         </section>
@@ -80,11 +78,10 @@ export default function AboutUs() {
           </div>
           <div className="relative aspect-[16/11] w-3/5 rounded-l-xl bg-[#092928] bg-opacity-50 md:aspect-[16/8] md:w-1/2 md:rounded-l-[2.5rem]">
             <div className="absolute inset-0 -z-10">
-              <Image
+              <img
                 src="/webp/rapat01.webp"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-l-xl md:rounded-l-[2.5rem]"
+                alt="Meeting"
+                className="h-full w-full rounded-l-xl object-cover md:rounded-l-[2.5rem]"
               />
             </div>
           </div>

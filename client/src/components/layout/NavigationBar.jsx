@@ -12,6 +12,7 @@ import { signOutUser } from "@/api/apiClient";
 export default function NavigationBar() {
   const [hamburgerActive, setHamburgerActive] = useState(false);
   const [isSignedIn, setIsSignedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const handleSignOut = async () => {
     await signOutUser();
@@ -21,10 +22,16 @@ export default function NavigationBar() {
 
   useEffect(() => {
     const checkUserSignedIn = async () => {
-      const user = await isUserSignedIn();
-      setIsSignedIn(!!user);
+      try {
+        const user = await isUserSignedIn();
+        if (user.email === "admin@admin.com") {
+          setIsAdmin(true);
+        }
+        setIsSignedIn(!!user);
+      } catch (error) {
+        console.error("Error checking user signed in:", error);
+      }
     };
-
     checkUserSignedIn();
   }, []);
 
@@ -77,6 +84,13 @@ export default function NavigationBar() {
                   Profile
                 </h1>
               </Link>
+              {isAdmin && (
+                <Link href="/admin">
+                  <h1 className={`inline border-b-2 border-[#E9B472]`}>
+                    Admin
+                  </h1>
+                </Link>
+              )}
               <button
                 onClick={handleSignOut}
                 className="w-24 rounded-full bg-[#e63946] py-1 text-center text-white"
@@ -141,12 +155,26 @@ export default function NavigationBar() {
                     Login
                   </Link>
                 ) : (
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full rounded-full bg-[#e63946] py-1 text-center text-white"
-                  >
-                    Sign Out
-                  </button>
+                  <>
+                    <Link href="/profile">
+                      <h1 className={`inline border-b-2 border-[#E9B472]`}>
+                        Profile
+                      </h1>
+                    </Link>
+                    {isAdmin && (
+                      <Link href="/admin">
+                        <h1 className={`inline border-b-2 border-[#E9B472]`}>
+                          Admin
+                        </h1>
+                      </Link>
+                    )}
+                    <button
+                      onClick={handleSignOut}
+                      className="w-full rounded-full bg-[#e63946] py-1 text-center text-white"
+                    >
+                      Sign Out
+                    </button>
+                  </>
                 )}
               </div>
             </m.div>
