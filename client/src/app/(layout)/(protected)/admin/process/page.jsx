@@ -77,7 +77,7 @@ export default function Process() {
       <SideBar />
       <div className="py-12" id="mainAdminOrder">
         <section>
-          <div class="p-4 sm:ml-64">
+          <div class="sm:ml-48">
             <div className="flex flex-col items-center gap-5">
               <h1 className="item-center justify-center font-ptserif text-2xl font-black">
                 Order Process

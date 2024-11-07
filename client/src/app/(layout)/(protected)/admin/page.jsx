@@ -8,7 +8,7 @@ export default function Admin() {
     <>
       <SideBar />
       <div id="mainAdmin" className="mx-8 py-12 md:mx-16">
-        <div class="p-4 sm:ml-64">
+        <div class="p-4 sm:ml-52">
           <section
             id="contOPR"
             className="flex w-full flex-row items-center justify-center gap-12"
