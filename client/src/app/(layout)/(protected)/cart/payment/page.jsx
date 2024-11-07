@@ -138,7 +138,7 @@ export default function Payment() {
             Submit
           </button>
           {success && (
-            <div className="mt-4 text-green-600 font-bold text-lg">
+            <div className="my-4 text-green-600 font-bold text-lg">
               Payment submitted successfully!
             </div>
           )}
