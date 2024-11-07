@@ -1,0 +1,6 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - "8080:3001"
+    
