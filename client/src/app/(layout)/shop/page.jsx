@@ -13,6 +13,7 @@ export default function Shop() {
       try {
         const response = await getAllData("kaligraphyItem");
         setItems(response.data);
+        console.log(response.data);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -26,15 +27,7 @@ export default function Shop() {
       <SearchBar />
       <div className="grid grid-cols-2 place-items-center gap-16 px-16 py-12 sm:grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))]">
         {items.length > 0 ? (
-          items.map((item, i) => (
-            <Item
-              id={item.id}
-              key={i}
-              image={item.image}
-              name={item.item_name}
-              price={item.price}
-            />
-          ))
+          items.map((item, i) => <Item key={i} item={item} />)
         ) : (
           <p>Loading items...</p>
         )}
