@@ -2,10 +2,10 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { isUserSignedIn } from "@/api/auth";
-import { postData } from "@/api/apiClient";
+import { deleteData, updateData } from "@/api/apiClient";
 import NextLink from "next/link";
 
-export default function Item({ item }) {
+export default function Item({ item, cart }) {
   const [userId, setUserId] = useState(null);
   useEffect(() => {
     const fetchUser = async () => {
@@ -19,7 +19,7 @@ export default function Item({ item }) {
 
   const addToCart = async () => {
     try {
-      const response = await postData(`users/${userId}/cart`, item);
+      const response = await updateData(`users/${userId}/cart`, item.id, item);
       console.log("Item added to cart:", response.data);
     } catch (e) {
       console.log(e);
@@ -32,6 +32,15 @@ export default function Item({ item }) {
       window.location.href = "/content";
     } catch (e) {
       console.log("Error:", e);
+    }
+  };
+
+  const removeFromCart = async () => {
+    try {
+      const response = await deleteData(`users/${userId}/cart`, item.id);
+      console.log("Item removed from cart:", response.data);
+    } catch (e) {
+      console.log(e);
     }
   };
 
@@ -52,12 +61,12 @@ export default function Item({ item }) {
         </NextLink>
 
         <div
-          onClick={addToCart}
+          onClick={cart ? removeFromCart : addToCart}
           className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
         >
           <Image
-            src={"/svg/icon/plus.svg"} // Toggle icon based on cart status
-            alt="+"
+            src={cart ? "/svg/icon/minus.svg" : "/svg/icon/plus.svg"} // Toggle icon based on cart status
+            alt={cart ? "-" : "+"}
             width={20}
             height={20}
             className="w-1/3"

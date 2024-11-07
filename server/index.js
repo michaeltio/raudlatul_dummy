@@ -92,12 +92,13 @@ app.get("/user", authenticateToken, (req, res) => {
 
 // CRUD routes
 // Create data
-app.post("/data/:collectionName", async (req, res) => {
-  const { collectionName } = req.params;
+app.post("/data/:collectionName/:userId/order", async (req, res) => {
+  const { collectionName, userId } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/order`;
   const data = req.body;
   try {
-    const document = await postData(data, collectionName);
-    return res.json({ message: "Data added successfully!", document });
+    const document = await postData(data, fullCollectionName);
+    return res.json({ message: "Data added successfully!", data });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -114,6 +115,19 @@ app.post("/data/:collectionName/:userId/cart", async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 });
+
+app.post("/data/:collectionName", async (req, res) => {
+  const { collectionName } = req.params;
+  const data = req.body;
+  try {
+    const document = await postData(data, collectionName);
+    return res.json({ message: "Data added successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
+// Read all data
 
 app.get("/data/:collectionName/:userId/order", async (req, res) => {
   const { collectionName, userId } = req.params;
@@ -169,7 +183,6 @@ app.get("/data/:collectionName/:userId/process", async (req, res) => {
   }
 });
 
-// Read all data
 app.get("/data/:collectionName", async (req, res) => {
   const { collectionName } = req.params;
   try {
@@ -192,6 +205,18 @@ app.get("/data/:collectionName/:id", async (req, res) => {
 });
 
 // Update data
+app.put("/data/:collectionName/:userId/cart/:id", async (req, res) => {
+  const { collectionName, userId, id } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/cart`;
+  const data = req.body;
+  try {
+    const document = await updateData(fullCollectionName, id, data);
+    return res.json({ message: "Data updated successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 app.put("/data/:collectionName/:id", async (req, res) => {
   const { collectionName, id } = req.params;
   const data = req.body;
@@ -204,6 +229,17 @@ app.put("/data/:collectionName/:id", async (req, res) => {
 });
 
 // Delete data
+app.delete("/data/:collectionName/:userId/cart/:id", async (req, res) => {
+  const { collectionName, userId, id } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/cart`;
+  try {
+    const document = await deleteData(fullCollectionName, id);
+    return res.json({ message: "Data deleted successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 app.delete("/data/:collectionName/:userId/order/:id", async (req, res) => {
   const { collectionName, userId, id } = req.params;
   const fullCollectionName = `${collectionName}/${userId}/order`;
