@@ -90,7 +90,7 @@ const Profile = () => {
                 <Link href="/profile/edit">Edit</Link>
               </button>
             </div>
-            <div className="bottom-0 right-0 hidden justify-between md:absolute md:flex md:w-56">
+            <div className="bottom-0 right-0 hidden justify-end gap-10 md:absolute md:flex md:w-56">
               <Link href="/profile/order">
                 <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
                   Order
@@ -101,25 +101,15 @@ const Profile = () => {
                   Sent
                 </button>
               </Link>
-              <Link href="/profile/rating">
-                <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-                  Rating
-                </button>
-              </Link>
             </div>
           </div>
         </div>
-        <div className="flex justify-center gap-5 md:hidden md:w-56">
+        <div className="flex justify-center gap-10 md:hidden md:w-56">
           <Link href="/profile/order">
             <button className="h-14 w-14 rounded-xl bg-[#E9B472]">Order</button>
           </Link>
           <Link href="/profile/sent">
             <button className="h-14 w-14 rounded-xl bg-[#E9B472]">Sent</button>
-          </Link>
-          <Link href="/profile/rating">
-            <button className="h-14 w-14 rounded-xl bg-[#E9B472]">
-              Rating
-            </button>
           </Link>
         </div>
       </div>
