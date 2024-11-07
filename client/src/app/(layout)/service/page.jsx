@@ -9,7 +9,7 @@ export default function Service() {
           <img
             src="/webp/caligraphy06.webp"
             alt="img landSevice"
-            className="aspect-[16/11] w-4/6 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
+            className="aspect-[16/11] w-4/6 rounded-e-2xl shadow-lg md:w-1/2 md:rounded-e-3xl dark:shadow-gray-600"
             width={1000}
             height={100}
           />
@@ -74,7 +74,7 @@ export default function Service() {
 
             <div
               id="contInfo"
-              className="flex flex-col items-center justify-center gap-10 md:flex md:w-2/3 md:flex-row md:gap-0 md:rounded-full md:border-2 md:border-[#092928] md:p-5"
+              className="flex flex-col items-center justify-center gap-10 shadow-lg md:flex md:w-2/3 md:flex-row md:gap-0 md:rounded-full md:border-2 md:border-[#092928] md:p-5 dark:shadow-gray-600"
             >
               <div
                 id="contPhone"

@@ -53,7 +53,7 @@ export default function Item({ item }) {
 
         <div
           onClick={addToCart}
-          className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
+          className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] shadow-lg hover:cursor-pointer hover:bg-[#C6975D] sm:w-16 dark:shadow-gray-600"
         >
           <Image
             src={"/svg/icon/plus.svg"} // Toggle icon based on cart status

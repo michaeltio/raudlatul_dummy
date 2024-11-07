@@ -6,17 +6,21 @@ export default function Home() {
     <>
       <div className="space-y-6 py-12 text-center md:py-60">
         <div className="flex flex-row items-center justify-center gap-10">
-          <img src="/png/ornament.png" 
-          alt="Ornament"
-          className="hidden md:block md:w-48 md:h-48 md-transform scale-x-[-1]" />
+          <img
+            src="/png/ornament.png"
+            alt="Ornament"
+            className="md-transform hidden scale-x-[-1] md:block md:h-48 md:w-48"
+          />
           <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
             Looking for Beautiful Calligraphy
           </h2>
-          <img src="/png/ornament.png" 
-          alt="Ornament"
-          className="hidden md:block md:w-48 md:h-48" />
+          <img
+            src="/png/ornament.png"
+            alt="Ornament"
+            className="hidden md:block md:h-48 md:w-48"
+          />
         </div>
-        
+
         {/* <div className="flex w-full flex-row justify-center gap-3 px-16 md:gap-6">
           <input
             type="text"
@@ -38,21 +42,21 @@ export default function Home() {
       </div>
 
       <div id="pembatas" className="grid grid-cols-3">
-        <div className="relative col-span-2 h-20 w-full rounded-e-2xl bg-[#092928] md:h-auto">
+        <div className="relative col-span-2 h-20 w-full bg-[#092928] md:h-auto">
           <img
             src="/webp/main-building.webp"
             alt="Main Building"
-            className="absolute inset-0 h-full w-full rounded-e-2xl object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 rounded-e-2xl bg-[#092928] opacity-50"></div>
+          <div className="absolute inset-0 bg-[#092928] opacity-50"></div>
         </div>
-        <div className="bg-[#092928]] relative w-full rounded-s-2xl md:aspect-[16/4]">
+        <div className="bg-[#092928]] relative w-full md:aspect-[16/4]">
           <img
             src="/webp/building-certificate.webp"
             alt="Building Certificate"
-            className="absolute inset-0 h-full w-full rounded-s-2xl object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <div className="absolute inset-0 rounded-s-2xl bg-[#092928] opacity-50"></div>
+          <div className="absolute inset-0 bg-[#092928] opacity-50"></div>
         </div>
       </div>
 
@@ -70,14 +74,14 @@ export default function Home() {
                 <img
                   src="/webp/caligraphy02.webp"
                   alt="Caligraphy 02"
-                  className="absolute inset-0 h-full w-full rounded-2xl object-cover"
+                  className="absolute inset-0 h-full w-full rounded-2xl object-cover shadow-md dark:shadow-gray-600"
                 />
               </div>
               <div className="relative w-full rounded-2xl bg-[#092928] py-20 md:py-32">
                 <img
                   src="/webp/caligraphy03.webp"
                   alt="Caligraphy 03"
-                  className="absolute inset-0 h-full w-full rounded-2xl object-cover"
+                  className="absolute inset-0 h-full w-full rounded-2xl object-cover shadow-md dark:shadow-gray-600"
                 />
               </div>
             </div>
@@ -85,7 +89,7 @@ export default function Home() {
               <img
                 src="/webp/caligraphy04.webp"
                 alt="Caligraphy 04"
-                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover shadow-md dark:shadow-gray-600"
               />
             </div>
           </div>
@@ -95,14 +99,14 @@ export default function Home() {
               <img
                 src="/webp/caligraphy05.webp"
                 alt="Caligraphy 05"
-                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover shadow-md dark:shadow-gray-600"
               />
             </div>
             <div className="relative aspect-video w-full rounded-2xl bg-[#014E3E] md:aspect-auto md:h-2/3">
               <img
                 src="/webp/caligraphy01.webp"
                 alt="Caligraphy 01"
-                className="absolute inset-0 h-full w-full rounded-2xl object-cover"
+                className="absolute inset-0 h-full w-full rounded-2xl object-cover shadow-md dark:shadow-gray-600"
               />
             </div>
           </div>
@@ -117,7 +121,7 @@ export default function Home() {
           <img
             src="/webp/main-building-front.webp"
             alt="Main Building Front"
-            className="absolute -z-10 h-full w-full rounded-2xl object-cover"
+            className="absolute -z-10 h-full w-full rounded-2xl object-cover shadow-lg dark:shadow-gray-600"
           />
           <div className="absolute inset-0 rounded-2xl bg-[#092928] opacity-50"></div>
 
@@ -125,7 +129,7 @@ export default function Home() {
             <p>Let’s get to know</p>
             <p>the Raudlatul Irfan</p>
           </div>
-          <button className="z-10 rounded-full bg-[#E9B472] px-6 py-1 font-ptserif font-semibold text-white hover:bg-[#C6975D]">
+          <button className="z-10 rounded-full bg-[#E9B472] px-6 py-1 font-ptserif font-semibold text-white shadow-lg hover:bg-[#C6975D] dark:shadow-gray-600">
             <Link href="/about-us">Open</Link>
           </button>
         </div>
