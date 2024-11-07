@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { isUserSignedIn } from "@/api/auth";
 import { postData } from "@/api/apiClient";
+import NextLink from "next/link";
 
 export default function Item({ item }) {
   const [userId, setUserId] = useState(null);
@@ -37,14 +38,19 @@ export default function Item({ item }) {
   return (
     <div className="relative w-32 rounded-2xl sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
-        <img
-          src={item.image}
-          alt="Item"
-          width={500}
-          height={500}
-          className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
-          onClick={addToContent}
-        />
+        <NextLink href={`/content/${item.id}`}>
+          <div>
+            <img
+              src={item.image}
+              alt="Item"
+              width={500}
+              height={500}
+              className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
+              onClick={addToContent}
+            />
+          </div>
+        </NextLink>
+
         <div
           onClick={addToCart}
           className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
