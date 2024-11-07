@@ -24,27 +24,28 @@ export default function Content({ params }) {
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
       {selectedItem ? (
-        <div className="content-center space-y-10 p-9 md:flex-1 md:space-y-20">
-          <div className="space-y-3">
-            <h2 className="font-ptserif text-3xl font-bold">
-              {selectedItem.name}
-            </h2>
-            <p className="mb-7 font-ptserif text-lg">
-              {selectedItem.description}
-            </p>
-            <div className="space-y-1">
-              <p className="text-md font-ptserif">
-                <b>Artist:</b> {selectedItem.artist_name}
-              </p>
-              <p className="text-md mb-8 font-ptserif">
-                <b>Created Date:</b> {selectedItem.created_date}
+        <div className="space-y-4 px-9 md:flex-1 md:px-6 md:py-0 xl:flex xl:space-x-6 xl:space-y-0">
+          <div className="aspect-[16/11] rounded-2xl bg-[#092928] md:aspect-square md:flex-1 2xl:aspect-[16/11]">
+            <img
+              src={selectedItem.image}
+              className="object-fit h-full w-full rounded-2xl shadow-xl"
+            />
+          </div>
+
+          <div className="content-center space-y-10 p-9 md:flex-1 md:space-y-20">
+            <div className="">
+              <h2 className="font-ptserif text-3xl font-bold">
+                {selectedItem.name}
+              </h2>
+              <p className="mb-7 font-ptserif text-lg">
+                {selectedItem.description}
               </p>
             </div>
-            <div className="relative">
+            <div className="flex flex-col items-center justify-center md:mt-5 md:items-start">
               <p className="my-3 text-center font-ptserif text-xl font-bold">
-                {selectedItem.price}
+                Rp. {selectedItem.price}
               </p>
-              <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold hover:border-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA]">
+              <button className="w-44 rounded-full border border-black py-1 font-ptserif text-lg font-bold shadow-xl hover:border-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA]">
                 Check Out
               </button>
             </div>
