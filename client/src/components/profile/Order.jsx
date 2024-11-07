@@ -6,20 +6,9 @@ import { deleteData } from "@/api/apiClient";
 
 export default function Order({ item }) {
   // Ensure item properties are handled safely
-  const title = item?.title || "Default Item Title";
-  const price = item?.price || "$50";
-  const orderNumber = item?.orderNumber || "Order #0000";
-  const imageSrc = item?.image || "/webp/caligraphy01.webp"; // Default image
-
-  const handleCancel = async () => {
-    try {
-      const user = await isUserSignedIn();
-      const userId = user.uid;
-      await deleteData(`users/${userId}/order`, item.orderId);
-    } catch (error) {
-      console.error("Error deleting order:", error);
-    }
-  };
+  const title = item?.item_name || "Default Item Title";
+  const price = item?.item_price || "$50";
+  const imageSrc = item?.item_image || "/webp/caligraphy01.webp"; // Default image
 
   return (
     <div className="mb-5 flex rounded-3xl shadow-[0_0px_10px_rgba(0,0,0,0.25)]">
@@ -37,9 +26,6 @@ export default function Order({ item }) {
               <p className="font-ptserif text-sm font-black tracking-wide text-[#C6975D] md:text-lg">
                 Waiting
               </p>
-              <p className="font-ptserif text-xs font-black md:text-base">
-                {orderNumber}
-              </p>
             </div>
           </div>
           <div className="flex flex-col gap-1">
@@ -47,20 +33,12 @@ export default function Order({ item }) {
               {title}
             </h1>
             <div className="flex flex-row gap-2 tracking-wide">
-              <p className="font-ptserif text-xs md:text-sm">Quantity: 1</p>
               <p className="font-ptserif text-xs font-black md:text-sm">
-                {price}
+                Rp. {price}
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-end">
-            <button
-              onClick={handleCancel}
-              className="w-24 rounded-3xl border-[0.12rem] border-[#C11313] p-1 font-ptserif font-black text-[#C11313] hover:bg-[#C11313] hover:text-[#FAF1EA] md:w-28 md:text-lg"
-            >
-              Cancel
-            </button>
-          </div>
+          <div className="flex flex-col items-end"></div>
         </div>
       </div>
     </div>

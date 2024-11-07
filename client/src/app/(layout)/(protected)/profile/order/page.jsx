@@ -15,8 +15,6 @@ export default function OrderPage() {
         const userId = user.uid;
         const orderDataResponse = await getAllData(`users/${userId}/order`);
         const userOrders = orderDataResponse.data.map((order) => ({
-          userId: userId,
-          orderId: order.id,
           ...order,
         }));
         setItems(userOrders);
@@ -46,8 +44,8 @@ export default function OrderPage() {
         </Link>
       </div>
       <div>
-        {items.map((item) => (
-          <Order key={item.id} item={item} />
+        {items.map((item, i) => (
+          <Order key={i} item={item} />
         ))}
       </div>
     </div>
