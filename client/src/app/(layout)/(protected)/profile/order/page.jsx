@@ -1,39 +1,31 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
 import Order from "@/components/profile/Order";
 import Link from "next/link";
+import { getAllData } from "@/api/apiClient";
+import { isUserSignedIn } from "@/api/auth";
 
-export default function Service(key) {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      title: "Calligraphy Art",
-      price: "$100",
-      orderNumber: "Order #12345",
-      image: "/webp/caligraphy01.webp",
-    },
-    {
-      id: 2,
-      title: "Handmade Pottery",
-      price: "$75",
-      orderNumber: "Order #12346",
-      image: "/webp/caligraphy01.webp",
-    },
-  ]);
+export default function OrderPage() {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const user = await isUserSignedIn();
+        const userId = user.uid;
+        const orderDataResponse = await getAllData(`users/${userId}/order`);
+        const userOrders = orderDataResponse.data.map((order) => ({
+          userId: userId,
+          orderId: order.id,
+          ...order,
+        }));
+        setItems(userOrders);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching users with orders:", error);
       }
     };
 
-    fetchItems();
+    fetchOrders();
   }, []);
 
   return (

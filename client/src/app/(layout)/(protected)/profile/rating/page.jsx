@@ -1,52 +1,32 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import { isUserSignedIn } from "@/api/auth";
+import { getAllData } from "@/api/apiClient";
 import Rating from "@/components/profile/Rating";
 import Link from "next/link";
 
-export default function Service() {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      img: "caligraphy01.webp",
-      title: "Delicious Cake sfsdf sdfsd sdfsdf",
-      p1: "Price:",
-      p2: "$20",
-      p3: "Delivered on: 2024-10-22",
-    },
-    {
-      id: 2,
-      img: "caligraphy01.webp",
-      title: "Fresh Bread",
-      p1: "Price:",
-      p2: "$15",
-      p3: "Delivered on: 2024-10-20",
-    },
-    {
-      id: 3,
-      img: "caligraphy01.webp",
-      title: "Tasty Cookies",
-      p1: "Price:",
-      p2: "$10",
-      p3: "Delivered on: 2024-10-18",
-    },
-  ]);
+export default function RatingPage() {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchRating = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const user = await isUserSignedIn();
+        const userId = user.uid;
+        const reviewDataResponse = await getAllData(`users/${userId}/review`);
+        const userReview = reviewDataResponse.data.map((review) => ({
+          userId: userId,
+          reviewId: review.id,
+          ...review,
+        }));
+        setItems(userReview);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching users with sent:", error);
       }
     };
 
-    fetchItems();
+    fetchRating();
   }, []);
-
-  console.log(items);
 
   return (
     <>

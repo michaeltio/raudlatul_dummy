@@ -1,49 +1,32 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import Image from "next/image";
+import { isUserSignedIn } from "@/api/auth";
+import { getAllData } from "@/api/apiClient";
 import Sent from "@/components/profile/Sent";
 import Link from "next/link";
 
-export default function Service(key) {
-  const [items, setItems] = useState([
-    {
-      id: 1,
-      img: "caligraphy01.webp",
-      title: "Wireless Headphones",
-      p1: "Order #12346",
-      p3: "Expected: Nov 5, 2024",
-    },
-    {
-      id: 2,
-      img: "caligraphy01.webp",
-      title: "Smartphone Case",
-      p1: "Order #12346",
-      p3: "Expected: Nov 7, 2024",
-    },
-    {
-      id: 3,
-      img: "caligraphy01.webp",
-      title: "Bluetooth Speaker",
-      p1: "Order #12346",
-      p3: "Expected: Nov 10, 2024",
-    },
-  ]);
+export default function SentPage() {
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
-    const fetchItems = async () => {
+    const fetchSent = async () => {
       try {
-        const response = await fetch("http://localhost:3001/api/item");
-        const data = await response.json();
-        setItems(data);
+        const user = await isUserSignedIn();
+        const userId = user.uid;
+        const sentDataResponse = await getAllData(`users/${userId}/process`);
+        const userSent = sentDataResponse.data.map((sent) => ({
+          userId: userId,
+          sentId: sent.id,
+          ...sent,
+        }));
+        setItems(userSent);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error("Error fetching users with sent:", error);
       }
     };
 
-    fetchItems();
+    fetchSent();
   }, []);
-
-  console.log(items);
 
   return (
     <div id="mainSent" className="mx-5 py-12 md:mx-10">

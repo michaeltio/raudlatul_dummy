@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { getData, updateData } from "@/api/apiClient";
 import { isUserSignedIn } from "@/api/auth";
-import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const ProfileEdit = () => {
   const [userData, setUserData] = useState({
@@ -12,29 +12,19 @@ const ProfileEdit = () => {
     address: "",
   });
   const [uid, setUid] = useState("");
+  const router = useRouter();
 
   useEffect(() => {
-    console.log("isUserSignedIn", isUserSignedIn());
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:3001/user", {
-            headers: {
-              Authorization: `${token}`,
-            },
-          });
-          const userId = response.data.user.uid;
-          setUid(userId);
-          const userDataResponse = await getData("users", userId);
-          
-          setUserData({
-            ...userDataResponse.data,
-            email: response.data.user.email,
-          });
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
+      const user = await isUserSignedIn();
+      if (user) {
+        setUid(user.uid);
+        const userDataResponse = await getData("users", user.uid);
+        const userDataR = userDataResponse.data;
+        setUserData({
+          ...userDataR,
+          email: user.email,
+        });
       }
     };
 
@@ -47,20 +37,10 @@ const ProfileEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Updated data:", userData);
-    
     try {
-      const token = localStorage.getItem("token");
-      const response = await axios.get("http://localhost:3001/user", {
-        headers: {
-          Authorization: `${token}`,
-        },
-      });
-      const userId = response.data.user.uid;
-
-      const { email, ...dataToUpdate } = userData; 
-      await updateData("users", userId, dataToUpdate);
-      alert("Data has been updated successfully!");
+      const { email, ...dataToUpdate } = userData;
+      await updateData("users", uid, dataToUpdate);
+      router.push("/profile");
     } catch (error) {
       console.error("Error updating user data:", error);
       alert("There was an error updating the data.");

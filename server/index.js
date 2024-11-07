@@ -147,6 +147,16 @@ app.get("/data/:collectionName/:userId/cart", async (req, res) => {
     return res.status(400).json({ message: error.message });
   }
 });
+app.get("/data/:collectionName/:userId/process", async (req, res) => {
+  const { collectionName, userId } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/process`;
+  try {
+    const data = await getAllData(fullCollectionName);
+    return res.json(data);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
 
 // Read all data
 app.get("/data/:collectionName", async (req, res) => {
