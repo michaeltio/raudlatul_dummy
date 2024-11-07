@@ -56,7 +56,7 @@ export default function EditItem() {
       setFormData({
         name: "",
         description: "",
-        price: "",
+        price: 0,
         image: "",
       });
       window.location.reload();
@@ -105,7 +105,7 @@ export default function EditItem() {
             placeholder="Description"
           />
           <input
-            type="text"
+            type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
