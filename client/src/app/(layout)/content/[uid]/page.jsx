@@ -20,6 +20,7 @@ export default function Content({ params }) {
 
     fetchData();
   }, []);
+
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
       {selectedItem ? (
@@ -28,16 +29,6 @@ export default function Content({ params }) {
             <h2 className="font-ptserif text-3xl font-bold">
               {selectedItem.name}
             </h2>
-            <div className="flex items-center">
-              <Image
-                src="/svg/icon/star-yellow.svg"
-                alt="img star"
-                className="w-8 p-1"
-                width={5}
-                height={5}
-              />
-              <p className="font-ptserif text-2xl font-bold">4.9/5</p>
-            </div>
             <p className="mb-7 font-ptserif text-lg">
               {selectedItem.description}
             </p>
