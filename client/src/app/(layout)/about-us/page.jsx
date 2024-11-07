@@ -8,7 +8,7 @@ export default function AboutUs() {
             <img
               src="/webp/main-building.webp"
               alt="Main Building"
-              className="h-full w-full rounded-2xl object-cover md:rounded-[3rem]"
+              className="h-full w-full rounded-2xl object-cover shadow-lg md:rounded-[3rem] dark:shadow-gray-600"
             />
           </div>
           <div className="w-2/3 md:py-20">
@@ -56,7 +56,7 @@ export default function AboutUs() {
               <img
                 src="/webp/rapat01.webp"
                 alt="Meeting"
-                className="h-full w-full rounded-l-xl object-cover md:rounded-l-[2.5rem]"
+                className="h-full w-full rounded-l-xl object-cover shadow-lg md:rounded-l-[2.5rem] dark:shadow-gray-600"
               />
             </div>
           </div>

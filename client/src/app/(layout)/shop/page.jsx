@@ -50,11 +50,11 @@ export default function Shop() {
             type="text"
             placeholder="Search"
             onChange={handleChange}
-            className="h-8 w-full rounded-full border border-black bg-transparent p-2 px-6 md:h-10"
+            className="h-8 w-full rounded-full border border-black bg-transparent p-2 px-6 shadow-lg md:h-10 dark:shadow-gray-300"
           />
           <Link
             href="/cart"
-            className="aspect-square h-8 rounded-full bg-[#092928] hover:bg-black md:h-10"
+            className="aspect-square h-8 rounded-full bg-[#092928] shadow-lg hover:bg-black md:h-10 dark:shadow-gray-600"
           >
             <Image
               src="/svg/icon/cart.svg"
