@@ -41,11 +41,11 @@ export default function Order({ item }) {
               </p>
             </div>
           </div>
-          <div className="flex flex-col items-end">
+          {/* <div className="flex flex-col items-end">
             <button className="w-24 rounded-3xl border-[0.12rem] border-[#C11313] p-1 font-ptserif font-black text-[#C11313] hover:bg-[#C11313] hover:text-[#FAF1EA] md:w-28 md:text-lg">
               Cancel
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
       {/* <div className="my-4 me-5 flex flex-col items-end justify-between md:my-7 md:me-8">
