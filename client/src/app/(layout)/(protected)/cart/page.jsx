@@ -8,7 +8,7 @@ import { getAllData } from "@/api/apiClient";
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
-  const [uid, setUid] = useState("");
+  const [toggle, setToggle] = useState(false);
   const [loading, setLoading] = useState(true); // Loading state to manage client-side rendering
 
   useEffect(() => {
@@ -17,7 +17,6 @@ export default function Cart() {
       if (user !== null) {
         try {
           const userId = user.uid;
-          setUid(userId);
 
           const [cartDataResponse, kaligraphyItems] = await Promise.all([
             getAllData(`users/${userId}/cart`),
@@ -50,12 +49,23 @@ export default function Cart() {
   return (
     <div className="flex flex-col py-12">
       <h1 className="text-center text-4xl font-bold">Cart</h1>
-      <div className="mx-auto mt-12 flex w-1/3 flex-row justify-between rounded-full bg-[#092928] px-16 py-2 text-white">
-        <h1 className="text-xl font-bold">Total</h1>
-        <h1 className="text-xl font-bold">Rp. {total.toLocaleString()}</h1>
-      </div>
+      {!toggle && (
+        <div className="fixed left-0 top-0 flex h-screen w-screen items-end justify-center">
+          <div
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+            className="mb-32 flex w-3/5 min-w-96 flex-row justify-between rounded-full bg-[#092928] px-12 py-2 text-white sm:px-16"
+          >
+            <h1 className="text-lg font-bold sm:text-xl">Total</h1>
+            <h1 className="text-lg font-bold sm:text-xl">
+              Rp. {total.toLocaleString()}
+            </h1>
+          </div>
+        </div>
+      )}
 
-      <div className="grid grid-cols-2 place-items-center gap-16 px-16 py-12 sm:grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))]">
+      <div className="grid grid-cols-2 place-items-center gap-16 px-4 py-12 sm:grid-cols-[repeat(auto-fill,_minmax(200px,_1fr))] sm:px-16">
         {loading ? (
           <p className="text-center text-gray-500">Loading your cart...</p>
         ) : cartItems.length > 0 ? (
