@@ -1,30 +1,5 @@
-"use client";
-import React, { useEffect, useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination } from "swiper/modules";
-
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-
+import React from "react";
 export default function AboutUs() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [achievement, setAchievement] = useState([]);
-
-  useEffect(() => {
-    const fetchAchievement = async () => {
-      try {
-        const response = await fetch("http://localhost:3001/api/achievement");
-        const data = await response.json();
-        setAchievement(data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-
-    fetchAchievement();
-  }, []);
-
   return (
     <>
       <div className="flex flex-col gap-8 py-12 font-ptserif md:gap-12">
