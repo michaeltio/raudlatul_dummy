@@ -87,22 +87,18 @@ export default function Process() {
                 <table className="w-full text-left font-ptserif text-sm tracking-wide text-[#FAF1EA]">
                   <thead className="bg-[#014E3E] text-xs uppercase text-[#FAF1EA]">
                     <tr>
-                      <th scope="col" className="p-4"></th>
+                      
                       <th scope="col" className="px-6 py-3">
                         NAME
                       </th>
                       <th scope="col" className="px-6 py-3">
                         ITEM
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        QUANTITY
-                      </th>
+                      
                       <th scope="col" className="px-6 py-3">
                         ADDRESS
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                        COURIER
-                      </th>
+                  
                       <th scope="col" className="px-6 py-3">
                         PRICE
                       </th>
@@ -145,15 +141,11 @@ export default function Process() {
                           <td className="px-6 py-4 text-[#092928]">
                             {item.item_name}
                           </td>
-                          <td className="px-6 py-4 text-[#092928]">
-                            {item.quantity}
-                          </td>
+                          
                           <td className="px-6 py-4 text-[#092928]">
                             {item.customer_address}
                           </td>
-                          <td className="px-6 py-4 text-[#092928]">
-                            {item.courier_name}
-                          </td>
+                          
                           <td className="px-6 py-4 text-[#092928]">
                             {item.price}
                           </td>
