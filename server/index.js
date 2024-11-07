@@ -115,6 +115,18 @@ app.post("/data/:collectionName/:userId/cart", async (req, res) => {
   }
 });
 
+app.post("/data/:collectionName/:userId/order", async (req, res) => {
+  const { collectionName, userId } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/order`;
+  const data = req.body;
+  try {
+    const document = await postData(data, fullCollectionName);
+    return res.json({ message: "Data added successfully!", data });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 app.get("/data/:collectionName/:userId/order", async (req, res) => {
   const { collectionName, userId } = req.params;
   const fullCollectionName = `${collectionName}/${userId}/order`;
