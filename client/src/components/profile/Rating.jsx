@@ -35,14 +35,14 @@ export default function Rating({ item }) {
               <p className="font-ptserif text-xs font-black md:text-sm">{p2}</p>
             </div>
           </div>
-          <div className="flex flex-row justify-end gap-3 md:gap-5">
+          {/* <div className="flex flex-row justify-end gap-3 md:gap-5">
             <button className="rounded-3xl border-[0.12rem] border-[#092928] p-1 px-3 font-ptserif text-sm font-black text-[#092928] hover:bg-[#092928] hover:text-[#FAF1EA] md:w-32 md:text-lg">
               Buy Again
             </button>
             <button className="rounded-3xl border-[0.12rem] border-[#C11313] p-1 px-3 font-ptserif text-sm font-black text-[#C11313] hover:bg-[#C11313] hover:text-[#FAF1EA] md:w-32 md:text-lg">
               Rate
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
