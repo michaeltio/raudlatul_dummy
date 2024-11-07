@@ -1,11 +1,15 @@
 "use client";
 import Image from "next/image";
+import NextLink from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { isUserSignedIn } from "@/api/auth";
 import { postData } from "@/api/apiClient";
 
 export default function Item({ item }) {
   const [userId, setUserId] = useState(null);
+  const router = useRouter();
+
   useEffect(() => {
     const fetchUser = async () => {
       const user = await isUserSignedIn();
@@ -25,26 +29,22 @@ export default function Item({ item }) {
     }
   };
 
-  const addToContent = async () => {
-    try {
-      localStorage.setItem("selectedItemId", id);
-      window.location.href = "/content";
-    } catch (e) {
-      console.log("Error:", e);
-    }
-  };
-
   return (
     <div className="relative w-32 rounded-2xl sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
-        <img
-          src={item.image}
-          alt="Item"
-          width={500}
-          height={500}
-          className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
-          onClick={addToContent}
-        />
+        {/* Wrap the image with NextLink to enable client-side navigation */}
+        <NextLink href={`/content/${item.id}`}>
+          <div>
+            <Image
+              src={`/webp/${item.image}`}
+              alt="Item"
+              width={500}
+              height={500}
+              className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
+            />
+          </div>
+        </NextLink>
+
         <div
           onClick={addToCart}
           className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
