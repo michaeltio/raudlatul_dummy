@@ -8,7 +8,7 @@ export default function Admin() {
       <div id="mainAdmin" className="mx-8 py-12 md:mx-16">
         <section
           id="contOPR"
-          className="flex w-full flex-row items-center justify-around"
+          className="flex w-full flex-row items-center justify-center gap-12"
         >
           <div
             id="Order"
@@ -35,31 +35,7 @@ export default function Admin() {
                 12
               </p>
             </div>
-          </div>
-          <div
-            id="Rating"
-            className="relative flex aspect-square w-3/12 items-center justify-center rounded-2xl bg-[#092928] md:aspect-[16/10] md:rounded-3xl"
-          >
-            <div className="flex flex-col items-center justify-center gap-3">
-              <p className="absolute top-0 my-2 font-ptserif text-sm font-medium tracking-wider text-[#FAF1EA] md:text-lg">
-                Rating
-              </p>
-              <p className="font-ptserif text-4xl font-black text-[#FAF1EA]">
-                4.8
-              </p>
-              <div
-                id="custRat"
-                className="absolute bottom-0 my-2 flex flex-row gap-1"
-              >
-                <p className="text-2xs font-ptserif font-light text-[#FAF1EA] md:text-sm">
-                  15
-                </p>
-                <p className="text-2xs font-ptserif font-light text-[#FAF1EA] md:text-sm">
-                  customer
-                </p>
-              </div>
-            </div>
-          </div>
+          </div>  
         </section>
 
         <section
