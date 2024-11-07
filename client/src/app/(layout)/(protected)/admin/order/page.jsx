@@ -64,19 +64,19 @@ export default function Order() {
                   <tr>
                     <th scope="col" className="p-4"></th>
                     <th scope="col" className="px-6 py-3">
-                      NAME
+                      NAMA
                     </th>
                     <th scope="col" className="px-6 py-3">
                       ITEM
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      QUANTITY
+                      ALAMAT
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      ADDRESS
+                      HARGA
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      PRICE
+                      PEMBAYARAN
                     </th>
                     <th scope="col" className="px-6 py-3">
                       ACTION
@@ -109,13 +109,17 @@ export default function Order() {
                           {item.item_name}
                         </td>
                         <td className="px-6 py-4 text-[#092928]">
-                          {item.quantity}
-                        </td>
-                        <td className="px-6 py-4 text-[#092928]">
                           {item.customer_address}
                         </td>
                         <td className="px-6 py-4 text-[#092928]">
                           {item.price}
+                        </td>
+                        <td className="px-6 py-4 text-[#092928]">
+                          <img
+                            src={item.image}
+                            alt="Payment"
+                            className="h-32 w-32"
+                          />
                         </td>
                         <td className="flex items-center gap-3 px-6 py-4 text-[#092928]">
                           <input
