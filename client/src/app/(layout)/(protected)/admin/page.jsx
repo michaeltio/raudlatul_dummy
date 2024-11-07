@@ -1,10 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import ItemAdmin from "@/components/admin/ItemAdmin";
+import SideBar from "@/components/admin/SideBar";
 
 export default function Admin() {
   return (
     <>
+      <SideBar />
       <div id="mainAdmin" className="mx-8 py-12 md:mx-16">
         <section
           id="contOPR"
@@ -35,7 +37,7 @@ export default function Admin() {
                 12
               </p>
             </div>
-          </div>  
+          </div>
         </section>
 
         <section
