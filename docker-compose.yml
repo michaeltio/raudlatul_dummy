@@ -12,8 +12,6 @@ services:
       - backend
 
   backend:
-    container_name: backend
-    backend:
     build: ./server
     ports:
-      - "8080:3001"
+      - "3001:3001"
