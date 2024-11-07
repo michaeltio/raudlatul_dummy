@@ -64,19 +64,19 @@ export default function Order() {
                   <tr>
                     <th scope="col" className="p-4"></th>
                     <th scope="col" className="px-6 py-3">
-                      NAME
+                      NAMA
                     </th>
                     <th scope="col" className="px-6 py-3">
                       ITEM
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      ADDRESS
+                      ALAMAT
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      PRICE
+                      HARGA
                     </th>
                     <th scope="col" className="px-6 py-3">
-                      PAYMENT
+                      PEMBAYARAN
                     </th>
                     <th scope="col" className="px-6 py-3">
                       ACTION
