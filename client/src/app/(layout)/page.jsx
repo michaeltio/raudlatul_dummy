@@ -4,11 +4,11 @@ import Link from "next/link";
 export default function Home() {
   return (
     <>
-      <div className="space-y-6 py-12 text-center md:py-52">
+      <div className="space-y-6 py-12 text-center md:py-60">
         <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
           Looking for Beautiful Calligraphy
         </h2>
-        <div className="flex w-full flex-row justify-center gap-3 px-16 md:gap-6">
+        {/* <div className="flex w-full flex-row justify-center gap-3 px-16 md:gap-6">
           <input
             type="text"
             placeholder=""
@@ -17,9 +17,9 @@ export default function Home() {
           <button className="w-32 rounded-full border border-black p-3 py-1 font-ptserif text-xs font-bold hover:bg-[#092928] hover:text-white md:w-36 md:text-lg">
             Search
           </button>
-        </div>
+        </div> */}
         <div className="justify-center">
-          <div className="flex items-center justify-center gap-5 text-xs md:gap-20 md:text-xl">
+          <div className="flex items-center justify-center gap-10 text-xs md:gap-28 md:text-xl">
             <h1 className={`inline font-ptserif`}>Naski</h1>
             <h1 className={`inline font-ptserif`}>Tsuluts</h1>
             <h1 className={`inline font-ptserif`}>Farisi</h1>
