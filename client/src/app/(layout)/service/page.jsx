@@ -8,7 +8,7 @@ export default function Service() {
       <div id="mainService" className="flex flex-col py-12">
         <div id="landPage" className="flex flex-row items-center">
           <Image
-            src="/webp/rapat02.webp"
+            src="/webp/caligraphy06.webp"
             alt="img landSevice"
             className="aspect-[16/11] w-4/6 rounded-e-2xl md:w-1/2 md:rounded-e-3xl"
             width={1000}
