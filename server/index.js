@@ -151,7 +151,6 @@ app.get("/data/:collectionName/:userId/wishlist", async (req, res) => {
 
 app.get("/data/:collectionName/:userId/cart", async (req, res) => {
   const { collectionName, userId } = req.params;
-  console.log("Test");
   const fullCollectionName = `${collectionName}/${userId}/cart`;
   try {
     const data = await getAllData(fullCollectionName);

@@ -56,7 +56,7 @@ export default function EditItem() {
       setFormData({
         name: "",
         description: "",
-        price: "",
+        price: 0,
         image: "",
       });
       window.location.reload();
@@ -105,7 +105,7 @@ export default function EditItem() {
             placeholder="Description"
           />
           <input
-            type="text"
+            type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
@@ -167,11 +167,11 @@ export default function EditItem() {
             ) : (
               items.map((item) => (
                 <tr key={item.id} className="text-xs text-[#092928]">
-                  <td className="py-2">{item.name}</td>
-                  <td className="py-2">{item.description}</td>
-                  <td className="py-2">{item.price}</td>
-                  <td className="py-2">{item.image}</td>
-                  <td className="py-2">
+                  <td className="py-2 text-center">{item.name}</td>
+                  <td className="py-2 text-center">{item.description}</td>
+                  <td className="py-2 text-center">{item.price}</td>
+                  <td className="py-2 text-center">{item.image}</td>
+                  <td className="py-2 text-center">
                     <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
                       Edit
                     </button>
