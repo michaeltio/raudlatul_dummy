@@ -1,77 +1,33 @@
 "use client";
 import Image from "next/image";
-import Link from "next/link";
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { isUserSignedIn } from "@/api/auth";
+import { postData } from "@/api/apiClient";
 
-export default function Item({
-  image,
-  name,
-  price,
-  isInCart,
-  onToggleCart,
-  quantity,
-  id,
-}) {
-  const [user, setUser] = useState({});
-
+export default function Item({ item }) {
+  const [userId, setUserId] = useState(null);
   useEffect(() => {
-    console.log("isUserSignedIn", isUserSignedIn());
     const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const response = await axios.get("http://localhost:3001/user", {
-            headers: {
-              Authorization: `${token}`,
-            },
-          });
-
-          setUser(response.data.user);
-        } catch (error) {
-          console.error("Error fetching user:", error);
-        }
-      }
+      const user = await isUserSignedIn();
+      if (!user) return;
+      setUserId(user.uid);
     };
 
     fetchUser();
   }, []);
 
-  const handleToggleCart = () => {
+  const addToCart = async () => {
     try {
-      const response = axios.post(
-        `http://localhost:3001/create/${user.uid}/cart`,
-        {
-          item_id: id,
-        },
-      );
+      const response = await postData(`users/${userId}/cart`, item);
+      console.log("Item added to cart:", response.data);
     } catch (e) {
       console.log(e);
     }
   };
 
-  // const handleToggleContent = async () => {
-  //   try {
-  //     // Mengirim request untuk menyimpan item yang dipilih ke backend
-  //     await axios.post(`http://localhost:3001/create/${user.uid}/content`, {
-  //       item_id: id,
-  //     });
-
-  //     // Navigasi ke halaman Content setelah sukses
-  //     window.location.href = "/content";
-  //   } catch (e) {
-  //     console.log("Error:", e);
-  //   }
-  // };
-
-  const handleToggleContent = async () => {
+  const addToContent = async () => {
     try {
-      // Simpan item_id ke Local Storage
       localStorage.setItem("selectedItemId", id);
-      console.log(id);
-
-      // Navigasi ke halaman Content setelah sukses
       window.location.href = "/content";
     } catch (e) {
       console.log("Error:", e);
@@ -82,20 +38,20 @@ export default function Item({
     <div className="relative w-32 rounded-2xl sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
         <Image
-          src={`/webp/${image}`}
+          src={`/webp/${item.image}`}
           alt="Item"
           width={500}
           height={500}
           className="absolute h-full w-full rounded-2xl object-cover sm:rounded-3xl"
-          onClick={handleToggleContent}
+          onClick={addToContent}
         />
         <div
-          onClick={handleToggleCart}
+          onClick={addToCart}
           className="absolute bottom-[-5px] right-[-5px] flex aspect-square w-10 items-center justify-center rounded-full bg-[#E9B472] hover:cursor-pointer hover:bg-[#C6975D] sm:w-16"
         >
           <Image
-            src={isInCart ? "/svg/icon/minus.svg" : "/svg/icon/plus.svg"} // Toggle icon based on cart status
-            alt={isInCart ? "Remove from cart" : "Add to cart"}
+            src={"/svg/icon/plus.svg"} // Toggle icon based on cart status
+            alt="test"
             width={20}
             height={20}
             className="w-1/3"
@@ -103,9 +59,8 @@ export default function Item({
         </div>
       </div>
       <div className="pt-4">
-        <h1 className="text-wrap font-semibold">{name}</h1>
-        <p>Rp. {price}</p>
-        {isInCart && <p>Quantity: {quantity}</p>}
+        <h1 className="text-wrap font-semibold">{item.name}</h1>
+        <p>Rp. {item.price}</p>
       </div>
     </div>
   );

@@ -5,15 +5,10 @@ import React, { useEffect, useState } from "react";
 export default function EditItem() {
   const [items, setItems] = useState([]);
   const [formData, setFormData] = useState({
-    item_name: "",
+    name: "",
     description: "",
-    artist_name: "",
-    created_date: "",
     price: "",
-    image: null, // Handling file input
-    category: "",
-    is_available: true,
-    quantity: "",
+    image: "",
   });
   const [error, setError] = useState(null); // To handle error messages
 
@@ -41,64 +36,34 @@ export default function EditItem() {
     }));
   };
 
-  // Handle file input for image
   const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      image: e.target.files[0], // Store the file object
-    }));
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prev) => ({
+        ...prev,
+        image: reader.result, // Store the base64 string
+      }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataToSubmit = new FormData();
-    for (const key in formData) {
-      formDataToSubmit.append(key, formData[key]);
-    }
-
     try {
-      const response = await postData("kaligraphyItem", formDataToSubmit, {
-        "Content-Type": "multipart/form-data",
-      });
-      console.log("Item added:", response.data);
+      const response = await postData("kaligraphyItem", formData);
       setFormData({
-        item_name: "",
+        name: "",
         description: "",
-        artist_name: "",
-        created_date: "",
         price: "",
-        image: null,
-        category: "",
-        is_available: true,
-        quantity: "",
+        image: "",
       });
       window.location.reload();
     } catch (error) {
       console.error("Error submitting data:", error);
       setError("Failed to submit data. Please try again.");
     }
-  };
-
-  const handleEdit = (item) => {
-    setFormData({
-      item_name: item.item_name,
-      description: item.description,
-      artist_name: item.artist_name,
-      created_date:
-        item.created_date && item.created_date.seconds
-          ? new Date(item.created_date.seconds * 1000)
-              .toISOString()
-              .split("T")[0]
-          : "",
-      price: item.price,
-      image: item.image,
-      category: item.category,
-      is_available: item.is_available,
-      item_id: item.item_id,
-      review: item.review,
-      quantity: item.quantity,
-    });
   };
 
   const handleDelete = async (id) => {
@@ -125,8 +90,8 @@ export default function EditItem() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="text"
-            name="item_name"
-            value={formData.item_name}
+            name="name"
+            value={formData.name}
             onChange={handleChange}
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
             placeholder="Item Name"
@@ -139,24 +104,6 @@ export default function EditItem() {
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
             placeholder="Description"
           />
-          <div className="flex gap-10">
-            <input
-              type="text"
-              name="artist_name"
-              value={formData.artist_name}
-              onChange={handleChange}
-              className="w-1/2 flex-1 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
-              placeholder="Artist"
-            />
-            <input
-              type="date"
-              name="created_date"
-              value={formData.created_date || ""}
-              onChange={handleChange}
-              className="w-1/2 flex-1 border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
-              placeholder="Created Date"
-            />
-          </div>
           <input
             type="text"
             name="price"
@@ -200,12 +147,6 @@ export default function EditItem() {
                 Description
               </th>
               <th scope="col" className="py-2">
-                Artist
-              </th>
-              <th scope="col" className="py-2">
-                Created Date
-              </th>
-              <th scope="col" className="py-2">
                 Price
               </th>
               <th scope="col" className="py-2">
@@ -226,22 +167,12 @@ export default function EditItem() {
             ) : (
               items.map((item) => (
                 <tr key={item.id} className="text-xs text-[#092928]">
-                  <td className="py-2">{item.item_name}</td>
+                  <td className="py-2">{item.name}</td>
                   <td className="py-2">{item.description}</td>
-                  <td className="py-2">{item.artist_name}</td>
-                  <td className="py-2">
-                    {item.created_date &&
-                      new Date(
-                        item.created_date.seconds * 1000,
-                      ).toLocaleDateString()}
-                  </td>
                   <td className="py-2">{item.price}</td>
                   <td className="py-2">{item.image}</td>
                   <td className="py-2">
-                    <button
-                      onClick={() => handleEdit(item)}
-                      className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
-                    >
+                    <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
                       Edit
                     </button>
                     <button
