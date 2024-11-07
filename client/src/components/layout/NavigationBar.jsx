@@ -24,6 +24,10 @@ export default function NavigationBar() {
     const checkUserSignedIn = async () => {
       try {
         const user = await isUserSignedIn();
+        if (!user) {
+          setIsSignedIn(false);
+          return;
+        }
         if (user.email === "admin@admin.com") {
           setIsAdmin(true);
         }
