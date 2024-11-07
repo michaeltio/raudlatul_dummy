@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Item from "@/components/shop/Item";
 import { isUserSignedIn } from "@/api/auth";
-import axios from "axios";
+import { getAllData } from "@/api/apiClient";
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState([]);
@@ -13,28 +13,22 @@ export default function Cart() {
 
   useEffect(() => {
     const fetchCartData = async () => {
-      const token = localStorage.getItem("token");
-      if (token && isUserSignedIn()) {
+      const user = await isUserSignedIn();
+      if (user !== null) {
         try {
-          const userResponse = await axios.get("http://localhost:3001/user", {
-            headers: {
-              Authorization: `${token}`,
-            },
-          });
-          const userId = userResponse.data.user.uid;
+          const userId = user.uid;
           setUid(userId);
 
           const [cartDataResponse, kaligraphyItems] = await Promise.all([
-            axios.get(`http://localhost:3001/read/cart/${userId}`),
-            axios.get(`http://localhost:3001/read/kaligraphyItem`),
+            getAllData(`users/${userId}/cart`),
+            getAllData("kaligraphyItem"),
           ]);
 
           // Filter cart items based on user cart data
           const filteredItems = kaligraphyItems.data.filter((item) =>
-            cartDataResponse.data.some(
-              (cartItem) => cartItem.item_id === item.id,
-            ),
+            cartDataResponse.data.some((cartItem) => cartItem.id === item.id),
           );
+
           setCartItems(filteredItems);
 
           // Calculate total price
@@ -65,14 +59,7 @@ export default function Cart() {
         {loading ? (
           <p className="text-center text-gray-500">Loading your cart...</p>
         ) : cartItems.length > 0 ? (
-          cartItems.map((item, i) => (
-            <Item
-              key={item.item_id || i}
-              image={item.image}
-              name={item.item_name}
-              price={item.price.toLocaleString()}
-            />
-          ))
+          cartItems.map((item, i) => <Item key={i} item={item} />)
         ) : (
           <p className="text-center text-gray-500">Your cart is empty.</p>
         )}

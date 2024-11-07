@@ -1,6 +1,5 @@
 "use client";
 
-import SearchBar from "@/components/shop/SearchBar";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -86,7 +85,6 @@ export default function Content() {
 
   return (
     <div id="mainService" className="flex flex-col gap-8 py-12">
-      <SearchBar />
       <div className="md:mx-10 md:flex">
         <div className="space-y-4 px-9 md:flex-1 md:px-6 md:py-0 xl:flex xl:space-x-6 xl:space-y-0">
           {items.map((item, index) => (

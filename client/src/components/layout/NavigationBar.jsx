@@ -41,7 +41,7 @@ export default function NavigationBar() {
 
   return (
     <>
-      <nav className="fixed z-50 flex w-screen flex-row items-center justify-between bg-primaryWhite bg-opacity-50 px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] backdrop-blur-sm md:px-12 md:py-6">
+      <nav className="fixed z-50 flex w-screen flex-row items-center justify-between bg-[#BFCFBB] bg-opacity-50 px-6 py-4 shadow-[rgba(0,0,15,0.25)_0px_5px_5px_0px] backdrop-blur-sm md:px-12 md:py-6">
         <Link
           href="/"
           className="text-2xs font-ptserif font-semibold tracking-wide md:text-lg"
