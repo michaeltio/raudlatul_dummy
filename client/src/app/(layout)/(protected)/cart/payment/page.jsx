@@ -19,18 +19,23 @@ export default function Payment() {
 
   return (
     <div className="flex flex-col">
-      <div className="mb-10 flex scale-y-[-1] flex-row items-center justify-center gap-10">
+      <div className="flex flex-row items-center justify-center gap-10">
         <img
           src="/png/ornament.png"
           alt="Ornament"
-          className="md-transform hidden scale-x-[-1] md:block md:h-full md:w-72"
+          className="md-transform hidden scale-x-[-1] scale-y-[-1] md:block md:h-full md:w-72"
         />
+        <div className="my-10 flex flex-col items-center justify-center md:mb-10 md:mt-0">
+          <p className="font-ptserif text-4xl font-bold">Total</p>
+          <p className="font-ptserif text-3xl font-normal">Rp. 1.000.000</p>
+        </div>
         <img
           src="/png/ornament.png"
           alt="Ornament"
-          className="hidden md:block md:h-full md:w-72"
+          className="hidden scale-y-[-1] md:block md:h-full md:w-72"
         />
       </div>
+
       <div className="flex flex-col items-center justify-between gap-10 md:flex-row md:justify-center">
         <div className="flex h-40 w-1/2 flex-col items-center justify-center gap-2 rounded-3xl bg-[#014E3E] md:h-60 md:w-1/3 md:gap-5">
           <p className="text-center font-ptserif font-bold text-white md:text-2xl">
@@ -58,6 +63,9 @@ export default function Payment() {
           <p className="w-80 items-center justify-center text-center text-xs text-gray-500">
             SVG, PNG, JPG or GIF (MAX. 800x400px).
           </p>
+          <button className="h-10 w-40 rounded-full border bg-[#E9B472] p-3 py-1 font-ptserif text-xs font-bold text-white hover:bg-[#C6975D] hover:text-white md:w-36 md:text-lg">
+            Submit
+          </button>
         </div>
       </div>
 
