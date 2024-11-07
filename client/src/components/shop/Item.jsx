@@ -51,27 +51,9 @@ export default function Item({
     }
   };
 
-  // const handleToggleContent = async () => {
-  //   try {
-  //     // Mengirim request untuk menyimpan item yang dipilih ke backend
-  //     await axios.post(`http://localhost:3001/create/${user.uid}/content`, {
-  //       item_id: id,
-  //     });
-
-  //     // Navigasi ke halaman Content setelah sukses
-  //     window.location.href = "/content";
-  //   } catch (e) {
-  //     console.log("Error:", e);
-  //   }
-  // };
-
   const handleToggleContent = async () => {
     try {
-      // Simpan item_id ke Local Storage
       localStorage.setItem("selectedItemId", id);
-      console.log(id);
-
-      // Navigasi ke halaman Content setelah sukses
       window.location.href = "/content";
     } catch (e) {
       console.log("Error:", e);
