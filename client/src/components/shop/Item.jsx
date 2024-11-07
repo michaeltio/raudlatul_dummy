@@ -37,8 +37,8 @@ export default function Item({ item }) {
   return (
     <div className="relative w-32 rounded-2xl sm:w-64">
       <div className="relative flex aspect-[9/12] w-full flex-col">
-        <Image
-          src={`/webp/${item.image}`}
+        <img
+          src={item.image}
           alt="Item"
           width={500}
           height={500}
@@ -51,7 +51,7 @@ export default function Item({ item }) {
         >
           <Image
             src={"/svg/icon/plus.svg"} // Toggle icon based on cart status
-            alt="test"
+            alt="+"
             width={20}
             height={20}
             className="w-1/3"

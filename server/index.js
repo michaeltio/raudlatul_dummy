@@ -95,7 +95,6 @@ app.get("/user", authenticateToken, (req, res) => {
 app.post("/data/:collectionName", async (req, res) => {
   const { collectionName } = req.params;
   const data = req.body;
-  console.log(data);
   try {
     const document = await postData(data, collectionName);
     return res.json({ message: "Data added successfully!", document });

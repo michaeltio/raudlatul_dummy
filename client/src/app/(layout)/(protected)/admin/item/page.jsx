@@ -214,29 +214,36 @@ export default function EditItem() {
               </tr>
             ) : (
               items.map((item) => (
-                <tr key={item.id} className="text-xs text-[#092928]">
-                  <td className="py-2 text-center">{item.name}</td>
-                  <td className="py-2 text-center">{item.description}</td>
-                  <td className="py-2 text-center">{item.price}</td>
-                  <td className="flex items-center justify-center py-2">
-                    <img
-                      src={item.image}
-                      alt="Selected"
-                      className="h-32 w-32 object-cover"
-                    />
-                  </td>
-                  <td className="py-2 text-center">
-                    <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(item.id)}
-                      className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
+                <React.Fragment key={item.id}>
+                  <tr className="text-xs text-[#092928]">
+                    <td className="py-2 text-center">{item.name}</td>
+                    <td className="py-2 text-center">{item.description}</td>
+                    <td className="py-2 text-center">{item.price}</td>
+                    <td className="flex items-center justify-center py-2">
+                      <img
+                        src={item.image}
+                        alt="Selected"
+                        className="h-32 w-32 object-cover"
+                      />
+                    </td>
+                    <td className="py-2 text-center">
+                      <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
+                        Edit
+                      </button>
+                      <button
+                        onClick={() => handleDelete(item.id)}
+                        className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                      >
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colSpan="7">
+                      <hr className="h-2 w-full bg-gray-300" />
+                    </td>
+                  </tr>
+                </React.Fragment>
               ))
             )}
           </tbody>
