@@ -9,6 +9,7 @@ export default function Item({ item }) {
   useEffect(() => {
     const fetchUser = async () => {
       const user = await isUserSignedIn();
+      if (!user) return;
       setUserId(user.uid);
     };
 
@@ -17,11 +18,7 @@ export default function Item({ item }) {
 
   const addToCart = async () => {
     try {
-      const response = await postData(`users/${userId}/cart`, {
-        name: item.name,
-        price: item.price,
-        image: item.image,
-      });
+      const response = await postData(`users/${userId}/cart`, item);
       console.log("Item added to cart:", response.data);
     } catch (e) {
       console.log(e);

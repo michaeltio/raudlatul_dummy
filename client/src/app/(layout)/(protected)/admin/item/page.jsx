@@ -8,7 +8,7 @@ export default function EditItem() {
     name: "",
     description: "",
     price: "",
-    image: null,
+    image: "",
   });
   const [error, setError] = useState(null); // To handle error messages
 
@@ -37,30 +37,27 @@ export default function EditItem() {
   };
 
   const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      image: e.target.files[0], // Store the file object
-    }));
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData((prev) => ({
+        ...prev,
+        image: reader.result, // Store the base64 string
+      }));
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const formDataToSubmit = new FormData();
-    for (const key in formData) {
-      formDataToSubmit.append(key, formData[key]);
-    }
-
     try {
-      const response = await postData("kaligraphyItem", formDataToSubmit, {
-        "Content-Type": "multipart/form-data",
-      });
-      console.log("Item added:", response.data);
+      const response = await postData("kaligraphyItem", formData);
       setFormData({
         name: "",
         description: "",
         price: "",
-        image: null,
+        image: "",
       });
       window.location.reload();
     } catch (error) {
@@ -93,7 +90,7 @@ export default function EditItem() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <input
             type="text"
-            name="item_name"
+            name="name"
             value={formData.name}
             onChange={handleChange}
             className="flex border-b-2 border-black bg-[#FAF1EA] placeholder-[#092928] placeholder-opacity-100"
