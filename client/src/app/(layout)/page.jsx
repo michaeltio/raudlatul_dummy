@@ -5,9 +5,18 @@ export default function Home() {
   return (
     <>
       <div className="space-y-6 py-12 text-center md:py-60">
-        <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
-          Looking for Beautiful Calligraphy
-        </h2>
+        <div className="flex flex-row items-center justify-center gap-10">
+          <img src="/png/ornament.png" 
+          alt="Ornament"
+          className="hidden md:block md:w-48 md:h-48 md-transform scale-x-[-1]" />
+          <h2 className="font-ptserif text-2xl font-bold md:text-3xl">
+            Looking for Beautiful Calligraphy
+          </h2>
+          <img src="/png/ornament.png" 
+          alt="Ornament"
+          className="hidden md:block md:w-48 md:h-48" />
+        </div>
+        
         {/* <div className="flex w-full flex-row justify-center gap-3 px-16 md:gap-6">
           <input
             type="text"
