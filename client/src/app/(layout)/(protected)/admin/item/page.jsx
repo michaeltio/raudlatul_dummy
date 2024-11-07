@@ -1,5 +1,6 @@
 "use client";
 import { deleteData, getAllData, postData } from "@/api/apiClient";
+import SideBar from "@/components/admin/SideBar";
 import React, { useEffect, useState } from "react";
 
 export default function EditItem() {
@@ -118,7 +119,10 @@ export default function EditItem() {
   };
 
   return (
-    <div className="mx-10 flex flex-col gap-16 py-12 font-ptserif">
+    <>
+    <SideBar />
+    <div class="p-4 sm:ml-64">
+      <div className="mx-10 flex flex-col gap-16 py-12 font-ptserif">
       <div className="flex justify-center">
         <h1 className="text-2xl font-black">Item</h1>
       </div>
@@ -250,5 +254,7 @@ export default function EditItem() {
         </table>
       </div>
     </div>
+    </div>
+    </>
   );
 }

@@ -10,7 +10,7 @@ export default function Layout({ children }) {
     <>
       {!isAdminPage && <NavigationBar />}
       <main className="min-h-screen pt-14 md:pt-20">{children}</main>
-      <Footer />
+      {!isAdminPage && <Footer />}
     </>
   );
 }
