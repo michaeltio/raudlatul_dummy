@@ -8,7 +8,7 @@ export default function EditItem() {
     name: "",
     description: "",
     price: "",
-    image: "",
+    image: null,
   });
   const [error, setError] = useState(null); // To handle error messages
 
@@ -38,26 +38,65 @@ export default function EditItem() {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData((prev) => ({
-        ...prev,
-        image: reader.result, // Store the base64 string
-      }));
-    };
-    reader.readAsDataURL(file);
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const img = new Image();
+        img.src = reader.result;
+
+        img.onload = () => {
+          // Create a canvas to resize the image
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          // Set the desired dimensions (e.g., reduce image size to 50% of original)
+          const maxWidth = 800; // Max width for resizing
+          const maxHeight = 400; // Max height for resizing
+          let width = img.width;
+          let height = img.height;
+
+          // Calculate the new dimensions while maintaining the aspect ratio
+          if (width > maxWidth || height > maxHeight) {
+            const aspectRatio = width / height;
+            if (width > height) {
+              width = maxWidth;
+              height = maxWidth / aspectRatio;
+            } else {
+              height = maxHeight;
+              width = maxHeight * aspectRatio;
+            }
+          }
+
+          // Resize the canvas to the new dimensions
+          canvas.width = width;
+          canvas.height = height;
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Convert the resized image to base64 with reduced quality (JPEG format)
+          const base64Image = canvas.toDataURL("image/jpeg", 0.5); // 0.5 is the quality (0-1 scale)
+
+          // Set the base64 image data to the formData
+          setFormData((prev) => ({
+            ...prev,
+            image: base64Image,
+          }));
+        };
+      };
+
+      reader.readAsDataURL(file); // Read the file as a data URL
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await postData("kaligraphyItem", formData);
+      await postData("kaligraphyItem", formData);
       setFormData({
         name: "",
         description: "",
         price: 0,
-        image: "",
+        image: null,
       });
       window.location.reload();
     } catch (error) {
@@ -127,9 +166,18 @@ export default function EditItem() {
               SVG, PNG, JPG or GIF (MAX. 800x400px).
             </p>
           </div>
+          {formData.image && (
+            <div>
+              <img
+                src={formData.image}
+                alt="Selected"
+                className="h-32 w-32 object-cover"
+              />
+            </div>
+          )}
           <button
             type="submit"
-            className="h-8 w-80 rounded-full bg-[#E9B472] text-[#FAF1EA]"
+            className="mx-auto h-8 w-80 rounded-full bg-[#E9B472] text-[#FAF1EA]"
           >
             Submit
           </button>
@@ -170,7 +218,13 @@ export default function EditItem() {
                   <td className="py-2 text-center">{item.name}</td>
                   <td className="py-2 text-center">{item.description}</td>
                   <td className="py-2 text-center">{item.price}</td>
-                  <td className="py-2 text-center">{item.image}</td>
+                  <td className="flex items-center justify-center py-2">
+                    <img
+                      src={item.image}
+                      alt="Selected"
+                      className="h-32 w-32 object-cover"
+                    />
+                  </td>
                   <td className="py-2 text-center">
                     <button className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]">
                       Edit
