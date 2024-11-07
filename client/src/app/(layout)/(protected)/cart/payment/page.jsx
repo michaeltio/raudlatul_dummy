@@ -145,7 +145,7 @@ export default function Payment() {
         </div>
       </div>
 
-      <div className="mt-10 flex flex-row items-center justify-center gap-80">
+      {/* <div className="mt-10 flex flex-row items-center justify-center gap-80">
         <img
           src="/png/ornament.png"
           alt="Ornament"
@@ -156,7 +156,7 @@ export default function Payment() {
           alt="Ornament"
           className="hidden md:block md:h-full md:w-72"
         />
-      </div>
+      </div> */}
     </div>
   );
 }
