@@ -50,6 +50,24 @@ export default function SideBar() {
         aria-label="Sidebar"
       >
         <div class="h-full overflow-y-auto bg-gray-50 px-3 py-4 dark:bg-[#BFCFBB]">
+        {isSidebarOpen && (
+            <button
+              onClick={toggleSidebar}
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+            >
+              <svg
+                className="h-6 w-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 9.293l4.707-4.707a1 1 0 011.414 1.414L11.414 10l4.707 4.707a1 1 0 11-1.414 1.414L10 11.414l-4.707 4.707a1 1 0 11-1.414-1.414L8.586 10 3.879 5.293a1 1 0 011.414-1.414L10 8.586z"
+                />
+              </svg>
+            </button>
+          )}
           <ul class="space-y-2 font-medium">
             <li>
               <a
