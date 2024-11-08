@@ -45,6 +45,11 @@ export default function Login() {
 
   return (
     <div className="relative flex h-3/5 w-4/5 justify-end rounded-3xl bg-[#092928] lg:w-2/3 2xl:w-1/2">
+      <img
+        src="/webp/allCaligraphyRight.webp"
+        alt="Login"
+        className="h-full w-1/2 rounded-l-3xl object-cover"
+      />
       <div className="relative flex h-full w-full flex-col justify-center rounded-3xl bg-white md:w-1/2 md:rounded-l-none md:rounded-r-3xl">
         <h1 className="text-center text-3xl font-bold">Login</h1>
         <form
