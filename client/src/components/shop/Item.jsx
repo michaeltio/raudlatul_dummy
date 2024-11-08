@@ -39,6 +39,7 @@ export default function Item({ item, cart }) {
     try {
       const response = await deleteData(`users/${userId}/cart`, item.id);
       console.log("Item removed from cart:", response.data);
+      window.location.reload();
     } catch (e) {
       console.log(e);
     }
