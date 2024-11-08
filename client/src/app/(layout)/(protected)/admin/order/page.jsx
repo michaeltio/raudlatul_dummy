@@ -106,16 +106,16 @@ export default function Order() {
                             scope="row"
                             className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
                           >
-                            {item.customer_name}
+                            {item.user_name}
                           </th>
                           <td className="px-6 py-4 text-[#092928]">
                             {item.item_name}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
-                            {item.customer_address}
+                            {item.user_address}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
-                            {item.price}
+                            {item.item_price}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
                             <img
