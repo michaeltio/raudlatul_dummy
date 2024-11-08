@@ -54,7 +54,7 @@ export default function Order() {
     <>
       <SideBar />
       <div className="py-12" id="mainAdminOrder">
-        <div class="p-4 sm:ml-64">
+        <div className="sm:ml-48">
           <section>
             <div className="flex flex-col items-center gap-5">
               <h1 className="item-center justify-center font-ptserif text-2xl font-black">
@@ -115,7 +115,7 @@ export default function Order() {
                             {item.user_address}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
-                            {item.item_price}
+                            {`Rp ${item.item_price.toLocaleString("id-ID")}`}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
                             <img

@@ -80,6 +80,10 @@ export default function Payment({ query }) {
       setImage({
         image: null,
       });
+      await postData(`users/${userId}/order`, image);
+      setImage({
+        image: null,
+      });
       setSuccess(true);
     } catch (error) {
       console.error("Error submitting data:", error);
