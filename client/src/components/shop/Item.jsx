@@ -74,7 +74,12 @@ export default function Item({ item, cart }) {
         </div>
       </div>
       <div className="pt-4">
-        <h1 className="text-wrap font-semibold">{item.name}</h1>
+        <h1
+          className="max-w-[240px] overflow-hidden truncate text-ellipsis whitespace-nowrap font-semibold"
+          title={item.name}
+        >
+          {item.name}
+        </h1>
         <p>Rp. {item.price}</p>
       </div>
     </div>
