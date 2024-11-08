@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import { isUserSignedIn } from "@/api/auth";
 import { postData } from "@/api/apiClient";
 
-export default function Payment() {
+export default function Payment({ query }) {
+  console.log(query);
   const [image, setImage] = useState({ image: null });
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -79,6 +80,10 @@ export default function Payment() {
       setImage({
         image: null,
       });
+      await postData(`users/${userId}/order`, image);
+      setImage({
+        image: null,
+      });
       setSuccess(true);
     } catch (error) {
       console.error("Error submitting data:", error);
@@ -132,13 +137,14 @@ export default function Payment() {
           <p className="w-80 items-center justify-center text-center text-xs text-gray-500">
             SVG, PNG, JPG or GIF (MAX. 800x400px).
           </p>
-          <button 
-          onClick={handleSubmit}
-          className="h-10 w-40 rounded-full border bg-[#E9B472] p-3 py-1 font-ptserif text-xs font-bold text-white hover:bg-[#C6975D] hover:text-white md:w-36 md:text-lg">
+          <button
+            onClick={handleSubmit}
+            className="h-10 w-40 rounded-full border bg-[#E9B472] p-3 py-1 font-ptserif text-xs font-bold text-white hover:bg-[#C6975D] hover:text-white md:w-36 md:text-lg"
+          >
             Submit
           </button>
           {success && (
-            <div className="my-4 text-green-600 font-bold text-lg">
+            <div className="my-4 text-lg font-bold text-green-600">
               Payment submitted successfully!
             </div>
           )}

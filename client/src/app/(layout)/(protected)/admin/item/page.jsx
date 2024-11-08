@@ -121,7 +121,7 @@ export default function EditItem() {
   return (
     <>
     <SideBar />
-    <div class="p-4 sm:ml-64">
+    <div class="p-4 sm:ml-52">
       <div className="mx-10 flex flex-col gap-16 py-12 font-ptserif">
       <div className="flex justify-center">
         <h1 className="text-2xl font-black">Item</h1>
