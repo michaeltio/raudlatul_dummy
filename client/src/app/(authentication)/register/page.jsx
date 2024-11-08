@@ -209,6 +209,11 @@ export default function Register() {
           </button>
         </div>
       </div>
+      <img
+        src="/webp/allCaligraphyLeft.webp"
+        alt="Register"
+        className="h-full w-1/2 rounded-r-3xl object-cover"
+      />
     </div>
   );
 }
