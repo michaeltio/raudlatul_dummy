@@ -220,12 +220,10 @@ app.get("/data/:collectionName/:id", async (req, res) => {
 // Update data
 app.put("/data/:collectionName/:userId/process/:id", async (req, res) => {
   const { collectionName, userId, id } = req.params;
-  console.log("collectionName", collectionName, "userId", userId, "id", id);
   const fullCollectionName = `${collectionName}/${userId}/sent`;
   const data = req.body;
   try {
     const document = await updateData(fullCollectionName, id, data);
-    console.log(document);
     return res.json({ message: "Data updated successfully!", data });
   } catch (error) {
     return res.status(400).json({ message: error.message });
