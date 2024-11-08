@@ -12,6 +12,7 @@ export default function Layout({ children }) {
       const signedIn = await isUserSignedIn();
       if (signedIn == null) {
         router.push("/login");
+        return;
       }
       if (signedIn.email !== "admin@admin.com") {
         router.push("/");

@@ -24,6 +24,7 @@ export default function Cart() {
             getAllData(`users/${userId}/cart`),
             getAllData("kaligraphyItem"),
           ]);
+          console.log("cartDataResponse:", cartDataResponse);
 
           // Filter cart items based on user cart data
           const filteredItems = kaligraphyItems.data.filter((item) =>

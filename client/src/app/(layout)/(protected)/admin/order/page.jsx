@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { getAllData, deleteData } from "@/api/apiClient";
+import { getAllData, deleteData, postData } from "@/api/apiClient";
 import SideBar from "@/components/admin/SideBar";
 
 export default function Order() {
@@ -20,16 +20,12 @@ export default function Order() {
           const orderDataResponse = await getAllData(
             "users/" + userId + "/order",
           );
-
           const userOrders = orderDataResponse.data.map((order) => ({
-            userId: userId,
-            orderId: order.id,
             ...order,
           }));
 
           allOrders.push(...userOrders);
         }
-
         setOrders(allOrders);
       } catch (error) {
         console.error("Error fetching users with orders:", error);
@@ -47,6 +43,22 @@ export default function Order() {
       window.location.reload();
     } catch (error) {
       console.error("Error deleting order:", error);
+    }
+  };
+
+  const handleProcess = async (item) => {
+    try {
+      const { id, ...orderWithoutId } = item;
+      const updatedOrder = {
+        ...orderWithoutId,
+        status: "Pending",
+      };
+
+      await postData(`users/${item.user_id}/sent`, updatedOrder);
+      handleDelete(item.id, item.user_id);
+      console.log("Order processed successfully");
+    } catch (error) {
+      console.error("Error processing order:", error);
     }
   };
 
@@ -125,14 +137,15 @@ export default function Order() {
                             />
                           </td>
                           <td className="flex items-center gap-3 px-6 py-4 text-[#092928]">
-                            <input
-                              type="checkbox"
-                              id={`checkbox-table-search-${item.orderId}`}
-                              className="h-5 w-5"
-                            />
+                            <button
+                              onClick={() => handleProcess(item)}
+                              className="rounded-full bg-[#E9B472] px-2 text-[#FAF1EA]"
+                            >
+                              Process
+                            </button>
                             <Image
                               onClick={() =>
-                                handleDelete(item.orderId, item.userId)
+                                handleDelete(item.id, item.user_id)
                               }
                               src={`/svg/icon/delete.svg`}
                               alt="delete"

@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import { getAllData, deleteData } from "@/api/apiClient";
+import { getAllData, deleteData, updateData } from "@/api/apiClient";
 import SideBar from "@/components/admin/SideBar";
 
 export default function Process() {
@@ -22,13 +22,12 @@ export default function Process() {
           );
 
           const userProcess = processDataResponse.data.map((process) => ({
-            userId: userId,
-            processId: process.id,
             ...process,
           }));
 
           allProcess.push(...userProcess);
         }
+        console.log("userProcess:", allProcess);
 
         setProcess(allProcess);
       } catch (error) {
@@ -50,26 +49,31 @@ export default function Process() {
     }
   };
 
-  const handleStatusChange = async (id, status) => {
+  const updateProcessData = async (item, status) => {
     try {
-      // Update the status in the local state
-      setProcess((prevProcess) =>
-        prevProcess.map((item) =>
-          item.processId === id ? { ...item, status } : item,
-        ),
-      );
-
-      // Update the status in the database
-      const processToUpdate = process.find((item) => item.processId === id);
-      if (processToUpdate) {
-        await updateData(`users/${processToUpdate.userId}/process/${id}`, {
-          status,
-        });
-        console.log("Status updated successfully");
-      }
+      const { id, ...processWithoutId } = item;
+      const updatedProcess = {
+        ...processWithoutId,
+        status,
+      };
+      await updateData(`users/${item.user_id}/process`, id, updatedProcess);
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error updating process data:", error);
     }
+  };
+
+  const handleStatusChange = (item, status) => {
+    setProcess((prevProcess) => {
+      const updatedProcess = prevProcess.map((i) =>
+        i.id === item.id ? { ...i, status } : i,
+      );
+      try {
+        updateProcessData(item, status);
+      } catch (error) {
+        console.error("Error updating status:", error);
+      }
+      return updatedProcess;
+    });
   };
 
   return (
@@ -87,18 +91,17 @@ export default function Process() {
                 <table className="w-full text-left font-ptserif text-sm tracking-wide text-[#FAF1EA]">
                   <thead className="bg-[#014E3E] text-xs uppercase text-[#FAF1EA]">
                     <tr>
-                      
                       <th scope="col" className="px-6 py-3">
                         NAME
                       </th>
                       <th scope="col" className="px-6 py-3">
                         ITEM
                       </th>
-                      
+
                       <th scope="col" className="px-6 py-3">
                         ADDRESS
                       </th>
-                  
+
                       <th scope="col" className="px-6 py-3">
                         PRICE
                       </th>
@@ -118,36 +121,27 @@ export default function Process() {
                         </td>
                       </tr>
                     ) : (
-                      process.map((item) => (
+                      process.map((item, i) => (
                         <tr
-                          key={item.processId}
+                          key={i}
                           className="border-b bg-[#FAF1EA] dark:border-gray-700 dark:hover:bg-[#CBC7C4]"
                         >
-                          <td className="w-4 p-4">
-                            <div className="flex items-center">
-                              <input
-                                type="checkbox"
-                                id={`checkbox-table-search-${item.processId}`}
-                                className="h-5 w-5"
-                              />
-                            </div>
-                          </td>
                           <th
                             scope="row"
                             className="whitespace-nowrap px-6 py-4 font-medium text-[#092928]"
                           >
-                            {item.customer_name}
+                            {item.user_name}
                           </th>
                           <td className="px-6 py-4 text-[#092928]">
                             {item.item_name}
                           </td>
-                          
+
                           <td className="px-6 py-4 text-[#092928]">
-                            {item.customer_address}
+                            {item.user_address}
                           </td>
-                          
+
                           <td className="px-6 py-4 text-[#092928]">
-                            {item.price}
+                            {item.item_price}
                           </td>
                           <td className="px-6 py-4 text-[#092928]">
                             {item.status}
@@ -157,10 +151,7 @@ export default function Process() {
                               className="rounded-md bg-[#014E3E] p-2 text-[#FAF1EA]"
                               value={item.status}
                               onChange={(e) =>
-                                handleStatusChange(
-                                  item.processId,
-                                  e.target.value,
-                                )
+                                handleStatusChange(item, e.target.value)
                               }
                             >
                               <option value="Pending">Pending</option>
@@ -170,7 +161,7 @@ export default function Process() {
                             </select>
                             <Image
                               onClick={() =>
-                                handleDelete(item.processId, item.userId)
+                                handleDelete(item.id, item.user_id)
                               }
                               src={`/svg/icon/delete.svg`}
                               alt="delete"

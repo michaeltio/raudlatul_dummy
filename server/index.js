@@ -98,7 +98,7 @@ app.post("/data/:collectionName/:userId/order", async (req, res) => {
   const data = req.body;
   try {
     const document = await postData(data, fullCollectionName);
-    return res.json({ message: "Data added successfully!", data });
+    return res.json({ message: "Data added successfully!", document });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -110,7 +110,19 @@ app.post("/data/:collectionName/:userId/cart", async (req, res) => {
   const data = req.body;
   try {
     const document = await postData(data, fullCollectionName);
-    return res.json({ message: "Data added successfully!", data });
+    return res.json({ message: "Data added successfully!", document });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
+app.post("/data/:collectionName/:userId/sent", async (req, res) => {
+  const { collectionName, userId } = req.params;
+  const fullCollectionName = `${collectionName}/${userId}/sent`;
+  const data = req.body;
+  try {
+    const document = await postData(data, fullCollectionName);
+    return res.json({ message: "Data added successfully!", document });
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
@@ -174,9 +186,10 @@ app.get("/data/:collectionName/:userId/cart", async (req, res) => {
 });
 app.get("/data/:collectionName/:userId/process", async (req, res) => {
   const { collectionName, userId } = req.params;
-  const fullCollectionName = `${collectionName}/${userId}/process`;
+  const fullCollectionName = `${collectionName}/${userId}/sent`;
   try {
     const data = await getAllData(fullCollectionName);
+    console.log(data);
     return res.json(data);
   } catch (error) {
     return res.status(400).json({ message: error.message });
@@ -205,6 +218,20 @@ app.get("/data/:collectionName/:id", async (req, res) => {
 });
 
 // Update data
+app.put("/data/:collectionName/:userId/process/:id", async (req, res) => {
+  const { collectionName, userId, id } = req.params;
+  console.log("collectionName", collectionName, "userId", userId, "id", id);
+  const fullCollectionName = `${collectionName}/${userId}/sent`;
+  const data = req.body;
+  try {
+    const document = await updateData(fullCollectionName, id, data);
+    console.log(document);
+    return res.json({ message: "Data updated successfully!", data });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+});
+
 app.put("/data/:collectionName/:userId/cart/:id", async (req, res) => {
   const { collectionName, userId, id } = req.params;
   const fullCollectionName = `${collectionName}/${userId}/cart`;

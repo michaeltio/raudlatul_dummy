@@ -15,8 +15,6 @@ export default function SentPage() {
         const userId = user.uid;
         const sentDataResponse = await getAllData(`users/${userId}/process`);
         const userSent = sentDataResponse.data.map((sent) => ({
-          userId: userId,
-          sentId: sent.id,
           ...sent,
         }));
         setItems(userSent);

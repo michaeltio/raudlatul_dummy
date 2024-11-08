@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { isUserSignedIn } from "@/api/auth";
+import { signOutUser } from "@/api/apiClient";
 
 export default function SideBar() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
