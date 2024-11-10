@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SearchBar from "@/components/shop/SearchBar";
+// import SearchBar from "@/components/shop/SearchBar";
 
 const ContentReview = () => {
   const [items, setItems] = useState([]);
@@ -62,7 +62,7 @@ const ContentReview = () => {
 
   return (
     <div id="mainService" className="flex flex-col gap-8">
-      <SearchBar />
+      {/* <SearchBar /> */}
       <div className="md:mx-10 md:flex"></div>
       <div className="space-y-4 px-9 md:flex-1 md:px-6 md:py-0 lg:flex lg:space-x-6 lg:space-y-0">
         <div className="aspect-[16/11] rounded-2xl bg-[#092928] md:aspect-square md:flex-1 lg:aspect-[16/11]">
