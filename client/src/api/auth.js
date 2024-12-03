@@ -5,7 +5,7 @@ export const isUserSignedIn = async () => {
   const token = localStorage.getItem("token");
   if (token) {
     try {
-      const response = await axios.get("https://utsmichaeltio70515.xyz/user", {
+      const response = await axios.get("http://localhost:3001/user", {
         headers: {
           Authorization: `${token}`,
         },
